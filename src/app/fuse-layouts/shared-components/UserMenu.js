@@ -31,15 +31,15 @@ function UserMenu(props) {
 				{user.data.photoURL ? (
 					<Avatar className="" alt="user photo" src={user.data.photoURL} />
 				) : (
-					<Avatar className="">{user.data.displayName[0]}</Avatar>
+					<Avatar className="">{user.data.nama[0]}</Avatar>
 				)}
 
 				<div className="hidden md:flex flex-col mx-12 items-start">
 					<Typography component="span" className="normal-case font-600 flex">
-						{user.data.displayName}
+						{user.data.nama}
 					</Typography>
 					<Typography className="text-11 capitalize" color="textSecondary">
-						{user.role.toString()}
+						{user.data.peran}
 					</Typography>
 				</div>
 

@@ -2,8 +2,9 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import FuseUtils from '@fuse/utils';
 import MenuConfig from 'app/main/menu/MenuConfig';
+import LoginConfig from 'app/main/login/LoginConfig';
 
-const routeConfigs = [MenuConfig];
+const routeConfigs = [LoginConfig, MenuConfig];
 
 const routes = [
 	...FuseUtils.generateRoutesFromConfigs(routeConfigs),

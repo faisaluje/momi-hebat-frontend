@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function MenuPengaturan(props) {
-	const classes = useStyles(props);
+	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const anchorRef = React.useRef(null);
 

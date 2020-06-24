@@ -6,6 +6,7 @@ import jwtService from 'app/services/jwtService';
 import * as MessageActions from 'app/store/actions/fuse/message.actions';
 import * as FuseActions from 'app/store/actions/fuse';
 import firebase from 'firebase/app';
+import authRoles from 'app/auth/authRoles';
 
 export const SET_USER_DATA = '[USER] SET DATA';
 export const REMOVE_USER_DATA = '[USER] REMOVE DATA';
@@ -86,25 +87,29 @@ export function createUserSettingsFirebase(authUser) {
  */
 export function setUserData(user) {
 	return dispatch => {
+		const userData = {
+			role: user.peran === 'admin' ? authRoles.admin : authRoles.user,
+			data: user
+		};
 		/*
-        You can redirect the logged-in user to a specific route depending on his role
-         */
+			You can redirect the logged-in user to a specific route depending on his role
+		*/
 
-		// history.location.state = {
-		//     redirectUrl: user.redirectUrl // for example 'apps/academy'
-		// }
+		history.location.state = {
+			redirectUrl: '/' // for example 'apps/academy'
+		};
 
 		/*
         Set User Settings
          */
-		dispatch(FuseActions.setDefaultSettings(user.data.settings));
+		// dispatch(FuseActions.setDefaultSettings(user.data.settings));
 
 		/*
-        Set User Data
-         */
+			Set User Data
+		*/
 		dispatch({
 			type: SET_USER_DATA,
-			payload: user
+			payload: userData
 		});
 	};
 }
