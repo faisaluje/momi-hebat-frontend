@@ -13,6 +13,7 @@ import {
 	ListItemIcon,
 	ListItemText
 } from '@material-ui/core';
+import History from '@history';
 
 const useStyles = makeStyles(theme => ({
 	menu: {
@@ -87,7 +88,7 @@ function MenuPengaturan(props) {
 									</ListItemIcon>
 									<ListItemText primary="Referensi" />
 								</MenuItem>
-								<MenuItem onClick={handleClickMenu}>
+								<MenuItem onClick={() => History.push('/pengguna')}>
 									<ListItemIcon>
 										<Icon>group</Icon>
 									</ListItemIcon>
