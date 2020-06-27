@@ -4,7 +4,7 @@ const PenggunaStatus = {
 		label: 'Aktif'
 	},
 	tidak_aktif: {
-		value: 'Aktif',
+		value: 'tidak_aktif',
 		label: 'Tidak Aktif'
 	}
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FuseUtils from '@fuse/utils';
-import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
-import { getListPengguna } from './store/actions';
+import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Typography } from '@material-ui/core';
+import { getListPengguna, setPenggunaForm, openPenggunaDialog } from './store/actions';
 import PenggunaStatus from './PenggunaStatus';
 
 function getFilteredArray(data, txtCari) {
@@ -30,6 +30,11 @@ function PenggunaTable() {
 		}
 	}, [data, txtCari]);
 
+	const onClickPengguna = pengguna => {
+		dispatch(setPenggunaForm(pengguna));
+		dispatch(openPenggunaDialog());
+	};
+
 	return (
 		<TableContainer component={Paper} elevation={8} className="my-12">
 			<Table stickyHeader size="small">
@@ -48,7 +53,15 @@ function PenggunaTable() {
 						rows.map((pengguna, idx) => (
 							<TableRow key={pengguna.id}>
 								<TableCell>{idx + 1}</TableCell>
-								<TableCell>{pengguna.username}</TableCell>
+								<TableCell>
+									<Typography
+										className="text-blue hover:underline"
+										role="button"
+										onClick={() => onClickPengguna(pengguna)}
+									>
+										{pengguna.username}
+									</Typography>
+								</TableCell>
 								<TableCell>{pengguna.nama}</TableCell>
 								<TableCell>{pengguna.noHp}</TableCell>
 								<TableCell>{PenggunaStatus[pengguna.status].label}</TableCell>

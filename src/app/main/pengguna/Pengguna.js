@@ -5,9 +5,11 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import clsx from 'clsx';
 import withReducer from 'app/store/withReducer';
 import { useSelector } from 'react-redux';
+import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import reducer from './store/reducers';
 import PenggunaTable from './PenggunaTable';
 import PenggunaToolbar from './PenggunaToolbar';
+import PenggunaDialog from './PenggunaDialog';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -22,6 +24,7 @@ function Pengguna(props) {
 
 	return (
 		<>
+			<PenggunaDialog />
 			<div className={clsx(classes.root, 'p-8')}>
 				<Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
 					<Link color="inherit" to="/" className="flex items-center">
@@ -42,10 +45,17 @@ function Pengguna(props) {
 						<Typography className="mt-8">Sedang memuat data. . .</Typography>
 					</div>
 				) : (
-					<>
+					<FuseAnimateGroup
+						enter={{
+							animation: 'transition.slideDownIn',
+							delay: 200,
+							duration: 500
+						}}
+						className="flex flex-col w-full"
+					>
 						<PenggunaToolbar />
 						<PenggunaTable />
-					</>
+					</FuseAnimateGroup>
 				)}
 			</div>
 		</>

@@ -18,10 +18,10 @@ class JwtService extends FuseUtils.EventEmitter {
 			},
 			err => {
 				return new Promise(() => {
-					// if (err.response?.status === 401 && err.config && !err.config.__isRetryRequest) {
-					// if you ever get an unauthorized response, logout the user
-					this.emit('onAutoLogout', 'Invalid access_token');
-					// }
+					if (err.response?.status === 401) {
+						// if you ever get an unauthorized response, logout the user
+						this.emit('onAutoLogout', 'Invalid access_token');
+					}
 					throw err;
 				});
 			}

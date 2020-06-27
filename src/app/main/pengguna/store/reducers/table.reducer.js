@@ -1,11 +1,11 @@
-const {
+import {
 	REFRESH_LIST_PENGGUNA,
 	GET_LIST_PENGGUNA,
 	GET_LIST_PENGGUNA_ERROR,
 	GET_LIST_PENGGUNA_SUCCESS,
-	SET_TXT_CARI_PENGGUNA: SET_TXT_CARI,
+	SET_TXT_CARI_PENGGUNA,
 	EXIT_LIST_PENGGUNA
-} = require('../actions');
+} from '../actions';
 
 const initialState = {
 	data: [],
@@ -44,7 +44,7 @@ function tableReducer(state = initialState, action) {
 				isLoading: false,
 				data: action.payload
 			};
-		case SET_TXT_CARI:
+		case SET_TXT_CARI_PENGGUNA:
 			return {
 				...state,
 				txtCari: action.txtCari
