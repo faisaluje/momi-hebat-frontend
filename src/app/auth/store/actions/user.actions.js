@@ -161,7 +161,7 @@ export function removeUserData() {
  * Logout
  */
 export function logoutUser() {
-	return (dispatch, getState) => {
+	return async (dispatch, getState) => {
 		const { user } = getState().auth;
 
 		if (!user.role || user.role.length === 0) {
@@ -173,19 +173,7 @@ export function logoutUser() {
 			pathname: '/'
 		});
 
-		switch (user.from) {
-			case 'firebase': {
-				firebaseService.signOut();
-				break;
-			}
-			case 'auth0': {
-				auth0Service.logout();
-				break;
-			}
-			default: {
-				jwtService.logout();
-			}
-		}
+		await jwtService.logout();
 
 		dispatch(FuseActions.setInitialSettings());
 

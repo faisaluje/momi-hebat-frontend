@@ -1,7 +1,7 @@
 import FuseUtils from '@fuse/utils/FuseUtils';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import { URL_BACKEND } from 'app/Constants';
+import { URL_API } from 'app/Constants';
 /* eslint-disable camelcase */
 
 class JwtService extends FuseUtils.EventEmitter {
@@ -17,7 +17,7 @@ class JwtService extends FuseUtils.EventEmitter {
 				return response;
 			},
 			err => {
-				return new Promise((resolve, reject) => {
+				return new Promise(() => {
 					// if (err.response?.status === 401 && err.config && !err.config.__isRetryRequest) {
 					// if you ever get an unauthorized response, logout the user
 					this.emit('onAutoLogout', 'Invalid access_token');
@@ -48,7 +48,7 @@ class JwtService extends FuseUtils.EventEmitter {
 	signInWithUsernameAndPassword = (username, password) => {
 		return new Promise((resolve, reject) => {
 			axios
-				.post(`${URL_BACKEND}/api/users/signin`, {
+				.post(`${URL_API}/users/signin`, {
 					username,
 					password
 				})
@@ -66,7 +66,7 @@ class JwtService extends FuseUtils.EventEmitter {
 	signInWithToken = () => {
 		return new Promise((resolve, reject) => {
 			axios
-				.get(`${URL_BACKEND}/api/users/currentuser`)
+				.get(`${URL_API}/users/currentuser`)
 				.then(response => {
 					if (response.data.currentUser) {
 						resolve(response.data.currentUser);
@@ -75,8 +75,7 @@ class JwtService extends FuseUtils.EventEmitter {
 					}
 				})
 				.catch(error => {
-					this.logout();
-					reject(error);
+					this.logout().then(() => reject(error));
 				});
 		});
 	};
@@ -99,6 +98,7 @@ class JwtService extends FuseUtils.EventEmitter {
 
 	logout = () => {
 		this.setSession(null);
+		return axios.post(`${URL_API}/users/signout`, {}, { timeout: 30000 });
 	};
 
 	isAuthTokenValid = access_token => {
