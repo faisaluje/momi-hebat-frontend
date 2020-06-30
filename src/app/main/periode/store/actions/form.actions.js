@@ -1,3 +1,4 @@
+import moment from 'moment';
 import PeriodeService from '../../services/periode.service';
 import { refreshListPeriode } from './table.actions';
 
@@ -19,6 +20,8 @@ export function savePeriode(data) {
 		dispatch({ type: SAVE_PERIODE });
 
 		let result = { success: false };
+		data.tglMulai = moment(data.tglMulai).format('YYYY-MM-DD');
+		data.tglBerakhir = moment(data.tglBerakhir).format('YYYY-MM-DD');
 		if (!data.id) {
 			result = await PeriodeService.createPeriode(data);
 		} else {

@@ -21,7 +21,14 @@ class PeriodeService {
 
 	static async createPeriode(data) {
 		try {
-			const result = await Axios.post(`${URL_API}/periode`, data, { timeout: 30000 });
+			const result = await Axios.post(
+				`${URL_API}/periode`,
+				{
+					...data,
+					status: 'tidak_aktif'
+				},
+				{ timeout: 30000 }
+			);
 			if (!result.data) {
 				throw new Error('Result is not readable');
 			}

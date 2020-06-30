@@ -1,8 +1,28 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FuseUtils from '@fuse/utils';
-import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Typography } from '@material-ui/core';
-import { getListPeriode, setPeriodeForm, openPeriodeDialog } from './store/actions';
+import moment from 'moment';
+import 'moment/locale/id';
+import {
+	TableContainer,
+	Paper,
+	Table,
+	TableHead,
+	TableRow,
+	TableCell,
+	TableBody,
+	Typography,
+	Checkbox,
+	DialogTitle,
+	DialogContent,
+	DialogContentText,
+	DialogActions,
+	Button
+} from '@material-ui/core';
+import { openDialog, closeDialog } from 'app/store/actions';
+import { getListPeriode, setPeriodeForm, openPeriodeDialog, savePeriode } from './store/actions';
+
+moment.locale('id');
 
 function getFilteredArray(data, txtCari) {
 	const arr = Object.keys(data).map(id => data[id]);
@@ -34,6 +54,36 @@ function PeriodeTable() {
 		dispatch(openPeriodeDialog());
 	};
 
+	const setAsActive = periode => {
+		if (periode.status === 'tidak_aktif') {
+			dispatch(
+				openDialog({
+					children: (
+						<>
+							<DialogTitle id="alert-dialog-title">Konfirmasi</DialogTitle>
+							<DialogContent>
+								<DialogContentText id="alert-dialog-description">
+									Periode ini akan diaktifan ?
+								</DialogContentText>
+							</DialogContent>
+							<DialogActions>
+								<Button onClick={() => dispatch(closeDialog())}>Tidak</Button>
+								<Button onClick={() => onSubmit(periode)} autoFocus>
+									Iya
+								</Button>
+							</DialogActions>
+						</>
+					)
+				})
+			);
+		}
+	};
+
+	const onSubmit = periode => {
+		dispatch(savePeriode({ ...periode, status: 'aktif' }));
+		dispatch(closeDialog());
+	};
+
 	return (
 		<TableContainer component={Paper} elevation={8} className="my-12">
 			<Table stickyHeader size="small">
@@ -49,7 +99,7 @@ function PeriodeTable() {
 				</TableHead>
 
 				<TableBody>
-					{rows?.length > 0 ? (
+					{rows.length > 0 ? (
 						rows.map((periode, idx) => (
 							<TableRow key={periode.id}>
 								<TableCell>{idx + 1}</TableCell>
@@ -62,9 +112,19 @@ function PeriodeTable() {
 										{periode.nama}
 									</Typography>
 								</TableCell>
-								<TableCell>{periode.tglMulai}</TableCell>
-								<TableCell>{periode.tglBerakhir}</TableCell>
-								<TableCell>{periode.status}</TableCell>
+								<TableCell>
+									{periode.tglMulai ? moment(periode.tglMulai).format('D MMMM YYYY') : '-'}
+								</TableCell>
+								<TableCell>
+									{periode.tglBerakhir ? moment(periode.tglBerakhir).format('D MMMM YYYY') : '-'}
+								</TableCell>
+								<TableCell>
+									<Checkbox
+										checked={periode.status === 'aktif'}
+										onChange={() => setAsActive(periode)}
+										color="primary"
+									/>
+								</TableCell>
 								<TableCell>-</TableCell>
 							</TableRow>
 						))

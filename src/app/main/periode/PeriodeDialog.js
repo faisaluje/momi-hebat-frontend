@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dialog, CircularProgress, Typography, Toolbar, IconButton, Icon } from '@material-ui/core';
 import { closePeriodeDialog } from './store/actions';
+import PeriodeForm from './PeriodeForm';
 
 function PeriodeDialog() {
 	const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function PeriodeDialog() {
 						</div>
 					</Toolbar>
 
-					{/* <PenggunaForm /> */}
+					<PeriodeForm />
 				</>
 			)}
 		</Dialog>
