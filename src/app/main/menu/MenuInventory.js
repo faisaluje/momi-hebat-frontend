@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import {
 	Icon,
@@ -39,23 +38,21 @@ function MenuInventory(props) {
 	return (
 		<div>
 			<div className="w-224 h-224 p-16">
-				<Link
-					to="/"
+				<span
 					ref={anchorRef}
 					className={clsx(
 						props.classes.board,
 						'flex flex-col items-center justify-center w-full h-full rounded py-24'
 					)}
-					role="button"
 					onMouseOver={() => setOpen(true)}
 					onFocus={() => setOpen(true)}
 					onMouseLeave={() => setOpen(false)}
 				>
-					<Icon className="text-56">assessment</Icon>
+					<Icon className="text-56">work_outline</Icon>
 					<Typography className="text-16 font-300 text-center pt-16 px-32" color="inherit">
 						Inventory
 					</Typography>
-				</Link>
+				</span>
 			</div>
 			<Popper
 				className="z-9999"

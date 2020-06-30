@@ -5,6 +5,7 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { useSelector } from 'react-redux';
 import MenuInventory from './MenuInventory';
 import MenuPengaturan from './MenuPengaturan';
 
@@ -37,6 +38,9 @@ const useStyles = makeStyles(theme => ({
 
 function Menu(props) {
 	const classes = useStyles(props);
+	const { role } = useSelector(({ auth }) => auth.user);
+
+	console.log(role);
 
 	return (
 		<>
@@ -134,7 +138,7 @@ function Menu(props) {
 							</Link>
 						</div>
 
-						<MenuPengaturan classes={classes} />
+						{!role?.find(val => val === 'user') && <MenuPengaturan classes={classes} />}
 					</FuseAnimateGroup>
 
 					<FuseAnimate>
