@@ -7,9 +7,9 @@ import withReducer from 'app/store/withReducer';
 import { useSelector } from 'react-redux';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import reducer from './store/reducers';
-import PenggunaTable from './PenggunaTable';
-import PenggunaToolbar from './PenggunaToolbar';
-import PenggunaDialog from './PenggunaDialog';
+import PeriodeToolbar from './PeriodeToolbar';
+import PeriodeDialog from './PeriodeDialog';
+import PeriodeTable from './PeriodeTable';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -18,13 +18,13 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-function Pengguna(props) {
+function Periode(props) {
 	const classes = useStyles(props);
-	const { isLoading } = useSelector(({ pengguna }) => pengguna.table);
+	const { isLoading } = useSelector(({ periode }) => periode.table);
 
 	return (
 		<>
-			<PenggunaDialog />
+			<PeriodeDialog />
 			<div className={clsx(classes.root, 'p-8')}>
 				<Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
 					<Link color="inherit" to="/" className="flex items-center">
@@ -35,7 +35,7 @@ function Pengguna(props) {
 						Core
           </Link> */}
 					<Typography color="textPrimary">Pengaturan</Typography>
-					<Typography color="textPrimary">Pengguna</Typography>
+					<Typography color="textPrimary">Periode</Typography>
 				</Breadcrumbs>
 			</div>
 
@@ -54,8 +54,8 @@ function Pengguna(props) {
 						}}
 						className="flex flex-col w-full"
 					>
-						<PenggunaToolbar />
-						<PenggunaTable />
+						<PeriodeToolbar />
+						<PeriodeTable />
 					</FuseAnimateGroup>
 				)}
 			</div>
@@ -63,4 +63,4 @@ function Pengguna(props) {
 	);
 }
 
-export default withReducer('pengguna', reducer)(Pengguna);
+export default withReducer('periode', reducer)(Periode);

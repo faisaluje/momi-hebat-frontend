@@ -25,10 +25,6 @@ function MenuPengaturan(props) {
 	const [open, setOpen] = React.useState(false);
 	const anchorRef = React.useRef(null);
 
-	const handleClickMenu = () => {
-		console.log('You clicked the menu');
-	};
-
 	const handleListKeyDown = event => {
 		if (event.key === 'Tab') {
 			event.preventDefault();
@@ -73,7 +69,7 @@ function MenuPengaturan(props) {
 					>
 						<Paper className={classes.menu} elevation={8}>
 							<MenuList id="menu-list-grow" onKeyDown={handleListKeyDown}>
-								<MenuItem onClick={handleClickMenu}>
+								<MenuItem onClick={() => History.push('/periode')}>
 									<ListItemIcon>
 										<Icon>schedule</Icon>
 									</ListItemIcon>

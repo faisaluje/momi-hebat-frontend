@@ -40,8 +40,6 @@ function Menu(props) {
 	const classes = useStyles(props);
 	const { role } = useSelector(({ auth }) => auth.user);
 
-	console.log(role);
-
 	return (
 		<>
 			<div className={clsx(classes.root, 'p-8')}>

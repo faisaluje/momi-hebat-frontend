@@ -2,15 +2,15 @@ import Axios from 'axios';
 import { URL_API } from 'app/Constants';
 import ErrorService from 'app/services/error.service';
 
-class PenggunaService {
-	static async getListPenggunaData() {
+class PeriodeService {
+	static async getListPeriodeData() {
 		try {
-			const result = await Axios.get(`${URL_API}/pengguna`, { timeout: 30000 });
-			if (!result.data.length) {
+			const { data } = await Axios.get(`${URL_API}/periode`, { timeout: 30000 });
+			if (!data.length) {
 				throw new Error('Result is not array');
 			}
 
-			return { success: true, data: result.data };
+			return { success: true, data };
 		} catch (e) {
 			return {
 				success: false,
@@ -19,9 +19,9 @@ class PenggunaService {
 		}
 	}
 
-	static async createPengguna(data) {
+	static async createPeriode(data) {
 		try {
-			const result = await Axios.post(`${URL_API}/pengguna`, data, { timeout: 30000 });
+			const result = await Axios.post(`${URL_API}/periode`, data, { timeout: 30000 });
 			if (!result.data) {
 				throw new Error('Result is not readable');
 			}
@@ -35,13 +35,12 @@ class PenggunaService {
 		}
 	}
 
-	static async updatePengguna(id, data) {
+	static async updatePeriode(id, data) {
 		try {
-			delete data.peran;
 			delete data.createdAt;
 			delete data.updatedAt;
 
-			const result = await Axios.patch(`${URL_API}/pengguna/${id}`, data, { timeout: 30000 });
+			const result = await Axios.patch(`${URL_API}/periode/${id}`, data, { timeout: 30000 });
 			if (!result.data) {
 				throw new Error('Result is not readable');
 			}
@@ -56,4 +55,4 @@ class PenggunaService {
 	}
 }
 
-export default PenggunaService;
+export default PeriodeService;
