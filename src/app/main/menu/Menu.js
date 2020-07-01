@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 function Menu(props) {
 	const classes = useStyles(props);
-	const { role } = useSelector(({ auth }) => auth.user);
+	const { role, data } = useSelector(({ auth }) => auth.user);
 
 	return (
 		<>
@@ -141,7 +141,7 @@ function Menu(props) {
 
 					<FuseAnimate>
 						<Typography className="mt-32 py-12 sm:py-24 text-16 sm:text-24 font-300" color="inherit">
-							Periode: 2019 - 2020
+							Periode: {data?.periode?.nama || 'Belum ada periode aktif'}
 						</Typography>
 					</FuseAnimate>
 				</div>

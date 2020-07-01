@@ -94,7 +94,7 @@ function PeriodeTable() {
 						<TableCell>Tanggal Mulai</TableCell>
 						<TableCell>Tanggal Berakhir</TableCell>
 						<TableCell>Aktif</TableCell>
-						<TableCell>Referensi</TableCell>
+						{/* <TableCell>Referensi</TableCell> */}
 					</TableRow>
 				</TableHead>
 
@@ -125,7 +125,7 @@ function PeriodeTable() {
 										color="primary"
 									/>
 								</TableCell>
-								<TableCell>-</TableCell>
+								{/* <TableCell>-</TableCell> */}
 							</TableRow>
 						))
 					) : (

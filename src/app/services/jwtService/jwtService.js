@@ -53,8 +53,6 @@ class JwtService extends FuseUtils.EventEmitter {
 					password
 				})
 				.then(response => {
-					console.log(response.headers);
-
 					resolve(response.data);
 				})
 				.catch(err => {
