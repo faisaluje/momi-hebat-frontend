@@ -20,6 +20,7 @@ function AgenDialog() {
 			fullWidth
 			disableBackdropClick
 			disableEscapeKeyDown
+			maxWidth="md"
 		>
 			{isLoading ? (
 				<div className="flex flex-col justify-center text-center items-center h-full p-16">

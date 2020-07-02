@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { showMessage, openDialog, closeDialog } from 'app/store/actions';
 import {
@@ -18,7 +18,8 @@ import {
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useForm } from '@fuse/hooks';
-import { setAgenForm } from './store/actions';
+import { setAgenForm, saveAgen } from './store/actions';
+import AgenComboBox from './AgenComboBox';
 
 const defaultBiodataState = {
 	nama: { lengkap: '', panggilan: '' },
@@ -26,13 +27,13 @@ const defaultBiodataState = {
 		jalan: '',
 		rt: '',
 		rw: '',
-		keluraham: '',
+		kelurahan: '',
 		kecamatan: '',
 		kabKota: ''
 	},
 	lahir: {
 		tempat: '',
-		tgl: new Date()
+		tanggal: ''
 	},
 	pekerjaan: '',
 	noTlp: ''
@@ -101,7 +102,7 @@ function AgenForm() {
 		console.log(form);
 
 		dispatch(setAgenForm(form));
-		// dispatch(savePeriode({ ...form }));
+		dispatch(saveAgen({ ...form }));
 		dispatch(closeDialog());
 	};
 
@@ -121,40 +122,224 @@ function AgenForm() {
 						</div>
 					)}
 
-					{jenisAgen === 1 && (
+					{(jenisAgen === 1 || data?.id) && (
 						<div className="flex mb-16">
 							<Typography className="min-w-160 font-bold pt-12">No. Agen:</Typography>
 
-							<TextField name="no" onChange={handleChange} value={form.no} fullWidth autoFocus required />
+							<TextField
+								name="no"
+								onChange={handleChange}
+								value={form.no}
+								className="w-1/3"
+								autoFocus
+								required
+								error={!form.no}
+								helperText={!form.no && 'Tidak boleh kosong'}
+								InputProps={{
+									readOnly: !!data?.id
+								}}
+							/>
+						</div>
+					)}
+
+					{(jenisAgen === 2 || data?.id) && (
+						<div className="flex mb-16">
+							<Typography className="min-w-160 font-bold pt-12">Agen Referral:</Typography>
+							<AgenComboBox
+								className="w-1/3"
+								currentAgen={form}
+								value={form.topAgen}
+								onChange={(_event, val) => setInForm('topAgen', val)}
+							/>
 						</div>
 					)}
 
 					{['diri', 'keluarga'].map(biodata => (
 						<ExpansionPanel elevation={5} defaultExpanded key={biodata}>
 							<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-								<Typography className="font-bold capitalize">Data {biodata}</Typography>
+								<Typography className="font-bold capitalize underline">Data {biodata}</Typography>
 							</ExpansionPanelSummary>
-							<ExpansionPanelDetails>
-								<div className="flex mb-16">
-									<Typography className="min-w-160 font-bold pt-12">Nama Lengkap:</Typography>
+							<ExpansionPanelDetails className="flex flex-col w-full">
+								<div className="flex flex-col sm:flex-row mb-16 w-full items-center">
+									<div className="flex w-160 pt-12">
+										<Typography className="font-bold">Nama:</Typography>
+									</div>
 
-									<TextField
-										onChange={event => setInForm(`${biodata}.nama.lengkap`, event.target.value)}
-										value={form[biodata].nama.lengkap}
-										fullWidth
-										autoFocus
-									/>
+									<div className="flex flex-wrap w-full">
+										<TextField
+											style={{ width: '45%' }}
+											id={`txt-nama-lengkap-${biodata}`}
+											label="Lengkap"
+											onChange={event => setInForm(`${biodata}.nama.lengkap`, event.target.value)}
+											value={form[biodata].nama.lengkap}
+											required
+										/>
+
+										<div style={{ width: '10%' }} />
+
+										<TextField
+											style={{ width: '45%' }}
+											id={`txt-nama-panggilan-${biodata}`}
+											label="Panggilan"
+											onChange={event =>
+												setInForm(`${biodata}.nama.panggilan`, event.target.value)
+											}
+											value={form[biodata].nama.panggilan}
+										/>
+									</div>
 								</div>
 
-								<div className="flex mb-16">
-									<Typography className="min-w-160 font-bold pt-12">Nama Panggilan:</Typography>
+								<div className="flex flex-col sm:flex-row mb-16 w-full">
+									<div className="flex w-160 pt-12">
+										<Typography className="font-bold">Alamat:</Typography>
+									</div>
 
-									<TextField
-										onChange={event => setInForm(`${biodata}.nama.panggilan`, event.target.value)}
-										value={form[biodata].nama.panggilan}
-										fullWidth
-										autoFocus
-									/>
+									<div className="flex flex-wrap w-full">
+										<TextField
+											className="w-full"
+											id={`txt-alamat-jalan-${biodata}`}
+											placeholder="Nama Jalan. . ."
+											onChange={event => setInForm(`${biodata}.alamat.jalan`, event.target.value)}
+											value={form[biodata].alamat.jalan}
+											multiline
+										/>
+
+										<TextField
+											style={{ width: '15%' }}
+											label="RT"
+											id={`txt-alamat-rt-${biodata}`}
+											onChange={event => setInForm(`${biodata}.alamat.rt`, event.target.value)}
+											value={form[biodata].alamat.rt}
+										/>
+
+										<div style={{ width: '10%' }} />
+
+										<TextField
+											style={{ width: '15%' }}
+											label="RW"
+											id={`txt-alamat-rw-${biodata}`}
+											onChange={event => setInForm(`${biodata}.alamat.rw`, event.target.value)}
+											value={form[biodata].alamat.rw}
+										/>
+									</div>
+								</div>
+
+								<div className="flex flex-col sm:flex-row mb-16 w-full">
+									<div className="flex w-160 pt-12">
+										<Typography className="font-bold">Kelurahan:</Typography>
+									</div>
+
+									<div className="flex flex-wrap w-full">
+										<TextField
+											className="w-1/2"
+											id={`txt-alamat-kelurahan-${biodata}`}
+											placeholder="Nama Kelurahan. . ."
+											onChange={event =>
+												setInForm(`${biodata}.alamat.kelurahan`, event.target.value)
+											}
+											value={form[biodata].alamat.kelurahan}
+										/>
+									</div>
+								</div>
+
+								<div className="flex flex-col sm:flex-row mb-16 w-full">
+									<div className="flex w-160 pt-12">
+										<Typography className="font-bold">Kecamatan:</Typography>
+									</div>
+
+									<div className="flex flex-wrap w-full">
+										<TextField
+											className="w-1/2"
+											id={`txt-alamat-kecamatan-${biodata}`}
+											placeholder="Nama Kecamatan. . ."
+											onChange={event =>
+												setInForm(`${biodata}.alamat.kecamatan`, event.target.value)
+											}
+											value={form[biodata].alamat.kecamatan}
+										/>
+									</div>
+								</div>
+
+								<div className="flex flex-col sm:flex-row mb-16 w-full">
+									<div className="flex w-160 pt-12">
+										<Typography className="font-bold">Kabupaten / Kota:</Typography>
+									</div>
+
+									<div className="flex flex-wrap w-full">
+										<TextField
+											className="w-1/2"
+											id={`txt-alamat-kabkota-${biodata}`}
+											placeholder="Nama Kabupaten / Kota. . ."
+											onChange={event =>
+												setInForm(`${biodata}.alamat.kabKota`, event.target.value)
+											}
+											value={form[biodata].alamat.kabKota}
+										/>
+									</div>
+								</div>
+
+								<div className="flex flex-col sm:flex-row mb-16 w-full items-center">
+									<div className="flex w-160 pt-12">
+										<Typography className="font-bold">Tempat, Tgl Lahir:</Typography>
+									</div>
+
+									<div className="flex flex-wrap w-full">
+										<TextField
+											style={{ width: '45%' }}
+											id={`txt-lahir-tempat-${biodata}`}
+											label="Tempat"
+											onChange={event => setInForm(`${biodata}.lahir.tempat`, event.target.value)}
+											value={form[biodata].lahir.tempat}
+										/>
+
+										<div style={{ width: '10%' }} />
+
+										<TextField
+											type="date"
+											style={{ width: '45%' }}
+											id={`txt-lahir-tanggal-${biodata}`}
+											onChange={event =>
+												setInForm(`${biodata}.lahir.tanggal`, event.target.value)
+											}
+											value={
+												form[biodata].lahir.tanggal
+													? moment(form[biodata].lahir.tanggal).format('YYYY-MM-DD')
+													: ''
+											}
+										/>
+									</div>
+								</div>
+
+								<div className="flex flex-col sm:flex-row mb-16 w-full">
+									<div className="flex w-160 pt-12">
+										<Typography className="font-bold">Pekerjaan:</Typography>
+									</div>
+
+									<div className="flex flex-wrap w-full">
+										<TextField
+											className="w-1/2"
+											id={`txt-pekerjaan-${biodata}`}
+											placeholder="Nama Pekerjaan. . ."
+											onChange={event => setInForm(`${biodata}.pekerjaan`, event.target.value)}
+											value={form[biodata].pekerjaan}
+										/>
+									</div>
+								</div>
+
+								<div className="flex flex-col sm:flex-row mb-16 w-full">
+									<div className="flex w-160 pt-12">
+										<Typography className="font-bold">No. Telp.:</Typography>
+									</div>
+
+									<div className="flex flex-wrap w-full">
+										<TextField
+											className="w-1/2"
+											id={`txt-notlp-${biodata}`}
+											placeholder="Nomor yang bisa dihubungi. . ."
+											onChange={event => setInForm(`${biodata}.noTlp`, event.target.value)}
+											value={form[biodata].noTlp}
+										/>
+									</div>
 								</div>
 							</ExpansionPanelDetails>
 						</ExpansionPanel>

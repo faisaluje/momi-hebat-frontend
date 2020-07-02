@@ -1,8 +1,26 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FuseUtils from '@fuse/utils';
-import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Typography } from '@material-ui/core';
-import { getListAgen, setAgenForm, openAgenDialog } from './store/actions';
+import {
+	TableContainer,
+	Paper,
+	Table,
+	TableHead,
+	TableRow,
+	TableCell,
+	TableBody,
+	Typography,
+	FormControlLabel,
+	DialogTitle,
+	DialogContent,
+	DialogActions,
+	Button,
+	DialogContentText
+} from '@material-ui/core';
+import { openDialog, closeDialog } from 'app/store/actions';
+import { getListAgen, setAgenForm, openAgenDialog, saveAgen } from './store/actions';
+import GreenSwitch from '../components/GreenSwitch';
+import AgenStatus from './AgenStatus';
 
 function getFilteredArray(data, txtCari) {
 	const arr = Object.keys(data).map(id => data[id]);
@@ -34,6 +52,40 @@ function AgenTable() {
 		dispatch(openAgenDialog());
 	};
 
+	const handleChangeStatus = agen => {
+		dispatch(
+			openDialog({
+				children: (
+					<>
+						<DialogTitle id="alert-dialog-title">Konfirmasi</DialogTitle>
+						<DialogContent>
+							<DialogContentText id="alert-dialog-description">
+								Agen {agen.diri.nama.lengkap} akan{' '}
+								{agen.status === AgenStatus.aktif.value ? 'dinonaktifkan' : 'aktifkan'} ?
+							</DialogContentText>
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={() => dispatch(closeDialog())}>Tidak</Button>
+							<Button onClick={() => onChangeStatus(agen)} autoFocus>
+								Iya
+							</Button>
+						</DialogActions>
+					</>
+				)
+			})
+		);
+	};
+
+	const onChangeStatus = agen => {
+		dispatch(
+			saveAgen({
+				...agen,
+				status: agen.status === AgenStatus.aktif.value ? AgenStatus.tidak_aktif.value : AgenStatus.aktif.value
+			})
+		);
+		dispatch(closeDialog());
+	};
+
 	return (
 		<TableContainer component={Paper} elevation={8} className="my-12">
 			<Table stickyHeader size="small">
@@ -44,6 +96,8 @@ function AgenTable() {
 						<TableCell>No. Tlp</TableCell>
 						<TableCell>Alamat</TableCell>
 						<TableCell>Kabupaten / Kota</TableCell>
+						<TableCell>Level Agen</TableCell>
+						<TableCell>Status</TableCell>
 					</TableRow>
 				</TableHead>
 
@@ -64,13 +118,24 @@ function AgenTable() {
 								<TableCell>{agen.diri.noTlp}</TableCell>
 								<TableCell>{agen.diri.alamat?.jalan}</TableCell>
 								<TableCell>{agen.diri.alamat?.kabKota}</TableCell>
-								{/* <TableCell>-</TableCell> */}
+								<TableCell>{agen.level}</TableCell>
+								<TableCell>
+									<FormControlLabel
+										control={
+											<GreenSwitch
+												checked={agen.status === 'aktif'}
+												onChange={() => handleChangeStatus(agen)}
+											/>
+										}
+										label={AgenStatus[agen.status].label}
+									/>
+								</TableCell>
 							</TableRow>
 						))
 					) : (
 						<TableRow>
-							<TableCell colSpan={6} align="center">
-								Belum ada periode. . .
+							<TableCell colSpan={7} align="center">
+								Belum ada Agen. . .
 							</TableCell>
 						</TableRow>
 					)}
