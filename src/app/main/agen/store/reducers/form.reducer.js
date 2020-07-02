@@ -12,6 +12,7 @@ const initialState = {
 	props: {
 		open: false
 	},
+	jenisAgen: 1,
 	isLoading: false,
 	isError: false,
 	msg: ''
@@ -27,6 +28,7 @@ function formReducer(state = initialState, action) {
 		case OPEN_AGEN_DIALOG:
 			return {
 				...state,
+				jenisAgen: action.jenisAgen,
 				props: {
 					open: true
 				}

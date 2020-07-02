@@ -73,7 +73,6 @@ function PeriodeForm() {
 			...data,
 			...values
 		};
-		console.log(form);
 
 		dispatch(setPeriodeForm(form));
 		dispatch(savePeriode({ ...form }));

@@ -11,7 +11,7 @@ export const SAVE_AGEN_ERROR = 'SAVE_AGEN_ERROR';
 export const SAVE_AGEN_SUCCESS = 'SAVE_AGEN_SUCCESS';
 
 export const setAgenForm = data => ({ type: SET_AGEN_FORM, data });
-export const openAgenDialog = () => ({ type: OPEN_AGEN_DIALOG });
+export const openAgenDialog = jenisAgen => ({ type: OPEN_AGEN_DIALOG, jenisAgen });
 export const closeAgenDialog = () => ({ type: CLOSE_AGEN_DIALOG });
 
 export function saveAgen(data) {

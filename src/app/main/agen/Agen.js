@@ -9,6 +9,7 @@ import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import reducer from './store/reducers';
 import AgenToolbar from './AgenToolbar';
 import AgenTable from './AgenTable';
+import AgenDialog from './AgenDialog';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -23,7 +24,7 @@ function Agen(props) {
 
 	return (
 		<>
-			{/* <PeriodeDialog /> */}
+			<AgenDialog />
 			<div className={clsx(classes.root, 'p-8')}>
 				<Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
 					<Link color="inherit" to="/" className="flex items-center">
