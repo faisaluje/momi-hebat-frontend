@@ -72,7 +72,7 @@ function Menu(props) {
 					>
 						<div className="w-224 h-224 p-16">
 							<Link
-								to="/"
+								to="/agen"
 								className={clsx(
 									classes.board,
 									'flex flex-col items-center justify-center w-full h-full rounded py-24'
