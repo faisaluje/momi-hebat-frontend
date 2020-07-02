@@ -1,4 +1,3 @@
-import FuseSplashScreen from '@fuse/core/FuseSplashScreen';
 import * as userActions from 'app/auth/store/actions';
 import auth0Service from 'app/services/auth0Service';
 import firebaseService from 'app/services/firebaseService';
@@ -7,6 +6,7 @@ import * as Actions from 'app/store/actions';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import SplashScreen from 'app/main/components/SplashScreen';
 
 class Auth extends Component {
 	state = {
@@ -131,7 +131,7 @@ class Auth extends Component {
 		});
 
 	render() {
-		return this.state.waitAuthCheck ? <FuseSplashScreen /> : <>{this.props.children}</>;
+		return this.state.waitAuthCheck ? <SplashScreen /> : <>{this.props.children}</>;
 	}
 }
 
