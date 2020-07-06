@@ -22,6 +22,7 @@ import { openDialog, closeDialog } from 'app/store/actions';
 import { getListAgen, setAgenForm, openAgenDialog, saveAgen } from './store/actions';
 import GreenSwitch from '../components/GreenSwitch';
 import AgenStatus from './AgenStatus';
+import SubAgenDialog from './SubAgenDialog';
 
 function getFilteredArray(data, txtCari) {
 	const arr = Object.keys(data).map(id => data[id]);
@@ -35,6 +36,8 @@ function AgenTable() {
 	const dispatch = useDispatch();
 	const { isRefresh, data, txtCari, status, level } = useSelector(({ agen }) => agen.table);
 	const [rows, setRows] = React.useState([]);
+	const [openSubAgens, setOpenSubAgens] = React.useState(false);
+	const [agenSelected, setAgenSelected] = React.useState(null);
 
 	React.useEffect(() => {
 		if (isRefresh) {
@@ -92,66 +95,88 @@ function AgenTable() {
 		dispatch(closeDialog());
 	};
 
-	return (
-		<TableContainer component={Paper} elevation={8} className="mt-12">
-			<Table stickyHeader size="small">
-				<TableHead>
-					<TableRow>
-						{/* <TableCell className="w-12">No.</TableCell> */}
-						<TableCell>No. Agen</TableCell>
-						<TableCell>Nama Agen</TableCell>
-						<TableCell>No. Tlp</TableCell>
-						<TableCell>Alamat</TableCell>
-						<TableCell>Kabupaten / Kota</TableCell>
-						<TableCell>Level Agen</TableCell>
-						<TableCell>Agen Referral</TableCell>
-						<TableCell>Status</TableCell>
-					</TableRow>
-				</TableHead>
+	const onClickSubAgens = agen => {
+		setAgenSelected(agen);
+		setOpenSubAgens(true);
+	};
 
-				<TableBody>
-					{rows.length > 0 ? (
-						rows.map((agen, idx) => (
-							<TableRow key={agen.id}>
-								{/* <TableCell>{idx + 1}</TableCell> */}
-								<TableCell>{agen.no}</TableCell>
-								<TableCell>
-									<Typography
-										className="text-blue hover:underline font-bold"
-										role="button"
-										onClick={() => onClickAgen(agen)}
-									>
-										{agen.diri.nama?.lengkap}
-									</Typography>
-								</TableCell>
-								<TableCell>{agen.diri.noTlp}</TableCell>
-								<TableCell>{agen.diri.alamat?.jalan}</TableCell>
-								<TableCell>{agen.diri.alamat?.kabKota}</TableCell>
-								<TableCell>{agen.level}</TableCell>
-								<TableCell>{agen.topAgen?.diri?.nama?.lengkap || ''}</TableCell>
-								<TableCell>
-									<FormControlLabel
-										control={
-											<GreenSwitch
-												checked={agen.status === 'aktif'}
-												onChange={() => handleChangeStatus(agen)}
-											/>
-										}
-										label={AgenStatus[agen.status].label}
-									/>
+	return (
+		<>
+			<SubAgenDialog open={openSubAgens} onClose={() => setOpenSubAgens(false)} agen={agenSelected} />
+			<TableContainer component={Paper} elevation={8} className="mt-12">
+				<Table stickyHeader size="small">
+					<TableHead>
+						<TableRow>
+							{/* <TableCell className="w-12">No.</TableCell> */}
+							<TableCell>No. Agen</TableCell>
+							<TableCell>Nama Agen</TableCell>
+							<TableCell>No. Tlp</TableCell>
+							<TableCell>Alamat</TableCell>
+							<TableCell>Kabupaten / Kota</TableCell>
+							<TableCell>Level Agen</TableCell>
+							<TableCell>Agen Referral</TableCell>
+							<TableCell>Sub Agen</TableCell>
+							<TableCell>Status</TableCell>
+						</TableRow>
+					</TableHead>
+
+					<TableBody>
+						{rows.length > 0 ? (
+							rows.map((agen, idx) => (
+								<TableRow key={agen.id}>
+									{/* <TableCell>{idx + 1}</TableCell> */}
+									<TableCell>{agen.no}</TableCell>
+									<TableCell>
+										<Typography
+											className="text-blue hover:underline font-bold text-14"
+											role="button"
+											onClick={() => onClickAgen(agen)}
+										>
+											{agen.diri.nama?.lengkap}
+										</Typography>
+									</TableCell>
+									<TableCell>{agen.diri.noTlp}</TableCell>
+									<TableCell>{agen.diri.alamat?.jalan}</TableCell>
+									<TableCell>{agen.diri.alamat?.kabKota}</TableCell>
+									<TableCell>{agen.level}</TableCell>
+									<TableCell>{agen.topAgen?.diri?.nama?.lengkap || ''}</TableCell>
+									<TableCell>
+										{agen.subAgens?.length > 0 ? (
+											<Typography
+												className="text-blue hover:underline font-bold text-14"
+												role="button"
+												onClick={() => onClickSubAgens(agen)}
+											>
+												{agen.subAgens.length} Agen
+											</Typography>
+										) : (
+											''
+										)}
+									</TableCell>
+									<TableCell>
+										<FormControlLabel
+											control={
+												<GreenSwitch
+													checked={agen.status === 'aktif'}
+													onChange={() => handleChangeStatus(agen)}
+												/>
+											}
+											label={AgenStatus[agen.status].label}
+										/>
+									</TableCell>
+								</TableRow>
+							))
+						) : (
+							<TableRow>
+								<TableCell colSpan={9} align="center">
+									Belum ada Agen. . .
 								</TableCell>
 							</TableRow>
-						))
-					) : (
-						<TableRow>
-							<TableCell colSpan={7} align="center">
-								Belum ada Agen. . .
-							</TableCell>
-						</TableRow>
-					)}
-				</TableBody>
-			</Table>
-		</TableContainer>
+						)}
+					</TableBody>
+				</Table>
+			</TableContainer>
+		</>
 	);
 }
 
