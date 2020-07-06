@@ -4,8 +4,11 @@ import {
 	GET_LIST_AGEN_ERROR,
 	GET_LIST_AGEN_SUCCESS,
 	SET_TXT_CARI_AGEN,
-	EXIT_LIST_AGEN
+	EXIT_LIST_AGEN,
+	SET_STATUS_AGEN,
+	SET_LEVEL_AGEN
 } from '../actions';
+import AgenStatus from '../../AgenStatus';
 
 const initialState = {
 	data: [],
@@ -13,7 +16,9 @@ const initialState = {
 	isRefresh: true,
 	isError: false,
 	msg: '',
-	txtCari: ''
+	txtCari: '',
+	status: AgenStatus.aktif.value,
+	level: ''
 };
 
 function tableReducer(state = initialState, action) {
@@ -48,6 +53,17 @@ function tableReducer(state = initialState, action) {
 			return {
 				...state,
 				txtCari: action.txtCari
+			};
+		case SET_STATUS_AGEN:
+			return {
+				...state,
+				status: action.status,
+				isRefresh: true
+			};
+		case SET_LEVEL_AGEN:
+			return {
+				...state,
+				level: action.level
 			};
 		case EXIT_LIST_AGEN:
 			return { ...initialState };

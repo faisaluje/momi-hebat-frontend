@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FuseUtils from '@fuse/utils';
@@ -32,20 +33,25 @@ function getFilteredArray(data, txtCari) {
 
 function AgenTable() {
 	const dispatch = useDispatch();
-	const { isRefresh, data, txtCari } = useSelector(({ agen }) => agen.table);
+	const { isRefresh, data, txtCari, status, level } = useSelector(({ agen }) => agen.table);
 	const [rows, setRows] = React.useState([]);
 
 	React.useEffect(() => {
 		if (isRefresh) {
-			dispatch(getListAgen());
+			dispatch(getListAgen(status));
 		}
-	}, [dispatch, isRefresh]);
+	}, [dispatch, isRefresh, status]);
 
 	React.useEffect(() => {
 		if (data) {
-			setRows(getFilteredArray(data, txtCari));
+			let filtered = getFilteredArray(data, txtCari);
+			if (level) {
+				filtered = filtered.filter(item => item.level === parseInt(level));
+			}
+
+			setRows(filtered);
 		}
-	}, [data, txtCari]);
+	}, [data, level, txtCari]);
 
 	const onClickAgen = agen => {
 		dispatch(setAgenForm(agen));
@@ -87,16 +93,18 @@ function AgenTable() {
 	};
 
 	return (
-		<TableContainer component={Paper} elevation={8} className="my-12">
+		<TableContainer component={Paper} elevation={8} className="mt-12">
 			<Table stickyHeader size="small">
 				<TableHead>
 					<TableRow>
-						<TableCell className="w-12">No.</TableCell>
+						{/* <TableCell className="w-12">No.</TableCell> */}
+						<TableCell>No. Agen</TableCell>
 						<TableCell>Nama Agen</TableCell>
 						<TableCell>No. Tlp</TableCell>
 						<TableCell>Alamat</TableCell>
 						<TableCell>Kabupaten / Kota</TableCell>
 						<TableCell>Level Agen</TableCell>
+						<TableCell>Agen Referral</TableCell>
 						<TableCell>Status</TableCell>
 					</TableRow>
 				</TableHead>
@@ -105,10 +113,11 @@ function AgenTable() {
 					{rows.length > 0 ? (
 						rows.map((agen, idx) => (
 							<TableRow key={agen.id}>
-								<TableCell>{idx + 1}</TableCell>
+								{/* <TableCell>{idx + 1}</TableCell> */}
+								<TableCell>{agen.no}</TableCell>
 								<TableCell>
 									<Typography
-										className="text-blue hover:underline"
+										className="text-blue hover:underline font-bold"
 										role="button"
 										onClick={() => onClickAgen(agen)}
 									>
@@ -119,6 +128,7 @@ function AgenTable() {
 								<TableCell>{agen.diri.alamat?.jalan}</TableCell>
 								<TableCell>{agen.diri.alamat?.kabKota}</TableCell>
 								<TableCell>{agen.level}</TableCell>
+								<TableCell>{agen.topAgen?.diri?.nama?.lengkap || ''}</TableCell>
 								<TableCell>
 									<FormControlLabel
 										control={

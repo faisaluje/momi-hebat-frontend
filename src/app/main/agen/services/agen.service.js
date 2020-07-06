@@ -1,11 +1,17 @@
 import Axios from 'axios';
 import { URL_API } from 'app/Constants';
 import ErrorService from 'app/services/error.service';
+import AgenStatus from '../AgenStatus';
 
 class AgenService {
-	static async getListAgenData() {
+	static async getListAgenData(status = AgenStatus.aktif.value) {
 		try {
-			const { data } = await Axios.get(`${URL_API}/agen`, { timeout: 30000 });
+			const { data } = await Axios.get(`${URL_API}/agen`, {
+				params: {
+					status
+				},
+				timeout: 30000
+			});
 			if (!Array.isArray(data)) {
 				throw new Error('Result is not array');
 			}
