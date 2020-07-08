@@ -1,16 +1,22 @@
 import React from 'react';
 import { TextField, Button, Icon } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { refreshListTransaksiSaldo } from './store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { refreshListTransaksiSaldo, setTxtCariTransaksiSaldo } from './store/actions';
 
 function TransaksiSaldoToolbar() {
   const dispatch = useDispatch();
+  const { txtCari } = useSelector(({ transaksiSaldo }) => transaksiSaldo.table);
 
   return (
     <div className="m-8 mr-0 w-full flex flex-wrap justify-between">
       <div className="flex flex-wrap items-center">
-        <TextField label="Pilih Bulan" color="secondary" placeholder="Ketik Disini..." defaultValue="Bulan" />
-
+        <TextField
+          label="Pencarian"
+          color="secondary"
+          placeholder="Ketik Disini..."
+          value={txtCari}
+          onChange={event => dispatch(setTxtCariTransaksiSaldo(event.target.value))}
+        />
         <Button
           size="small"
           variant="contained"

@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from '@lodash';
 import moment from 'moment';
+import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilteredArray } from 'app/Utils';
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
@@ -23,7 +24,7 @@ function TransaksiSaldoTable() {
     if (data) {
       const filtered = getFilteredArray(data, txtCari);
 
-      setRows(filtered);
+      setRows(_.sortBy(filtered, 'tgl'));
     }
   }, [data, txtCari]);
 
@@ -49,8 +50,26 @@ function TransaksiSaldoTable() {
                 <TableCell>{_.startCase(transaksi.kategori)}</TableCell>
                 <TableCell>{_.startCase(transaksi?.via)}</TableCell>
                 <TableCell>{transaksi?.catatan}</TableCell>
-                <TableCell>{transaksi.jenis === JenisTransaksi.MASUK && transaksi.nominal}</TableCell>
-                <TableCell>{transaksi.jenis === JenisTransaksi.KELUAR && transaksi.nominal}</TableCell>
+                <TableCell>
+                  {transaksi.jenis === JenisTransaksi.MASUK && (
+                    <NumberFormat
+                      decimalSeparator=","
+                      value={transaksi.nominal}
+                      displayType="text"
+                      thousandSeparator="."
+                    />
+                  )}
+                </TableCell>
+                <TableCell>
+                  {transaksi.jenis === JenisTransaksi.KELUAR && (
+                    <NumberFormat
+                      decimalSeparator=","
+                      value={transaksi.nominal}
+                      displayType="text"
+                      thousandSeparator="."
+                    />
+                  )}
+                </TableCell>
               </TableRow>
             ))
           ) : (
