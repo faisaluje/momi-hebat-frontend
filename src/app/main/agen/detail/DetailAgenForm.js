@@ -22,6 +22,9 @@ function DetailAgenForm(props) {
         delay: 200,
         duration: 500
       }}
+      style={{
+        height: '25%'
+      }}
       className={clsx(classes.root, 'flex flex-wrap justify-between overflow-auto w-full')}
     >
       <div className="flex flex-col overflow-auto">

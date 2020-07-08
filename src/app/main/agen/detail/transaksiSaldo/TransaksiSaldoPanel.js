@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import withReducer from 'app/store/withReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress, Typography } from '@material-ui/core';
@@ -8,9 +7,8 @@ import reducer from './store/reducers';
 import TransaksiSaldoTable from './TransaksiSaldoTable';
 import { exitListTransaksiSaldo } from './store/actions';
 
-function TransaksiSaldoPanel(props) {
+function TransaksiSaldoPanel() {
   const dispatch = useDispatch();
-  const { value, index } = props;
   const { isLoading } = useSelector(({ transaksiSaldo }) => transaksiSaldo.table);
 
   React.useEffect(() => {
@@ -18,7 +16,7 @@ function TransaksiSaldoPanel(props) {
   }, [dispatch]);
 
   return (
-    <div hidden={value !== index} className="flex flex-col flex-auto overflow-auto items-center p-12 w-full">
+    <div className="flex flex-col overflow-auto p-12">
       {isLoading ? (
         <>
           <CircularProgress color="secondary" />
@@ -33,10 +31,5 @@ function TransaksiSaldoPanel(props) {
     </div>
   );
 }
-
-TransaksiSaldoPanel.propTypes = {
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
-};
 
 export default withReducer('transaksiSaldo', reducer)(TransaksiSaldoPanel);

@@ -24,7 +24,7 @@ function TransaksiSaldoTable() {
     if (data) {
       const filtered = getFilteredArray(data, txtCari);
 
-      setRows(_.sortBy(filtered, 'tgl'));
+      setRows(_.orderBy(filtered, ['tgl', 'createdAt'], ['desc', 'desc']));
     }
   }, [data, txtCari]);
 
@@ -79,6 +79,56 @@ function TransaksiSaldoTable() {
               </TableCell>
             </TableRow>
           )}
+          <TableRow>
+            <TableCell colSpan={6} align="center">
+              Belum ada Transaksi. . .
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={6} align="center">
+              Belum ada Transaksi. . .
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={6} align="center">
+              Belum ada Transaksi. . .
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={6} align="center">
+              Belum ada Transaksi. . .
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={6} align="center">
+              Belum ada Transaksi. . .
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={6} align="center">
+              Belum ada Transaksi. . .
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={6} align="center">
+              Belum ada Transaksi. . .
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={6} align="center">
+              Belum ada Transaksi. . .
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={6} align="center">
+              Belum ada Transaksi. . .
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={6} align="center">
+              Belum ada Transaksi. . .
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

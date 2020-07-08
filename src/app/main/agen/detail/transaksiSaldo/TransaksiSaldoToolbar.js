@@ -8,7 +8,7 @@ function TransaksiSaldoToolbar() {
   const { txtCari } = useSelector(({ transaksiSaldo }) => transaksiSaldo.table);
 
   return (
-    <div className="m-8 mr-0 w-full flex flex-wrap justify-between">
+    <div className="m-8 mr-0 flex flex-wrap justify-between">
       <div className="flex flex-wrap items-center">
         <TextField
           label="Pencarian"

@@ -3,7 +3,6 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { AppBar } from '@material-ui/core';
-import SwipeableViews from 'react-swipeable-views';
 import TransaksiPaketPanel from './transaksiPaket/TransaksiPaketPanel';
 import TransaksiSaldoPanel from './transaksiSaldo/TransaksiSaldoPanel';
 
@@ -14,12 +13,8 @@ function DetailAgenTabs() {
     setValue(newValue);
   };
 
-  const handleChangeIndex = index => {
-    setValue(index);
-  };
-
   return (
-    <Paper className="flex flex-col flex-auto overflow-auto items-center w-full" elevation={5}>
+    <Paper className="flex flex-col w-full" elevation={5} style={{ height: '75%' }}>
       <AppBar position="static" color="primary">
         <Tabs
           value={value}
@@ -32,10 +27,8 @@ function DetailAgenTabs() {
           <Tab label="Paket" className="capitalize" />
         </Tabs>
       </AppBar>
-      <SwipeableViews axis="x" index={value} onChangeIndex={handleChangeIndex} className="flex flex-col w-full">
-        <TransaksiSaldoPanel index={0} value={value} />
-        <TransaksiPaketPanel index={1} value={value} />
-      </SwipeableViews>
+      {value === 0 && <TransaksiSaldoPanel />}
+      {value === 1 && <TransaksiPaketPanel />}
     </Paper>
   );
 }
