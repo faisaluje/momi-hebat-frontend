@@ -6,15 +6,16 @@ import LoginConfig from 'app/main/login/LoginConfig';
 import PenggunaConfig from 'app/main/pengguna/PenggunaConfig';
 import PeriodeConfig from 'app/main/periode/PeriodeConfig';
 import AgenConfig from 'app/main/agen/AgenConfig';
+import DetailAgenConfig from 'app/main/agen/detail/DetailAgenConfig';
 
-const routeConfigs = [LoginConfig, MenuConfig, PenggunaConfig, PeriodeConfig, AgenConfig];
+const routeConfigs = [LoginConfig, MenuConfig, PenggunaConfig, PeriodeConfig, DetailAgenConfig, AgenConfig];
 
 const routes = [
-	...FuseUtils.generateRoutesFromConfigs(routeConfigs),
-	{
-		path: '/',
-		component: () => <Redirect to="/menu" />
-	}
+  ...FuseUtils.generateRoutesFromConfigs(routeConfigs),
+  {
+    path: '/',
+    component: () => <Redirect to="/menu" />
+  }
 ];
 
 export default routes;

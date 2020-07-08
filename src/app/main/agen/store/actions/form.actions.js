@@ -15,24 +15,24 @@ export const openAgenDialog = jenisAgen => ({ type: OPEN_AGEN_DIALOG, jenisAgen 
 export const closeAgenDialog = () => ({ type: CLOSE_AGEN_DIALOG });
 
 export function saveAgen(data) {
-	return async dispatch => {
-		dispatch({ type: SAVE_AGEN });
+  return async dispatch => {
+    dispatch({ type: SAVE_AGEN });
 
-		let result = { success: false };
-		if (!data.id) {
-			result = await AgenService.createAgen(data);
-		} else {
-			const { id } = data;
-			delete data.id;
-			result = await AgenService.updateAgen(id, data);
-		}
+    let result = { success: false };
+    if (!data.id) {
+      result = await AgenService.createAgen(data);
+    } else {
+      const { id } = data;
+      delete data.id;
+      result = await AgenService.updateAgen(id, data);
+    }
 
-		if (!result.success) {
-			return dispatch({ type: SAVE_AGEN_ERROR, payload: result.msg });
-		}
+    if (!result.success) {
+      return dispatch({ type: SAVE_AGEN_ERROR, payload: result.msg });
+    }
 
-		dispatch({ type: SAVE_AGEN_SUCCESS, payload: result.data });
-		dispatch(refreshListAgen());
-		return dispatch(closeAgenDialog());
-	};
+    dispatch({ type: SAVE_AGEN_SUCCESS, payload: result.data });
+    dispatch(refreshListAgen());
+    return dispatch(closeAgenDialog());
+  };
 }

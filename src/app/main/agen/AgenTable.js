@@ -1,5 +1,4 @@
 /* eslint-disable radix */
-import FuseUtils from '@fuse/utils';
 import {
   Button,
   DialogActions,
@@ -20,24 +19,19 @@ import { closeDialog, openDialog } from 'app/store/actions';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { getFilteredArray } from 'app/Utils';
 import GreenSwitch from '../components/GreenSwitch';
 import AgenStatus from './AgenStatus';
-import { getListAgen, openAgenDialog, saveAgen, setAgenForm } from './store/actions';
+import { getListAgen, saveAgen } from './store/actions';
 import SubAgenDialog from './SubAgenDialog';
-
-function getFilteredArray(data, txtCari) {
-  const arr = Object.keys(data).map(id => data[id]);
-  if (txtCari.length < 1) {
-    return arr;
-  }
-  return FuseUtils.filterArrayByString(arr, txtCari);
-}
+import AgenActionsDialog from './AgenActionsDialog';
 
 function AgenTable() {
   const dispatch = useDispatch();
   const { isRefresh, data, txtCari, status, level } = useSelector(({ agen }) => agen.table);
   const [rows, setRows] = React.useState([]);
   const [openSubAgens, setOpenSubAgens] = React.useState(false);
+  const [openAgenActions, setOpenAgenActions] = React.useState(false);
   const [agenSelected, setAgenSelected] = React.useState(null);
 
   React.useEffect(() => {
@@ -58,8 +52,8 @@ function AgenTable() {
   }, [data, level, txtCari]);
 
   const onClickAgen = agen => {
-    dispatch(setAgenForm(agen));
-    dispatch(openAgenDialog());
+    setAgenSelected(agen);
+    setOpenAgenActions(true);
   };
 
   const handleChangeStatus = agen => {
@@ -104,6 +98,7 @@ function AgenTable() {
   return (
     <>
       <SubAgenDialog open={openSubAgens} onClose={() => setOpenSubAgens(false)} agen={agenSelected} />
+      <AgenActionsDialog open={openAgenActions} onClose={() => setOpenAgenActions(false)} agen={agenSelected} />
       <TableContainer component={Paper} elevation={8} className="mt-12">
         <Table stickyHeader size="small">
           <TableHead>
@@ -123,7 +118,7 @@ function AgenTable() {
 
           <TableBody>
             {rows.length > 0 ? (
-              rows.map((agen, idx) => (
+              rows.map(agen => (
                 <TableRow key={agen.id}>
                   {/* <TableCell>{idx + 1}</TableCell> */}
                   <TableCell>{agen.no}</TableCell>

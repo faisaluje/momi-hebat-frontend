@@ -17,14 +17,14 @@ export const setStatusAgen = status => ({ type: SET_STATUS_AGEN, status });
 export const setLevelAgen = level => ({ type: SET_LEVEL_AGEN, level });
 
 export function getListAgen(status) {
-	return async dispatch => {
-		dispatch({ type: GET_LIST_AGEN });
+  return async dispatch => {
+    dispatch({ type: GET_LIST_AGEN });
 
-		const listAgen = await AgenService.getListAgenData(status);
-		if (!listAgen.success) {
-			return dispatch({ type: GET_LIST_AGEN_ERROR, payload: listAgen.msg });
-		}
+    const listAgen = await AgenService.getListAgenData(status);
+    if (!listAgen.success) {
+      return dispatch({ type: GET_LIST_AGEN_ERROR, payload: listAgen.msg });
+    }
 
-		return dispatch({ type: GET_LIST_AGEN_SUCCESS, payload: listAgen.data });
-	};
+    return dispatch({ type: GET_LIST_AGEN_SUCCESS, payload: listAgen.data });
+  };
 }
