@@ -1,8 +1,9 @@
 import React from 'react';
-import { Typography, makeStyles } from '@material-ui/core';
+import { Typography, makeStyles, CircularProgress } from '@material-ui/core';
 import clsx from 'clsx';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { useSelector } from 'react-redux';
+import NumberFormat from 'react-number-format';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 
 function DetailAgenForm(props) {
   const classes = useStyles(props);
-  const { agen } = useSelector(({ detailAgen }) => detailAgen.panel);
+  const { agen, isLoading, saldo } = useSelector(({ detailAgen }) => detailAgen.panel);
 
   return (
     <FuseAnimateGroup
@@ -60,7 +61,17 @@ function DetailAgenForm(props) {
       </div>
       <div className="flex flex-col overflow-auto">
         <Typography className="font-bold">Total Saldo :</Typography>
-        <Typography>Rp. 5.000.000</Typography>
+        {isLoading ? (
+          <CircularProgress color="secondary" />
+        ) : (
+          <NumberFormat
+            decimalSeparator=","
+            value={saldo ? saldo.jumlah + saldo.bonus : 0}
+            displayType="text"
+            thousandSeparator="."
+            prefix="Rp. "
+          />
+        )}
       </div>
     </FuseAnimateGroup>
   );

@@ -97,8 +97,6 @@ function AgenForm() {
   };
 
   const onSubmit = () => {
-    console.log(form);
-
     dispatch(setAgenForm(form));
     dispatch(saveAgen({ ...form }));
     dispatch(closeDialog());

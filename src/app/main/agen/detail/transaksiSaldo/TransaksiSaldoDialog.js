@@ -1,15 +1,17 @@
 import React from 'react';
+import _ from '@lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dialog, CircularProgress, Typography, Toolbar, IconButton, Icon } from '@material-ui/core';
-import { closeAgenDialog } from './store/actions';
-import AgenForm from './AgenForm';
+import { closeTransaksiSaldoDialog } from './store/actions';
+import TransaksiSaldoForm from './TransaksiSaldoForm';
 
-function AgenDialog() {
+function TransaksiSaldoDialog() {
   const dispatch = useDispatch();
-  const { isLoading, props, data } = useSelector(({ agen }) => agen.form);
+  const { isLoading, props, kategori } = useSelector(({ transaksiSaldo }) => transaksiSaldo.form);
+  const { agen } = useSelector(({ detailAgen }) => detailAgen.panel);
 
   const handleClose = () => {
-    dispatch(closeAgenDialog());
+    dispatch(closeTransaksiSaldoDialog());
   };
 
   return (
@@ -20,7 +22,6 @@ function AgenDialog() {
       fullWidth
       disableBackdropClick
       disableEscapeKeyDown
-      maxWidth="md"
     >
       {isLoading ? (
         <div className="flex flex-col justify-center text-center items-center h-full p-16">
@@ -32,7 +33,7 @@ function AgenDialog() {
           <Toolbar className="flex flex-row items-center justify-between w-full">
             <div className="flex flex-col items-center w-full">
               <Typography variant="h6" color="inherit" className="w-full mt-12">
-                {data ? 'Ubah' : 'Tambah'} Agen
+                {_.startCase(kategori)} {agen?.diri?.nama?.lengkap}
               </Typography>
 
               <IconButton className="absolute right-0" color="inherit" onClick={handleClose}>
@@ -41,11 +42,11 @@ function AgenDialog() {
             </div>
           </Toolbar>
 
-          <AgenForm />
+          <TransaksiSaldoForm />
         </>
       )}
     </Dialog>
   );
 }
 
-export default AgenDialog;
+export default TransaksiSaldoDialog;

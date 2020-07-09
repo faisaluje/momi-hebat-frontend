@@ -3,11 +3,18 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { AppBar } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 import TransaksiPaketPanel from './transaksiPaket/TransaksiPaketPanel';
 import TransaksiSaldoPanel from './transaksiSaldo/TransaksiSaldoPanel';
+import { exitListTransaksiSaldo } from './transaksiSaldo/store/actions';
 
 function DetailAgenTabs() {
+  const dispatch = useDispatch();
   const [value, setValue] = React.useState(0);
+
+  React.useEffect(() => {
+    return () => dispatch(exitListTransaksiSaldo());
+  }, [dispatch]);
 
   const handleChange = (_event, newValue) => {
     setValue(newValue);
