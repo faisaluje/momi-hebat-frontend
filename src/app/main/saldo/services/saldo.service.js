@@ -13,6 +13,10 @@ class SaldoService {
 
       return { success: true, data: data.saldo };
     } catch (e) {
+      if (e.response?.status === 404) {
+        return { success: true, data: [] };
+      }
+
       return {
         success: false,
         msg: e.response?.message || e.message || 'Gagal mengambil data user'

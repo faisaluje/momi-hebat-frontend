@@ -60,11 +60,12 @@ function DetailAgenForm(props) {
         </div>
       </div>
       <div className="flex flex-col overflow-auto">
-        <Typography className="font-bold">Total Saldo :</Typography>
+        <Typography className="font-bold text-20">Total Saldo :</Typography>
         {isLoading ? (
           <CircularProgress color="secondary" />
         ) : (
           <NumberFormat
+            className="text-20 font-bold"
             decimalSeparator=","
             value={saldo ? saldo.jumlah + saldo.bonus : 0}
             displayType="text"

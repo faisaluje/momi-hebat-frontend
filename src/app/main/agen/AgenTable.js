@@ -15,6 +15,7 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
+import _ from '@lodash';
 import { closeDialog, openDialog } from 'app/store/actions';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,7 +48,7 @@ function AgenTable() {
         filtered = filtered.filter(item => item.level === parseInt(level));
       }
 
-      setRows(filtered);
+      setRows(_.orderBy(filtered, ['level', 'no']));
     }
   }, [data, level, txtCari]);
 

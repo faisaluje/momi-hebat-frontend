@@ -49,7 +49,7 @@ function TransaksiSaldoTable() {
     if (data) {
       const filtered = getFilteredArray(data, txtCari);
 
-      setRows(_.orderBy(filtered, ['tgl', 'createdAt'], ['desc', 'desc']));
+      setRows(_.orderBy(filtered, ['tgl', 'createdAt'], ['asc', 'asc']));
     }
   }, [data, txtCari]);
 

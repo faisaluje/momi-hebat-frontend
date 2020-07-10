@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from '@lodash';
 import moment from 'moment';
+import 'moment/locale/id';
 import { useDispatch, useSelector } from 'react-redux';
 import { showMessage, openDialog, closeDialog } from 'app/store/actions';
 import {
@@ -18,9 +19,12 @@ import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { useForm } from '@fuse/hooks';
 import JenisTransaksi from 'app/main/components/JenisTransaksi';
 import NumberFormat from 'react-number-format';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import TransaksiSaldoKategori from './TransaksiSaldoKategori';
 import TransaksiSaldoVia from './TransaksiSaldoVia';
 import { createTransaksiSaldo, setTransaksiSaldoForm } from './store/actions';
+
+moment.locale('id');
 
 const defaultTransaksiSaldoState = {
   tgl: moment().format('YYYY-MM-DD'),
@@ -108,31 +112,45 @@ function TransaksiSaldoForm() {
             </div>
           )}
 
-          <div className="flex mb-16">
-            <Typography className="min-w-160 font-bold pt-12">No. Transaksi:</Typography>
+          {data?.id && (
+            <div className="flex mb-16">
+              <Typography className="min-w-160 font-bold pt-12">No. Transaksi:</Typography>
 
-            <TextField
-              name="no"
-              onChange={handleChange}
-              value={form.no || ''}
-              className="w-1/3"
-              autoFocus
-              InputProps={{
-                readOnly: !!data?.id
-              }}
-            />
-          </div>
+              <TextField
+                name="no"
+                onChange={handleChange}
+                value={form.no || ''}
+                className="w-1/3"
+                autoFocus
+                InputProps={{
+                  readOnly: !!data?.id
+                }}
+              />
+            </div>
+          )}
 
           <div className="flex mb-16">
             <Typography className="min-w-160 font-bold pt-12">Tgl Transaksi:</Typography>
 
-            <TextField
+            {/* <TextField
               type="date"
               name="tgl"
               style={{ width: '13rem' }}
               onChange={handleChange}
               value={moment(form.tgl || null).format('YYYY-MM-DD')}
               required
+              InputProps={{
+                readOnly: !!data?.id
+              }}
+            /> */}
+            <KeyboardDatePicker
+              autoOk
+              variant="inline"
+              invalidDateMessage="Tanggal tidak valid"
+              format="DD/MM/YYYY"
+              value={form.tgl}
+              onChange={date => setInForm('tgl', date?.toDate() || null)}
+              readOnly={!!data?.id}
               InputProps={{
                 readOnly: !!data?.id
               }}
@@ -205,6 +223,22 @@ function TransaksiSaldoForm() {
               ))}
             </TextField>
           </div>
+
+          {form.via === TransaksiSaldoVia.TRANSFER && (
+            <div className="flex mb-16">
+              <Typography className="min-w-160 font-bold pt-12">Nama Bank:</Typography>
+
+              <TextField
+                name="namaBank"
+                onChange={handleChange}
+                value={form.namaBank || ''}
+                className="w-1/3"
+                InputProps={{
+                  readOnly: !!data?.id
+                }}
+              />
+            </div>
+          )}
 
           {form.via === TransaksiSaldoVia.TRANSFER && (
             <div className="flex mb-16">
