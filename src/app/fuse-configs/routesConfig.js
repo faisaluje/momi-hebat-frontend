@@ -8,6 +8,7 @@ import PeriodeConfig from 'app/main/periode/PeriodeConfig';
 import AgenConfig from 'app/main/agen/AgenConfig';
 import DetailAgenConfig from 'app/main/agen/detail/DetailAgenConfig';
 import SaldoConfig from 'app/main/saldo/SaldoConfig';
+import BarangConfig from 'app/main/barang/BarangConfig';
 
 const routeConfigs = [
   LoginConfig,
@@ -16,7 +17,8 @@ const routeConfigs = [
   PeriodeConfig,
   DetailAgenConfig,
   AgenConfig,
-  SaldoConfig
+  SaldoConfig,
+  BarangConfig
 ];
 
 const routes = [

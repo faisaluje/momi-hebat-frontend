@@ -48,7 +48,7 @@ function AgenTable() {
         filtered = filtered.filter(item => item.level === parseInt(level));
       }
 
-      setRows(_.orderBy(filtered, ['level', 'no']));
+      setRows(_.orderBy(filtered, ['level', 'createdAt']));
     }
   }, [data, level, txtCari]);
 
