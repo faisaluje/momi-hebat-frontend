@@ -7,8 +7,17 @@ import PenggunaConfig from 'app/main/pengguna/PenggunaConfig';
 import PeriodeConfig from 'app/main/periode/PeriodeConfig';
 import AgenConfig from 'app/main/agen/AgenConfig';
 import DetailAgenConfig from 'app/main/agen/detail/DetailAgenConfig';
+import SaldoConfig from 'app/main/saldo/SaldoConfig';
 
-const routeConfigs = [LoginConfig, MenuConfig, PenggunaConfig, PeriodeConfig, DetailAgenConfig, AgenConfig];
+const routeConfigs = [
+  LoginConfig,
+  MenuConfig,
+  PenggunaConfig,
+  PeriodeConfig,
+  DetailAgenConfig,
+  AgenConfig,
+  SaldoConfig
+];
 
 const routes = [
   ...FuseUtils.generateRoutesFromConfigs(routeConfigs),

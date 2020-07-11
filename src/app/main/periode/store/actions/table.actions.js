@@ -13,14 +13,14 @@ export const refreshListPeriode = () => ({ type: REFRESH_LIST_PERIODE });
 export const setTxtCariPeriode = txtCari => ({ type: SET_TXT_CARI_PERIODE, txtCari });
 
 export function getListPeriode() {
-	return async dispatch => {
-		dispatch({ type: GET_LIST_PERIODE });
+  return async dispatch => {
+    dispatch({ type: GET_LIST_PERIODE });
 
-		const listPeriode = await PeriodeService.getListPeriodeData();
-		if (!listPeriode.success) {
-			return dispatch({ type: GET_LIST_PERIODE_ERROR, payload: listPeriode.msg });
-		}
+    const listPeriode = await PeriodeService.getListPeriodeData();
+    if (!listPeriode.success) {
+      return dispatch({ type: GET_LIST_PERIODE_ERROR, payload: listPeriode.msg });
+    }
 
-		return dispatch({ type: GET_LIST_PERIODE_SUCCESS, payload: listPeriode.data });
-	};
+    return dispatch({ type: GET_LIST_PERIODE_SUCCESS, payload: listPeriode.data });
+  };
 }

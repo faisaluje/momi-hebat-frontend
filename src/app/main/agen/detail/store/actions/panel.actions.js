@@ -19,7 +19,7 @@ export function setSaldoAgen(agenId) {
       return dispatch({ type: SET_SALDO_AGEN_ERROR, payload: saldoAgen.msg });
     }
 
-    const saldo = saldoAgen.data.find(val => val.agen === agenId);
+    const saldo = saldoAgen.data.find(val => val.agen.id === agenId);
     return dispatch({
       type: SET_SALDO_AGEN_SUCCESS,
       payload: saldo

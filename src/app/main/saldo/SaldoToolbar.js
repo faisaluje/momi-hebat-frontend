@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography, TextField, Button, Icon } from '@material-ui/core';
-import { setTxtCariPeriode, refreshListPeriode, openPeriodeDialog } from './store/actions';
+import { refreshListSaldo, setTxtCariSaldo } from './store/actions';
 
-function PeriodeToolbar() {
+function SaldoToolbar() {
   const dispatch = useDispatch();
-  const { txtCari } = useSelector(({ periode }) => periode.table);
+  const { txtCari } = useSelector(({ saldo }) => saldo.table);
 
   return (
     <div className="m-8 mr-0 w-full flex flex-wrap justify-between">
@@ -14,7 +14,7 @@ function PeriodeToolbar() {
         <TextField
           placeholder="Ketik Disini..."
           value={txtCari}
-          onChange={event => dispatch(setTxtCariPeriode(event.target.value))}
+          onChange={event => dispatch(setTxtCariSaldo(event.target.value))}
         />
 
         <Button
@@ -23,25 +23,17 @@ function PeriodeToolbar() {
           color="primary"
           startIcon={<Icon>refresh</Icon>}
           className="ml-24"
-          onClick={() => dispatch(refreshListPeriode())}
+          onClick={() => dispatch(refreshListSaldo())}
         >
           Refresh
         </Button>
       </div>
 
       <div className="flex flex-wrap items-center">
-        <Button
-          size="small"
-          variant="contained"
-          color="primary"
-          startIcon={<Icon>add</Icon>}
-          onClick={() => dispatch(openPeriodeDialog())}
-        >
-          Tambah
-        </Button>
+        <Typography variant="h5">Pilihan Periode</Typography>
       </div>
     </div>
   );
 }
 
-export default PeriodeToolbar;
+export default SaldoToolbar;

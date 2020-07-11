@@ -1,17 +1,17 @@
 import { lazy } from 'react';
 import { authRoles } from 'app/auth';
 
-const PeriodeConfig = {
+const SaldoConfig = {
   settings: {
     layout: {}
   },
   auth: authRoles.user,
   routes: [
     {
-      path: '/periode',
-      component: lazy(() => import('./Periode'))
+      path: '/saldo',
+      component: lazy(() => import('./Saldo'))
     }
   ]
 };
 
-export default PeriodeConfig;
+export default SaldoConfig;

@@ -7,9 +7,8 @@ import withReducer from 'app/store/withReducer';
 import { useSelector } from 'react-redux';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import reducer from './store/reducers';
-import PeriodeToolbar from './PeriodeToolbar';
-import PeriodeDialog from './PeriodeDialog';
-import PeriodeTable from './PeriodeTable';
+import SaldoTable from './SaldoTable';
+import SaldoToolbar from './SaldoToolbar';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,13 +17,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Periode(props) {
+function Saldo(props) {
   const classes = useStyles(props);
-  const { isLoading } = useSelector(({ periode }) => periode.table);
+  const { isLoading } = useSelector(({ saldo }) => saldo.table);
 
   return (
     <>
-      <PeriodeDialog />
       <div className={clsx(classes.root, 'p-8')}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
           <Link color="inherit" to="/" className="flex items-center">
@@ -34,33 +32,30 @@ function Periode(props) {
           {/* <Link color="inherit" to="/getting-started/installation/">
 						Core
           </Link> */}
-          <Typography color="textPrimary">Pengaturan</Typography>
-          <Typography color="textPrimary">Periode</Typography>
+          <Typography color="textPrimary">Saldo Agen</Typography>
         </Breadcrumbs>
       </div>
 
-      <div className={clsx(classes.root, 'flex flex-col flex-auto overflow-auto items-center p-24')}>
-        {isLoading ? (
-          <div className="flex flex-col justify-center text-center items-center h-full">
-            <CircularProgress />
-            <Typography className="mt-8">Sedang memuat data. . .</Typography>
-          </div>
-        ) : (
-          <FuseAnimateGroup
-            enter={{
-              animation: 'transition.slideDownIn',
-              delay: 200,
-              duration: 500
-            }}
-            className="flex flex-col w-full"
-          >
-            <PeriodeToolbar />
-            <PeriodeTable />
-          </FuseAnimateGroup>
-        )}
-      </div>
+      {isLoading ? (
+        <div className={clsx(classes.root, 'flex flex-col flex-auto overflow-auto items-center p-24')}>
+          <CircularProgress color="secondary" />
+          <Typography className="mt-8">Sedang memuat data. . .</Typography>
+        </div>
+      ) : (
+        <FuseAnimateGroup
+          enter={{
+            animation: 'transition.slideDownIn',
+            delay: 200,
+            duration: 500
+          }}
+          className={clsx(classes.root, 'flex flex-col flex-auto overflow-auto items-center p-24')}
+        >
+          <SaldoToolbar />
+          <SaldoTable />
+        </FuseAnimateGroup>
+      )}
     </>
   );
 }
 
-export default withReducer('periode', reducer)(Periode);
+export default withReducer('saldo', reducer)(Saldo);
