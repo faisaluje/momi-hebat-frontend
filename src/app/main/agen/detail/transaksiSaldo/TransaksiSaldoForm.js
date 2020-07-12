@@ -132,17 +132,6 @@ function TransaksiSaldoForm() {
           <div className="flex mb-16">
             <Typography className="min-w-160 font-bold pt-12">Tgl Transaksi:</Typography>
 
-            {/* <TextField
-              type="date"
-              name="tgl"
-              style={{ width: '13rem' }}
-              onChange={handleChange}
-              value={moment(form.tgl || null).format('YYYY-MM-DD')}
-              required
-              InputProps={{
-                readOnly: !!data?.id
-              }}
-            /> */}
             <KeyboardDatePicker
               autoOk
               variant="inline"

@@ -10,6 +10,7 @@ import reducer from './store/reducers';
 import BarangToolbar from './BarangToolbar';
 import BarangTable from './BarangTable';
 import TransaksiBarangList from './transaksiBarang/TransaksiBarangList';
+import TransaksiBarangDialog from './transaksiBarang/TransaksiBarangDialog';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,6 +26,7 @@ function Barang(props) {
   return (
     <>
       <TransaksiBarangList />
+      <TransaksiBarangDialog />
       <div className={clsx(classes.root, 'p-8')}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
           <Link color="inherit" to="/" className="flex items-center">

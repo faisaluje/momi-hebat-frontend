@@ -1,7 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography, TextField, Button, Icon } from '@material-ui/core';
-import { openListTransaksiBarangDialog, refreshListBarang, setTxtCariBarang } from './store/actions';
+import {
+  openListTransaksiBarangDialog,
+  openTransaksiBarangDialog,
+  refreshListBarang,
+  setTxtCariBarang
+} from './store/actions';
 
 function BarangToolbar() {
   const dispatch = useDispatch();
@@ -43,7 +48,14 @@ function BarangToolbar() {
           Daftar Transaksi
         </Button>
 
-        <Button className="ml-0 sm:ml-12" size="small" variant="contained" color="primary" startIcon={<Icon>add</Icon>}>
+        <Button
+          className="ml-0 sm:ml-12"
+          size="small"
+          variant="contained"
+          color="primary"
+          startIcon={<Icon>add</Icon>}
+          onClick={() => dispatch(openTransaksiBarangDialog())}
+        >
           Barang Masuk
         </Button>
       </div>

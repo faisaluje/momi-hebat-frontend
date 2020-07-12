@@ -72,6 +72,7 @@ export function createTransaksiBarang(data) {
 
     dispatch({ type: SAVE_TRANSAKSI_BARANG_SUCCESS, payload: result.data });
     dispatch(refreshListTransaksiBarang());
+    dispatch(refreshListBarang());
     return dispatch(closeTransaksiBarangDialog());
   };
 }

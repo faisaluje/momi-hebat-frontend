@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Typography } from '@material-ui/core';
 import { getFilteredArray } from 'app/Utils';
 import NumberFormat from 'react-number-format';
-import { getListBarang } from './store/actions';
+import { getListStokBarang } from './store/actions';
 
 function BarangTable() {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ function BarangTable() {
 
   React.useEffect(() => {
     if (isRefresh) {
-      dispatch(getListBarang());
+      dispatch(getListStokBarang());
     }
   }, [dispatch, isRefresh]);
 

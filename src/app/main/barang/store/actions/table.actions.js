@@ -14,15 +14,15 @@ export const refreshListBarang = () => ({ type: REFRESH_LIST_BARANG });
 export const setTxtCariBarang = txtCari => ({ type: SET_TXT_CARI_BARANG, txtCari });
 export const setPeriodeBarang = periodeId => ({ type: SET_PERIODE_BARANG, periodeId });
 
-export function getListBarang(periodeId) {
+export function getListStokBarang(periodeId) {
   return async dispatch => {
     dispatch({ type: GET_LIST_BARANG });
 
-    const listBarang = await BarangService.getListBarang(periodeId);
-    if (!listBarang.success) {
-      return dispatch({ type: GET_LIST_BARANG_ERROR, payload: listBarang.msg });
+    const listStokBarang = await BarangService.getListStokBarang(periodeId);
+    if (!listStokBarang.success) {
+      return dispatch({ type: GET_LIST_BARANG_ERROR, payload: listStokBarang.msg });
     }
 
-    return dispatch({ type: GET_LIST_BARANG_SUCCESS, payload: listBarang.data });
+    return dispatch({ type: GET_LIST_BARANG_SUCCESS, payload: listStokBarang.data });
   };
 }
