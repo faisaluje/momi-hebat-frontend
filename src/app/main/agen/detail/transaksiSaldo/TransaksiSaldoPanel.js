@@ -1,16 +1,27 @@
 import React from 'react';
 import withReducer from 'app/store/withReducer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress, Typography } from '@material-ui/core';
 import TransaksiSaldoToolbar from './TransaksiSaldoToolbar';
 import reducer from './store/reducers';
 import TransaksiSaldoTable from './TransaksiSaldoTable';
+import { getListTransaksiSaldo } from './store/actions';
+import { setSaldoAgen } from '../store/actions';
 
 function TransaksiSaldoPanel() {
-  const { isLoading } = useSelector(({ transaksiSaldo }) => transaksiSaldo.table);
+  const dispatch = useDispatch();
+  const { isLoading, isRefresh } = useSelector(({ transaksiSaldo }) => transaksiSaldo.table);
+  const { agen } = useSelector(({ detailAgen }) => detailAgen.panel);
+
+  React.useEffect(() => {
+    if (isRefresh && agen) {
+      dispatch(getListTransaksiSaldo(agen.id));
+      dispatch(setSaldoAgen(agen.id));
+    }
+  }, [agen, dispatch, isRefresh]);
 
   return (
-    <div className="flex flex-col overflow-auto p-12">
+    <div className="flex flex-col overflow-auto p-12 items-center justify-center">
       {isLoading ? (
         <>
           <CircularProgress color="secondary" />

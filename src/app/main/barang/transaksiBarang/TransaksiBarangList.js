@@ -17,17 +17,23 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Tooltip
+  Tooltip,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
 } from '@material-ui/core';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { getFilteredArray } from 'app/Utils';
 import NumberFormat from 'react-number-format';
 import { orderBy, startCase, sumBy } from 'lodash';
+import { closeDialog, openDialog } from 'app/store/actions';
 import {
   closeListTransaksiBarangDialog,
   getListTransaksiBarang,
   refreshListTransaksiBarang,
-  setTxtCariTransaksiBarang
+  setTxtCariTransaksiBarang,
+  deleteTransaksiBarang
 } from '../store/actions';
 
 function TransaksiBarangList() {
@@ -51,6 +57,32 @@ function TransaksiBarangList() {
 
   const handleClose = () => {
     dispatch(closeListTransaksiBarangDialog());
+  };
+
+  const handleDeleteTransaksiBarang = transaksi => {
+    dispatch(
+      openDialog({
+        children: (
+          <>
+            <DialogTitle id="alert-dialog-title">Konfirmasi</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">Transaksi akan dihapus ?</DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => dispatch(closeDialog())}>Tidak</Button>
+              <Button onClick={() => onDeleteTranaksi(transaksi)} autoFocus>
+                Iya
+              </Button>
+            </DialogActions>
+          </>
+        )
+      })
+    );
+  };
+
+  const onDeleteTranaksi = transaksi => {
+    dispatch(deleteTransaksiBarang(transaksi.id));
+    dispatch(closeDialog());
   };
 
   return (
@@ -117,10 +149,11 @@ function TransaksiBarangList() {
               <Table stickyHeader size="small">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Tanggal</TableCell>
+                    <TableCell style={{ width: '12rem' }}>Tanggal</TableCell>
                     <TableCell>No. Transaksi</TableCell>
                     <TableCell>Jenis Transaksi</TableCell>
                     <TableCell>Total Biaya</TableCell>
+                    <TableCell> </TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -188,6 +221,13 @@ function TransaksiBarangList() {
                                 displayType="text"
                                 thousandSeparator="."
                               />
+                            </Tooltip>
+                          </TableCell>
+                          <TableCell className="w-24">
+                            <Tooltip title="Hapus Transaksi" placement="left">
+                              <IconButton size="small" onClick={() => handleDeleteTransaksiBarang(transaksi)}>
+                                <Icon className="text-red">close</Icon>
+                              </IconButton>
                             </Tooltip>
                           </TableCell>
                         </TableRow>

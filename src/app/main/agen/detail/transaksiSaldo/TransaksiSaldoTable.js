@@ -23,27 +23,13 @@ import {
 } from '@material-ui/core';
 import JenisTransaksi from 'app/main/components/JenisTransaksi';
 import { openDialog, closeDialog } from 'app/store/actions';
-import {
-  getListTransaksiSaldo,
-  setTransaksiSaldoForm,
-  openTransaksiSaldoDialog,
-  deleteTransaksiSaldo
-} from './store/actions';
+import { setTransaksiSaldoForm, openTransaksiSaldoDialog, deleteTransaksiSaldo } from './store/actions';
 import TransaksiSaldoKategori from './TransaksiSaldoKategori';
-import { setSaldoAgen } from '../store/actions';
 
 function TransaksiSaldoTable() {
   const dispatch = useDispatch();
-  const { isRefresh, data, txtCari } = useSelector(({ transaksiSaldo }) => transaksiSaldo.table);
-  const { agen } = useSelector(({ detailAgen }) => detailAgen.panel);
+  const { data, txtCari } = useSelector(({ transaksiSaldo }) => transaksiSaldo.table);
   const [rows, setRows] = React.useState([]);
-
-  React.useEffect(() => {
-    if (isRefresh && agen) {
-      dispatch(getListTransaksiSaldo(agen.id));
-      dispatch(setSaldoAgen(agen.id));
-    }
-  }, [agen, dispatch, isRefresh]);
 
   React.useEffect(() => {
     if (data) {

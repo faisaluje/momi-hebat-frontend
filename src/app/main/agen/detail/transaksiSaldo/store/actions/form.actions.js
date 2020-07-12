@@ -28,18 +28,3 @@ export function createTransaksiSaldo(data) {
     return dispatch(closeTransaksiSaldoDialog());
   };
 }
-
-export function deleteTransaksiSaldo(id) {
-  return async dispatch => {
-    dispatch({ type: SAVE_TRANSAKSI_SALDO });
-
-    const result = await TransaksiSaldoService.deleteTransaksiSaldo(id);
-    if (!result.success) {
-      return dispatch({ type: SAVE_TRANSAKSI_SALDO_ERROR, payload: result.msg });
-    }
-
-    dispatch({ type: SAVE_TRANSAKSI_SALDO_SUCCESS });
-    dispatch(refreshListTransaksiSaldo());
-    return dispatch(closeTransaksiSaldoDialog());
-  };
-}

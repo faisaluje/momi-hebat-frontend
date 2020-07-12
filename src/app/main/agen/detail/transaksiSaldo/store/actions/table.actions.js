@@ -24,3 +24,17 @@ export function getListTransaksiSaldo(agenId) {
     return dispatch({ type: GET_LIST_TRANSAKSI_SALDO_SUCCESS, payload: listTransaksiSaldo.data });
   };
 }
+
+export function deleteTransaksiSaldo(id) {
+  return async dispatch => {
+    dispatch({ type: GET_LIST_TRANSAKSI_SALDO });
+
+    const result = await TransaksiSaldoService.deleteTransaksiSaldo(id);
+    console.log(result);
+    if (!result.success) {
+      return dispatch({ type: GET_LIST_TRANSAKSI_SALDO_ERROR, payload: result.msg });
+    }
+
+    return dispatch(refreshListTransaksiSaldo());
+  };
+}

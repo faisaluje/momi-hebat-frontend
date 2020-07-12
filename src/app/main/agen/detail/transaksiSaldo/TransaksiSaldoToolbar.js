@@ -12,7 +12,7 @@ function TransaksiSaldoToolbar() {
   return (
     <>
       <TransaksiSaldoDialog />
-      <div className="m-8 mr-0 flex flex-wrap justify-between">
+      <div className="m-8 mr-0 flex flex-wrap justify-between w-full">
         <div className="flex flex-wrap items-center">
           <TextField
             label="Pencarian"

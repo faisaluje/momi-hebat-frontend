@@ -1,4 +1,5 @@
 import TransaksiBarangService from '../../services/transaksiBarang.service';
+import { refreshListBarang } from './table.actions';
 
 export const OPEN_LIST_TRANSAKSI_BARANG_DIALOG = 'OPEN_LIST_TRANSAKSI_BARANG_DIALOG';
 export const CLOSE_LIST_TRANSAKSI_BARANG_DIALOG = 'CLOSE_LIST_TRANSAKSI_BARANG_DIALOG';
@@ -42,6 +43,35 @@ export function getListTransaksiBarang(periodeId) {
   };
 }
 
+export function deleteTransaksiBarang(id) {
+  return async dispatch => {
+    dispatch({ type: GET_LIST_TRANSAKSI_BARANG });
+
+    const result = await TransaksiBarangService.deleteTransaksiBarang(id);
+    if (!result.success) {
+      return dispatch({ type: GET_LIST_TRANSAKSI_BARANG_ERROR, payload: result.msg });
+    }
+
+    dispatch(refreshListBarang());
+    return dispatch(refreshListTransaksiBarang());
+  };
+}
+
 export const setTransaksiBarangForm = data => ({ type: SET_TRANSAKSI_BARANG_FORM, data });
 export const openTransaksiBarangDialog = () => ({ type: OPEN_TRANSAKSI_BARANG_DIALOG });
 export const closeTransaksiBarangDialog = () => ({ type: CLOSE_TRANSAKSI_BARANG_DIALOG });
+
+export function createTransaksiBarang(data) {
+  return async dispatch => {
+    dispatch({ type: SAVE_TRANSAKSI_BARANG });
+
+    const result = await TransaksiBarangService.createTransaksiBarang(data);
+    if (!result.success) {
+      return dispatch({ type: SAVE_TRANSAKSI_BARANG_ERROR, payload: result.msg });
+    }
+
+    dispatch({ type: SAVE_TRANSAKSI_BARANG_SUCCESS, payload: result.data });
+    dispatch(refreshListTransaksiBarang());
+    return dispatch(closeTransaksiBarangDialog());
+  };
+}
