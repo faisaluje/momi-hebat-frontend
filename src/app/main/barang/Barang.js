@@ -9,6 +9,7 @@ import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import reducer from './store/reducers';
 import BarangToolbar from './BarangToolbar';
 import BarangTable from './BarangTable';
+import TransaksiBarangList from './transaksiBarang/TransaksiBarangList';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,6 +24,7 @@ function Barang(props) {
 
   return (
     <>
+      <TransaksiBarangList />
       <div className={clsx(classes.root, 'p-8')}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
           <Link color="inherit" to="/" className="flex items-center">

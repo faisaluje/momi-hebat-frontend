@@ -16,26 +16,26 @@ export const openPeriodeDialog = () => ({ type: OPEN_PERIODE_DIALOG });
 export const closePeriodeDialog = () => ({ type: CLOSE_PERIODE_DIALOG });
 
 export function savePeriode(data) {
-	return async dispatch => {
-		dispatch({ type: SAVE_PERIODE });
+  return async dispatch => {
+    dispatch({ type: SAVE_PERIODE });
 
-		let result = { success: false };
-		data.tglMulai = moment(data.tglMulai).format('YYYY-MM-DD');
-		data.tglBerakhir = moment(data.tglBerakhir).format('YYYY-MM-DD');
-		if (!data.id) {
-			result = await PeriodeService.createPeriode(data);
-		} else {
-			const { id } = data;
-			delete data.id;
-			result = await PeriodeService.updatePeriode(id, data);
-		}
+    let result = { success: false };
+    data.tglMulai = moment(data.tglMulai).format('YYYY-MM-DD');
+    data.tglBerakhir = moment(data.tglBerakhir).format('YYYY-MM-DD');
+    if (!data.id) {
+      result = await PeriodeService.createPeriode(data);
+    } else {
+      const { id } = data;
+      delete data.id;
+      result = await PeriodeService.updatePeriode(id, data);
+    }
 
-		if (!result.success) {
-			return dispatch({ type: SAVE_PERIODE_ERROR, payload: result.msg });
-		}
+    if (!result.success) {
+      return dispatch({ type: SAVE_PERIODE_ERROR, payload: result.msg });
+    }
 
-		dispatch({ type: SAVE_PERIODE_SUCCESS, payload: result.data });
-		dispatch(refreshListPeriode());
-		return dispatch(closePeriodeDialog());
-	};
+    dispatch({ type: SAVE_PERIODE_SUCCESS, payload: result.data });
+    dispatch(refreshListPeriode());
+    return dispatch(closePeriodeDialog());
+  };
 }

@@ -36,7 +36,7 @@ function BarangTable() {
         <TableBody>
           {rows.length > 0 ? (
             rows.map((item, idx) => (
-              <TableRow key={item.id}>
+              <TableRow key={idx}>
                 <TableCell>{idx + 1}</TableCell>
                 <TableCell>
                   <Typography>{item.barang?.nama || '-'}</Typography>

@@ -1,0 +1,213 @@
+import React from 'react';
+import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Dialog,
+  CircularProgress,
+  Typography,
+  Toolbar,
+  IconButton,
+  Icon,
+  TextField,
+  Button,
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Tooltip
+} from '@material-ui/core';
+import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
+import { getFilteredArray } from 'app/Utils';
+import NumberFormat from 'react-number-format';
+import { orderBy, startCase, sumBy } from 'lodash';
+import {
+  closeListTransaksiBarangDialog,
+  getListTransaksiBarang,
+  refreshListTransaksiBarang,
+  setTxtCariTransaksiBarang
+} from '../store/actions';
+
+function TransaksiBarangList() {
+  const dispatch = useDispatch();
+  const { isRefresh, data, isLoading, props, txtCari } = useSelector(({ barang }) => barang.transaksi);
+  const [rows, setRows] = React.useState([]);
+
+  React.useEffect(() => {
+    if (isRefresh) {
+      dispatch(getListTransaksiBarang());
+    }
+  }, [dispatch, isRefresh]);
+
+  React.useEffect(() => {
+    if (data) {
+      const filtered = getFilteredArray(data, txtCari);
+
+      setRows(orderBy(filtered, ['tgl']));
+    }
+  }, [data, txtCari]);
+
+  const handleClose = () => {
+    dispatch(closeListTransaksiBarangDialog());
+  };
+
+  return (
+    <Dialog
+      classes={{ paper: 'rounded-8 w-full' }}
+      {...props}
+      onClose={handleClose}
+      fullWidth
+      disableBackdropClick
+      disableEscapeKeyDown
+    >
+      {isLoading ? (
+        <div className="flex flex-col justify-center text-center items-center h-full p-16">
+          <CircularProgress />
+          <Typography className="mt-8">Sedang memproses. . .</Typography>
+        </div>
+      ) : (
+        <>
+          <Toolbar className="flex flex-row items-center justify-between w-full">
+            <div className="flex flex-col items-center w-full">
+              <Typography variant="h6" color="inherit" className="w-full mt-12">
+                Daftar Transaksi
+              </Typography>
+
+              <IconButton className="absolute right-0" color="inherit" onClick={handleClose}>
+                <Icon className="text-28">close</Icon>
+              </IconButton>
+            </div>
+          </Toolbar>
+
+          <FuseAnimateGroup
+            enter={{
+              animation: 'transition.slideDownIn',
+              delay: 200,
+              duration: 500
+            }}
+            className="flex flex-col flex-auto overflow-auto items-center p-24"
+          >
+            <div className="m-8 mr-0 w-full flex flex-wrap justify-between">
+              <div className="flex flex-wrap items-center">
+                <Typography className="mr-8">Cari : </Typography>
+                <TextField
+                  placeholder="Ketik Disini..."
+                  value={txtCari}
+                  onChange={event => dispatch(setTxtCariTransaksiBarang(event.target.value))}
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center">
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  startIcon={<Icon>refresh</Icon>}
+                  className="ml-24"
+                  onClick={() => dispatch(refreshListTransaksiBarang())}
+                >
+                  Refresh
+                </Button>
+              </div>
+            </div>
+
+            <TableContainer component={Paper} elevation={2} className="my-12">
+              <Table stickyHeader size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Tanggal</TableCell>
+                    <TableCell>No. Transaksi</TableCell>
+                    <TableCell>Jenis Transaksi</TableCell>
+                    <TableCell>Total Biaya</TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  {rows.length > 0 ? (
+                    rows.map(transaksi => {
+                      const totalBiaya = sumBy(transaksi.items, 'biaya');
+
+                      return (
+                        <TableRow key={transaksi.id}>
+                          <TableCell>{moment(transaksi.tgl).format('YYYY-MM-DD')}</TableCell>
+                          <TableCell>
+                            <Typography>{transaksi.no}</Typography>
+                          </TableCell>
+                          <TableCell>
+                            <Typography>{startCase(transaksi.jenis)}</Typography>
+                          </TableCell>
+                          <TableCell>
+                            <Tooltip
+                              title={
+                                <>
+                                  <table className="w-320">
+                                    <thead>
+                                      <tr>
+                                        <th className="text-12" align="left">
+                                          Nama Barang
+                                        </th>
+                                        <th className="text-12" align="left">
+                                          Qty
+                                        </th>
+                                        <th className="text-12" align="left">
+                                          Biaya
+                                        </th>
+                                      </tr>
+                                    </thead>
+
+                                    <tbody>
+                                      {transaksi.items.map((item, idx) => (
+                                        <tr key={item.barang.id}>
+                                          <td className="text-12">
+                                            {idx + 1}. {item.barang.nama}
+                                          </td>
+                                          <td className="text-12">{item.jumlah}</td>
+                                          <td className="text-12">
+                                            <NumberFormat
+                                              decimalSeparator=","
+                                              value={item.biaya || 0}
+                                              displayType="text"
+                                              thousandSeparator="."
+                                            />
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </>
+                              }
+                              arrow
+                              placement="left"
+                            >
+                              <NumberFormat
+                                className="hover:underline text-blue cursor-pointer"
+                                decimalSeparator=","
+                                value={totalBiaya}
+                                displayType="text"
+                                thousandSeparator="."
+                              />
+                            </Tooltip>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={4} align="center">
+                        Belum ada Transaksi. . .
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </FuseAnimateGroup>
+        </>
+      )}
+    </Dialog>
+  );
+}
+
+export default TransaksiBarangList;
