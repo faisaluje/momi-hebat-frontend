@@ -9,6 +9,7 @@ import AgenConfig from 'app/main/agen/AgenConfig';
 import DetailAgenConfig from 'app/main/agen/detail/DetailAgenConfig';
 import SaldoConfig from 'app/main/saldo/SaldoConfig';
 import BarangConfig from 'app/main/barang/BarangConfig';
+import PaketConfig from 'app/main/paket/PaketConfig';
 
 const routeConfigs = [
   LoginConfig,
@@ -18,7 +19,8 @@ const routeConfigs = [
   DetailAgenConfig,
   AgenConfig,
   SaldoConfig,
-  BarangConfig
+  BarangConfig,
+  PaketConfig
 ];
 
 const routes = [

@@ -10,7 +10,9 @@ const filter = createFilterOptions();
 function BarangAutoComplete(props) {
   return (
     <Autocomplete
+      multiple={props.multiple}
       id={props.id}
+      autoHighlight
       value={props.value}
       loading={props.loading}
       onChange={props.onChange}
@@ -55,13 +57,14 @@ function BarangAutoComplete(props) {
 BarangAutoComplete.propTypes = {
   id: PropTypes.string,
   data: PropTypes.any.isRequired,
-  value: PropTypes.object,
+  value: PropTypes.any,
   style: PropTypes.object,
   variant: PropTypes.string,
   label: PropTypes.string,
   loading: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  multiple: PropTypes.bool
 };
 
 export default BarangAutoComplete;

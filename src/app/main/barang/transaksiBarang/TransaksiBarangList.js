@@ -153,6 +153,7 @@ function TransaksiBarangList() {
                     <TableCell>No. Transaksi</TableCell>
                     <TableCell>Jenis Transaksi</TableCell>
                     <TableCell>Total Biaya</TableCell>
+                    <TableCell>Catatan</TableCell>
                     <TableCell> </TableCell>
                   </TableRow>
                 </TableHead>
@@ -165,12 +166,8 @@ function TransaksiBarangList() {
                       return (
                         <TableRow key={transaksi.id}>
                           <TableCell>{moment(transaksi.tgl).format('DD-MM-YYYY')}</TableCell>
-                          <TableCell>
-                            <Typography>{transaksi.no}</Typography>
-                          </TableCell>
-                          <TableCell>
-                            <Typography>{startCase(transaksi.jenis)}</Typography>
-                          </TableCell>
+                          <TableCell>{transaksi.no}</TableCell>
+                          <TableCell>{startCase(transaksi.jenis)}</TableCell>
                           <TableCell>
                             <Tooltip
                               title={
@@ -225,6 +222,7 @@ function TransaksiBarangList() {
                               />
                             </Tooltip>
                           </TableCell>
+                          <TableCell>{transaksi.catatan}</TableCell>
                           <TableCell className="w-24">
                             <Tooltip title="Hapus Transaksi" placement="left">
                               <IconButton size="small" onClick={() => handleDeleteTransaksiBarang(transaksi)}>

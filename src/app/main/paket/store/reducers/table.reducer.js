@@ -1,14 +1,13 @@
 import {
-  REFRESH_LIST_AGEN,
-  GET_LIST_AGEN,
-  GET_LIST_AGEN_ERROR,
-  GET_LIST_AGEN_SUCCESS,
-  SET_TXT_CARI_AGEN,
-  EXIT_LIST_AGEN,
-  SET_STATUS_AGEN,
-  SET_LEVEL_AGEN
+  EXIT_LIST_PAKET,
+  GET_LIST_PAKET,
+  GET_LIST_PAKET_ERROR,
+  GET_LIST_PAKET_SUCCESS,
+  REFRESH_LIST_PAKET,
+  SET_PERIODE_PAKET,
+  SET_STATUS_PAKET,
+  SET_TXT_CARI_PAKET
 } from '../actions';
-import AgenStatus from '../../AgenStatus';
 
 const initialState = {
   data: [],
@@ -17,18 +16,18 @@ const initialState = {
   isError: false,
   msg: '',
   txtCari: '',
-  status: AgenStatus.aktif.value,
-  level: ''
+  periodeId: '',
+  status: 'aktif'
 };
 
 function tableReducer(state = initialState, action) {
   switch (action.type) {
-    case REFRESH_LIST_AGEN:
+    case REFRESH_LIST_PAKET:
       return {
         ...state,
         isRefresh: true
       };
-    case GET_LIST_AGEN:
+    case GET_LIST_PAKET:
       return {
         ...state,
         isLoading: true,
@@ -36,36 +35,37 @@ function tableReducer(state = initialState, action) {
         isError: false,
         msg: ''
       };
-    case GET_LIST_AGEN_ERROR:
+    case GET_LIST_PAKET_ERROR:
       return {
         ...state,
         isLoading: false,
         isError: true,
         msg: action.payload
       };
-    case GET_LIST_AGEN_SUCCESS:
+    case GET_LIST_PAKET_SUCCESS:
       return {
         ...state,
         isLoading: false,
         data: action.payload
       };
-    case SET_TXT_CARI_AGEN:
+    case SET_TXT_CARI_PAKET:
       return {
         ...state,
         txtCari: action.txtCari
       };
-    case SET_STATUS_AGEN:
+    case SET_PERIODE_PAKET:
+      return {
+        ...state,
+        periodeId: action.periodeId,
+        isRefresh: true
+      };
+    case SET_STATUS_PAKET:
       return {
         ...state,
         status: action.status,
         isRefresh: true
       };
-    case SET_LEVEL_AGEN:
-      return {
-        ...state,
-        level: action.level
-      };
-    case EXIT_LIST_AGEN:
+    case EXIT_LIST_PAKET:
       return { ...initialState };
     default:
       return state;

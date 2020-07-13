@@ -78,6 +78,7 @@ function AgenToolbar() {
             </MenuItem>
           ))}
         </TextField>
+
         <AgenConfirmationDialog open={openConfirmation} onClose={onJenisSelected} />
         <Button
           className="ml-0 sm:ml-12"

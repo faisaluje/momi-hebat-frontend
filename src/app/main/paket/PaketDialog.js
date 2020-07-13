@@ -1,15 +1,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dialog, CircularProgress, Typography, Toolbar, IconButton, Icon } from '@material-ui/core';
-import { closeAgenDialog } from './store/actions';
-import AgenForm from './AgenForm';
+import { closePaketDialog } from './store/actions';
+import PaketForm from './PaketForm';
 
-function AgenDialog() {
+function PaketDialog() {
   const dispatch = useDispatch();
-  const { isLoading, props, data } = useSelector(({ agen }) => agen.form);
+  const { isLoading, props, data } = useSelector(({ paket }) => paket.form);
 
   const handleClose = () => {
-    dispatch(closeAgenDialog());
+    dispatch(closePaketDialog());
   };
 
   return (
@@ -20,7 +20,6 @@ function AgenDialog() {
       fullWidth
       disableBackdropClick
       disableEscapeKeyDown
-      maxWidth="md"
     >
       {isLoading ? (
         <div className="flex flex-col justify-center text-center items-center h-full p-16">
@@ -32,7 +31,7 @@ function AgenDialog() {
           <Toolbar className="flex flex-row items-center justify-between w-full">
             <div className="flex flex-col items-center w-full">
               <Typography variant="h6" color="inherit" className="w-full mt-12">
-                {data?.id ? 'Ubah' : 'Tambah'} Agen
+                {data?.id ? 'Ubah' : 'Tambah'} Paket
               </Typography>
 
               <IconButton className="absolute right-0" color="inherit" onClick={handleClose}>
@@ -41,11 +40,11 @@ function AgenDialog() {
             </div>
           </Toolbar>
 
-          <AgenForm />
+          <PaketForm />
         </>
       )}
     </Dialog>
   );
 }
 
-export default AgenDialog;
+export default PaketDialog;

@@ -76,7 +76,7 @@ function MenuInventory(props) {
                   </ListItemIcon>
                   <ListItemText primary="Barang" />
                 </MenuItem>
-                <MenuItem onClick={handleClickMenu}>
+                <MenuItem onClick={() => History.push('/paket')}>
                   <ListItemIcon>
                     <Icon>dns</Icon>
                   </ListItemIcon>

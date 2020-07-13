@@ -38,7 +38,7 @@ const defaultTransaksiBarangState = {
 function TransaksiBarangForm() {
   const dispatch = useDispatch();
   const { data, isError, msg, isLoading } = useSelector(({ barang }) => barang.transaksi.form);
-  const { form, setForm, setInForm } = useForm(defaultTransaksiBarangState);
+  const { form, setForm, setInForm, handleChange } = useForm(defaultTransaksiBarangState);
   const [listBarang, setListBarang] = React.useState(null);
   const [isLoadingBarang, setIsLoadingBarang] = React.useState(true);
   const canBeSubmitted = !!form?.tgl && form?.items?.length > 0;
@@ -149,6 +149,21 @@ function TransaksiBarangForm() {
             />
           </div>
 
+          <div className="flex flex-col sm:flex-row mb-16 w-full">
+            <Typography className="min-w-160 font-bold pt-12">Catatan:</Typography>
+
+            <TextField
+              variant="outlined"
+              placeholder="ketik disini. . ."
+              style={{ width: '45%' }}
+              name="catatan"
+              multiline
+              rows={3}
+              onChange={handleChange}
+              value={form?.catatan || ''}
+            />
+          </div>
+
           <div className="flex mb-16">
             <Button
               variant="contained"
@@ -165,7 +180,7 @@ function TransaksiBarangForm() {
             <div className="flex mb-16" key={idx}>
               <BarangAutoComplete
                 id={`barang-autocomplete-${idx}`}
-                style={{ width: '45rem' }}
+                style={{ width: '25rem' }}
                 label="Nama Barang"
                 data={listBarang || []}
                 value={item.barang}

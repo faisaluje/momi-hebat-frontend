@@ -7,14 +7,14 @@ import { getListStokBarang } from './store/actions';
 
 function BarangTable() {
   const dispatch = useDispatch();
-  const { isRefresh, data, txtCari } = useSelector(({ barang }) => barang.table);
+  const { isRefresh, data, txtCari, periodeId } = useSelector(({ barang }) => barang.table);
   const [rows, setRows] = React.useState([]);
 
   React.useEffect(() => {
     if (isRefresh) {
-      dispatch(getListStokBarang());
+      dispatch(getListStokBarang(periodeId));
     }
-  }, [dispatch, isRefresh]);
+  }, [dispatch, isRefresh, periodeId]);
 
   React.useEffect(() => {
     if (data) {

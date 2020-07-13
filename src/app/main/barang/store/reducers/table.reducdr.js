@@ -54,7 +54,8 @@ function tableReducer(state = initialState, action) {
     case SET_PERIODE_BARANG:
       return {
         ...state,
-        periodeId: action.periodeId
+        periodeId: action.periodeId,
+        isRefresh: true
       };
     case EXIT_LIST_BARANG:
       return { ...initialState };
