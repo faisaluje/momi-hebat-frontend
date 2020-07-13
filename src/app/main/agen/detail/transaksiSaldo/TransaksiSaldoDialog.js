@@ -7,7 +7,7 @@ import TransaksiSaldoForm from './TransaksiSaldoForm';
 
 function TransaksiSaldoDialog() {
   const dispatch = useDispatch();
-  const { isLoading, props, kategori } = useSelector(({ transaksiSaldo }) => transaksiSaldo.form);
+  const { isLoading, props, kategori, data } = useSelector(({ transaksiSaldo }) => transaksiSaldo.form);
   const { agen } = useSelector(({ detailAgen }) => detailAgen.panel);
 
   const handleClose = () => {
@@ -33,7 +33,7 @@ function TransaksiSaldoDialog() {
           <Toolbar className="flex flex-row items-center justify-between w-full">
             <div className="flex flex-col items-center w-full">
               <Typography variant="h6" color="inherit" className="w-full mt-12">
-                {_.startCase(kategori)} {agen?.diri?.nama?.lengkap}
+                {_.startCase(data?.kategori || kategori)} {agen?.diri?.nama?.lengkap}
               </Typography>
 
               <IconButton className="absolute right-0" color="inherit" onClick={handleClose}>

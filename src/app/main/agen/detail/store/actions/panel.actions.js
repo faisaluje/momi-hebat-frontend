@@ -14,12 +14,12 @@ export function setSaldoAgen(agenId) {
   return async dispatch => {
     dispatch({ type: SET_SALDO_AGEN });
 
-    const saldoAgen = await SaldoService.getSaldoAgen();
+    const saldoAgen = await SaldoService.getSaldo();
     if (!saldoAgen.success) {
       return dispatch({ type: SET_SALDO_AGEN_ERROR, payload: saldoAgen.msg });
     }
 
-    const saldo = saldoAgen.data.find(val => val.agen.id === agenId);
+    const saldo = saldoAgen.data.find(val => val.agen === agenId);
     return dispatch({
       type: SET_SALDO_AGEN_SUCCESS,
       payload: saldo

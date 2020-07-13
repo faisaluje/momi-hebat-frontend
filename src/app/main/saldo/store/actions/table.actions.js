@@ -18,9 +18,10 @@ export function getListSaldo(periodeId) {
   return async dispatch => {
     dispatch({ type: GET_LIST_SALDO });
 
-    const listSaldo = await SaldoService.getSaldoAgen(periodeId);
+    // const listSaldo = await SaldoService.getSaldo(periodeId);
+    const listSaldo = await SaldoService.getSaldoWithAgen(periodeId);
     if (!listSaldo.success) {
-      return dispatch({ type: GET_LIST_SALDO_ERROR, payload: listSaldo.msg });
+      return dispatch({ type: GET_LIST_SALDO_ERROR, payload: listSaldo.msg || 'Gagal mendapatkan data' });
     }
 
     return dispatch({ type: GET_LIST_SALDO_SUCCESS, payload: listSaldo.data });

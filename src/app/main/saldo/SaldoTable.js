@@ -43,8 +43,8 @@ function SaldoTable() {
 
         <TableBody>
           {rows.length > 0 ? (
-            rows.map(saldo => (
-              <TableRow key={saldo._id}>
+            rows.map((saldo, idx) => (
+              <TableRow key={idx}>
                 <TableCell>{saldo.agen.no}</TableCell>
                 <TableCell>
                   <Typography
@@ -56,13 +56,17 @@ function SaldoTable() {
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <NumberFormat
-                    prefix="Rp. "
-                    decimalSeparator=","
-                    value={saldo.jumlah}
-                    displayType="text"
-                    thousandSeparator="."
-                  />
+                  {saldo.jumlah ? (
+                    <NumberFormat
+                      prefix="Rp. "
+                      decimalSeparator=","
+                      value={saldo.jumlah}
+                      displayType="text"
+                      thousandSeparator="."
+                    />
+                  ) : (
+                    '-'
+                  )}
                 </TableCell>
                 <TableCell>
                   {saldo.bonus ? (
