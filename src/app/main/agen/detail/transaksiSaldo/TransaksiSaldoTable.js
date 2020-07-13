@@ -89,7 +89,7 @@ function TransaksiSaldoTable() {
           {rows.length > 0 ? (
             rows.map(transaksi => (
               <TableRow key={transaksi.id}>
-                <TableCell>{moment(transaksi.tgl).format('YYYY-MM-DD')}</TableCell>
+                <TableCell>{moment(transaksi.tgl).format('DD-MM-YYYY')}</TableCell>
                 <TableCell>{_.startCase(transaksi.kategori)}</TableCell>
                 <TableCell>{_.startCase(transaksi?.via)}</TableCell>
                 <TableCell>{transaksi?.catatan}</TableCell>
@@ -97,6 +97,7 @@ function TransaksiSaldoTable() {
                   {transaksi.jenis === JenisTransaksi.MASUK && (
                     <NumberFormat
                       decimalSeparator=","
+                      prefix="Rp. "
                       value={transaksi.nominal}
                       displayType="text"
                       thousandSeparator="."
@@ -110,6 +111,7 @@ function TransaksiSaldoTable() {
                   {transaksi.jenis === JenisTransaksi.KELUAR && (
                     <NumberFormat
                       decimalSeparator=","
+                      prefix="Rp. "
                       value={transaksi.nominal}
                       displayType="text"
                       thousandSeparator="."

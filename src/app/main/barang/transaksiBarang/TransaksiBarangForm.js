@@ -10,6 +10,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Icon,
+  IconButton,
   Paper,
   TextField,
   Typography
@@ -39,7 +41,7 @@ function TransaksiBarangForm() {
   const { form, setForm, setInForm } = useForm(defaultTransaksiBarangState);
   const [listBarang, setListBarang] = React.useState(null);
   const [isLoadingBarang, setIsLoadingBarang] = React.useState(true);
-  const canBeSubmitted = !!form?.tgl;
+  const canBeSubmitted = !!form?.tgl && form?.items?.length > 0;
 
   React.useEffect(() => {
     if (!listBarang) {
@@ -81,6 +83,11 @@ function TransaksiBarangForm() {
     });
   };
 
+  const removeBarang = idx => {
+    const newItems = form.items.filter((item, index) => idx !== index);
+    setForm({ ...form, items: newItems });
+  };
+
   const handleSubmit = event => {
     event.preventDefault();
     dispatch(
@@ -105,7 +112,6 @@ function TransaksiBarangForm() {
 
   const onSubmit = () => {
     dispatch(setTransaksiBarangForm(form));
-    console.log(form);
     dispatch(createTransaksiBarang({ ...form }));
     dispatch(closeDialog());
   };
@@ -133,7 +139,7 @@ function TransaksiBarangForm() {
               autoOk
               variant="inline"
               invalidDateMessage="Tanggal tidak valid"
-              format="DD/MM/YYYY"
+              format="DD-MM-YYYY"
               value={form.tgl}
               onChange={date => setInForm('tgl', date?.toDate() || null)}
               readOnly={!!data?.id}
@@ -144,7 +150,13 @@ function TransaksiBarangForm() {
           </div>
 
           <div className="flex mb-16">
-            <Button variant="contained" size="small" className="capitalize" onClick={addBarang}>
+            <Button
+              variant="contained"
+              size="small"
+              className="capitalize"
+              onClick={addBarang}
+              startIcon={<Icon>add_circle_outline</Icon>}
+            >
               Tambah Barang
             </Button>
           </div>
@@ -157,14 +169,19 @@ function TransaksiBarangForm() {
                 label="Nama Barang"
                 data={listBarang || []}
                 value={item.barang}
+                required
                 loading={isLoadingBarang}
                 onChange={(_event, newValue) => {
-                  if (newValue.inputValue) {
-                    setInForm(`items[${idx}].barang`, { nama: newValue.inputValue });
-                  }
+                  if (newValue) {
+                    if (newValue.inputValue) {
+                      setInForm(`items[${idx}].barang`, { nama: newValue.inputValue });
+                    }
 
-                  if (newValue.id) {
-                    setInForm(`items[${idx}].barang`, newValue);
+                    if (newValue.id) {
+                      setInForm(`items[${idx}].barang`, newValue);
+                    }
+                  } else {
+                    setInForm(`items[${idx}].barang`, null);
                   }
                 }}
               />
@@ -183,6 +200,7 @@ function TransaksiBarangForm() {
 
               <NumberFormat
                 id={`biaya-barang-${idx}`}
+                prefix="Rp. "
                 label="Biaya"
                 className="mx-0 sm:mx-20"
                 value={item.biaya || ''}
@@ -192,6 +210,10 @@ function TransaksiBarangForm() {
                 decimalSeparator=","
                 required
               />
+
+              <IconButton onClick={() => removeBarang(idx)}>
+                <Icon className="text-red">delete_outline</Icon>
+              </IconButton>
             </div>
           ))}
         </FuseAnimateGroup>

@@ -56,11 +56,23 @@ function SaldoTable() {
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <NumberFormat decimalSeparator="," value={saldo.jumlah} displayType="text" thousandSeparator="." />
+                  <NumberFormat
+                    prefix="Rp. "
+                    decimalSeparator=","
+                    value={saldo.jumlah}
+                    displayType="text"
+                    thousandSeparator="."
+                  />
                 </TableCell>
                 <TableCell>
                   {saldo.bonus ? (
-                    <NumberFormat decimalSeparator="," value={saldo.bonus} displayType="text" thousandSeparator="." />
+                    <NumberFormat
+                      prefix="Rp. "
+                      decimalSeparator=","
+                      value={saldo.bonus}
+                      displayType="text"
+                      thousandSeparator="."
+                    />
                   ) : (
                     '-'
                   )}

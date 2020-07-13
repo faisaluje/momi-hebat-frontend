@@ -45,7 +45,9 @@ function BarangAutoComplete(props) {
       renderOption={option => option.nama}
       style={props.style}
       freeSolo
-      renderInput={params => <TextField {...params} label={props.label} variant={props.variant} />}
+      renderInput={params => (
+        <TextField {...params} label={props.label} variant={props.variant} required={props.required} />
+      )}
     />
   );
 }
@@ -58,7 +60,8 @@ BarangAutoComplete.propTypes = {
   variant: PropTypes.string,
   label: PropTypes.string,
   loading: PropTypes.bool,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  required: PropTypes.bool
 };
 
 export default BarangAutoComplete;

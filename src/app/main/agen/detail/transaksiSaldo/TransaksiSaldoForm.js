@@ -136,7 +136,7 @@ function TransaksiSaldoForm() {
               autoOk
               variant="inline"
               invalidDateMessage="Tanggal tidak valid"
-              format="DD/MM/YYYY"
+              format="DD-MM-YYYY"
               value={form.tgl}
               onChange={date => setInForm('tgl', date?.toDate() || null)}
               readOnly={!!data?.id}
@@ -250,6 +250,7 @@ function TransaksiSaldoForm() {
 
             <NumberFormat
               name="nominal"
+              prefix="Rp. "
               value={form.nominal || ''}
               onValueChange={val => setInForm('nominal', val.value)}
               customInput={TextField}

@@ -90,7 +90,7 @@ function TransaksiBarangList() {
       classes={{ paper: 'rounded-8 w-full' }}
       {...props}
       onClose={handleClose}
-      fullWidth
+      maxWidth="md"
       disableBackdropClick
       disableEscapeKeyDown
     >
@@ -164,7 +164,7 @@ function TransaksiBarangList() {
 
                       return (
                         <TableRow key={transaksi.id}>
-                          <TableCell>{moment(transaksi.tgl).format('YYYY-MM-DD')}</TableCell>
+                          <TableCell>{moment(transaksi.tgl).format('DD-MM-YYYY')}</TableCell>
                           <TableCell>
                             <Typography>{transaksi.no}</Typography>
                           </TableCell>
@@ -199,6 +199,7 @@ function TransaksiBarangList() {
                                           <td className="text-12">{item.jumlah}</td>
                                           <td className="text-12">
                                             <NumberFormat
+                                              prefix="Rp. "
                                               decimalSeparator=","
                                               value={item.biaya || 0}
                                               displayType="text"
@@ -216,6 +217,7 @@ function TransaksiBarangList() {
                             >
                               <NumberFormat
                                 className="hover:underline text-blue cursor-pointer"
+                                prefix="Rp. "
                                 decimalSeparator=","
                                 value={totalBiaya}
                                 displayType="text"
