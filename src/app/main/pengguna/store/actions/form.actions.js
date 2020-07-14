@@ -15,24 +15,24 @@ export const openPenggunaDialog = () => ({ type: OPEN_PENGGUNA_DIALOG });
 export const closePenggunaDialog = () => ({ type: CLOSE_PENGGUNA_DIALOG });
 
 export function savePengguna(data) {
-	return async dispatch => {
-		dispatch({ type: SAVE_PENGGUNA });
+  return async dispatch => {
+    dispatch({ type: SAVE_PENGGUNA });
 
-		let result = { success: false };
-		if (!data.id) {
-			result = await PenggunaService.createPengguna(data);
-		} else {
-			const { id } = data;
-			delete data.id;
-			result = await PenggunaService.updatePengguna(id, data);
-		}
+    let result = { success: false };
+    if (!data.id) {
+      result = await PenggunaService.createPengguna(data);
+    } else {
+      const { id } = data;
+      delete data.id;
+      result = await PenggunaService.updatePengguna(id, data);
+    }
 
-		if (!result.success) {
-			return dispatch({ type: SAVE_PENGGUNA_ERROR, payload: result.msg });
-		}
+    if (!result.success) {
+      return dispatch({ type: SAVE_PENGGUNA_ERROR, payload: result.msg });
+    }
 
-		dispatch({ type: SAVE_PENGGUNA_SUCCESS, payload: result.data });
-		dispatch(refreshListPengguna());
-		return dispatch(closePenggunaDialog());
-	};
+    dispatch({ type: SAVE_PENGGUNA_SUCCESS, payload: result.data });
+    dispatch(refreshListPengguna());
+    return dispatch(closePenggunaDialog());
+  };
 }

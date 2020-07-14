@@ -8,3 +8,7 @@ export function getFilteredArray(data, txtCari) {
   }
   return FuseUtils.filterArrayByString(arr, txtCari);
 }
+
+export function thousandSeparator(value, separator = '.') {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+}

@@ -1,10 +1,10 @@
 import {
-  OPEN_PENGGUNA_DIALOG,
-  CLOSE_PENGGUNA_DIALOG,
-  SET_PENGGUNA_FORM,
-  SAVE_PENGGUNA,
-  SAVE_PENGGUNA_ERROR,
-  SAVE_PENGGUNA_SUCCESS
+  OPEN_PACKING_DIALOG,
+  CLOSE_PACKING_DIALOG,
+  SET_PACKING_FORM,
+  SAVE_PACKING,
+  SAVE_PACKING_ERROR,
+  SAVE_PACKING_SUCCESS
 } from '../actions';
 
 const initialState = {
@@ -19,37 +19,37 @@ const initialState = {
 
 function formReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_PENGGUNA_FORM:
+    case SET_PACKING_FORM:
       return {
         ...state,
         data: action.data
       };
-    case OPEN_PENGGUNA_DIALOG:
+    case OPEN_PACKING_DIALOG:
       return {
         ...state,
         props: {
           open: true
         }
       };
-    case CLOSE_PENGGUNA_DIALOG:
+    case CLOSE_PACKING_DIALOG:
       return {
         ...initialState
       };
-    case SAVE_PENGGUNA:
+    case SAVE_PACKING:
       return {
         ...state,
         isLoading: true,
         isError: false,
         msg: ''
       };
-    case SAVE_PENGGUNA_ERROR:
+    case SAVE_PACKING_ERROR:
       return {
         ...state,
         isLoading: false,
         isError: true,
         msg: action.payload
       };
-    case SAVE_PENGGUNA_SUCCESS:
+    case SAVE_PACKING_SUCCESS:
       return {
         ...state,
         isLoading: false,

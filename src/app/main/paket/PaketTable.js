@@ -80,7 +80,7 @@ function PaketTable() {
   };
 
   return (
-    <TableContainer component={Paper} elevation={8} className="my-12">
+    <TableContainer component={Paper} elevation={5} className="my-12">
       <Table stickyHeader size="small">
         <TableHead>
           <TableRow>

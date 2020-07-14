@@ -195,13 +195,17 @@ function TransaksiBarangList() {
                                           </td>
                                           <td className="text-12">{item.jumlah}</td>
                                           <td className="text-12">
-                                            <NumberFormat
-                                              prefix="Rp. "
-                                              decimalSeparator=","
-                                              value={item.biaya || 0}
-                                              displayType="text"
-                                              thousandSeparator="."
-                                            />
+                                            {item.biaya ? (
+                                              <NumberFormat
+                                                prefix="Rp. "
+                                                decimalSeparator=","
+                                                value={item.biaya || 0}
+                                                displayType="text"
+                                                thousandSeparator="."
+                                              />
+                                            ) : (
+                                              '-'
+                                            )}
                                           </td>
                                         </tr>
                                       ))}
@@ -212,23 +216,29 @@ function TransaksiBarangList() {
                               arrow
                               placement="left"
                             >
-                              <NumberFormat
-                                className="hover:underline text-blue cursor-pointer"
-                                prefix="Rp. "
-                                decimalSeparator=","
-                                value={totalBiaya}
-                                displayType="text"
-                                thousandSeparator="."
-                              />
+                              {totalBiaya ? (
+                                <NumberFormat
+                                  className="hover:underline text-blue cursor-pointer"
+                                  prefix="Rp. "
+                                  decimalSeparator=","
+                                  value={totalBiaya}
+                                  displayType="text"
+                                  thousandSeparator="."
+                                />
+                              ) : (
+                                <Typography>-</Typography>
+                              )}
                             </Tooltip>
                           </TableCell>
                           <TableCell>{transaksi.catatan}</TableCell>
                           <TableCell className="w-24">
-                            <Tooltip title="Hapus Transaksi" placement="left">
-                              <IconButton size="small" onClick={() => handleDeleteTransaksiBarang(transaksi)}>
-                                <Icon className="text-red">close</Icon>
-                              </IconButton>
-                            </Tooltip>
+                            {transaksi.catatan !== 'Packing' && (
+                              <Tooltip title="Hapus Transaksi" placement="left">
+                                <IconButton size="small" onClick={() => handleDeleteTransaksiBarang(transaksi)}>
+                                  <Icon className="text-red">close</Icon>
+                                </IconButton>
+                              </Tooltip>
+                            )}
                           </TableCell>
                         </TableRow>
                       );

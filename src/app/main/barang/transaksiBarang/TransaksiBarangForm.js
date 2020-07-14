@@ -84,7 +84,7 @@ function TransaksiBarangForm() {
   };
 
   const removeBarang = idx => {
-    const newItems = form.items.filter((item, index) => idx !== index);
+    const newItems = form.items.filter((_item, index) => idx !== index);
     setForm({ ...form, items: newItems });
   };
 

@@ -167,7 +167,7 @@ function PaketForm() {
             <TextField
               variant="outlined"
               placeholder="ketik disini. . ."
-              style={{ width: '45%' }}
+              fullWidth
               name="keterangan"
               multiline
               rows={3}

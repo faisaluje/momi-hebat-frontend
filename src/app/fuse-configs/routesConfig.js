@@ -10,6 +10,7 @@ import DetailAgenConfig from 'app/main/agen/detail/DetailAgenConfig';
 import SaldoConfig from 'app/main/saldo/SaldoConfig';
 import BarangConfig from 'app/main/barang/BarangConfig';
 import PaketConfig from 'app/main/paket/PaketConfig';
+import PackingConfig from 'app/main/packing/PackingConfig';
 
 const routeConfigs = [
   LoginConfig,
@@ -20,7 +21,8 @@ const routeConfigs = [
   AgenConfig,
   SaldoConfig,
   BarangConfig,
-  PaketConfig
+  PaketConfig,
+  PackingConfig
 ];
 
 const routes = [
