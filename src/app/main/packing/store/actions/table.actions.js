@@ -1,4 +1,6 @@
+import { refreshListBarang, refreshListTransaksiBarang } from 'app/main/barang/store/actions';
 import PaketService from 'app/main/paket/services/paket.service';
+import { refreshListPaket } from 'app/main/paket/store/actions';
 import PackingService from '../../services/packing.service';
 
 export const GET_LIST_PACKING = 'GET_LIST_PACKING';
@@ -43,6 +45,9 @@ export function deletePacking(id) {
       return dispatch({ type: GET_LIST_PACKING_ERROR, payload: result.msg });
     }
 
+    dispatch(refreshListBarang());
+    dispatch(refreshListPaket());
+    dispatch(refreshListTransaksiBarang());
     return dispatch(refreshListPacking());
   };
 }

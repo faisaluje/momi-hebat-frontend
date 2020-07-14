@@ -1,3 +1,5 @@
+import { refreshListBarang, refreshListTransaksiBarang } from 'app/main/barang/store/actions';
+import { refreshListPaket } from 'app/main/paket/store/actions';
 import PackingService from '../../services/packing.service';
 import { refreshListPacking } from './table.actions';
 
@@ -26,6 +28,9 @@ export function savePacking(data) {
 
     dispatch({ type: SAVE_PACKING_SUCCESS, payload: result.data });
     dispatch(refreshListPacking());
+    dispatch(refreshListBarang());
+    dispatch(refreshListPaket());
+    dispatch(refreshListTransaksiBarang());
     return dispatch(closePackingDialog());
   };
 }

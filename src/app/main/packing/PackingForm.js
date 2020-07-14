@@ -194,7 +194,7 @@ function PackingForm() {
             <div className="flex mb-16" key={idx}>
               <KaryawnAutoComplete
                 id={`karyawan-autocomplete-${idx}`}
-                disabled={data?.id}
+                disabled={!!data?.id}
                 style={{ width: '25rem' }}
                 label="Nama Karyawan"
                 data={listKaryawan || []}
@@ -220,7 +220,7 @@ function PackingForm() {
                 id={`paket-autocomplete-${idx}`}
                 style={{ width: '25rem', margin: '0 2rem 0 2rem' }}
                 label="Nama Paket"
-                disabled={data?.id}
+                disabled={!!data?.id}
                 data={listPaket || []}
                 value={proses.jenisPaket}
                 required
@@ -243,7 +243,7 @@ function PackingForm() {
               <NumberFormat
                 id={`jumlah-paket-${idx}`}
                 label="Qty"
-                disabled={data?.id}
+                disabled={!!data?.id}
                 className="mx-0 sm:mx-20"
                 value={proses.jumlah || ''}
                 onValueChange={val => setInForm(`proses[${idx}].jumlah`, val.value)}

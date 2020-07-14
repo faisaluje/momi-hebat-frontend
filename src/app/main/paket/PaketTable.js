@@ -17,7 +17,7 @@ import {
   Tooltip,
   Typography
 } from '@material-ui/core';
-import { getFilteredArray } from 'app/Utils';
+import { getFilteredArray, thousandSeparator } from 'app/Utils';
 import NumberFormat from 'react-number-format';
 import { closeDialog, openDialog } from 'app/store/actions';
 import { getListPaket, openPaketDialog, savePaket, setPaketForm } from './store/actions';
@@ -137,7 +137,7 @@ function PaketTable() {
                     '-'
                   )}
                 </TableCell>
-                <TableCell>Stok Tersedia</TableCell>
+                <TableCell>{paket.stok?.jumlah ? thousandSeparator(paket.stok?.jumlah) : '-'}</TableCell>
                 <TableCell>
                   <FormControlLabel
                     control={

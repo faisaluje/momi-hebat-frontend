@@ -37,7 +37,7 @@ function PackingToolbar() {
           size="small"
           variant="contained"
           color="primary"
-          startIcon={<Icon>category</Icon>}
+          startIcon={<Icon>group</Icon>}
           // onClick={() => dispatch(openListTransaksiBarangDialog())}
         >
           Karyawan
