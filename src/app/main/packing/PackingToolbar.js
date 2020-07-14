@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography, TextField, Button, Icon } from '@material-ui/core';
 import { openPackingDialog, refreshListPacking, setTxtCariPacking } from './store/actions';
+import { openListKaryawanDialog } from './karyawan/store/actions';
 
 function PackingToolbar() {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ function PackingToolbar() {
           variant="contained"
           color="primary"
           startIcon={<Icon>group</Icon>}
-          // onClick={() => dispatch(openListTransaksiBarangDialog())}
+          onClick={() => dispatch(openListKaryawanDialog())}
         >
           Karyawan
         </Button>

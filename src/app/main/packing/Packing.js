@@ -11,6 +11,7 @@ import PackingToolbar from './PackingToolbar';
 import PackingTable from './PackingTable';
 import PackingDialog from './PackingDialog';
 import { getListPacking } from './store/actions';
+import Karyawan from './karyawan/Karyawan';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,6 +33,7 @@ function Packing(props) {
 
   return (
     <>
+      <Karyawan />
       <PackingDialog />
       <div className={clsx(classes.root, 'p-8')}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">

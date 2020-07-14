@@ -18,6 +18,7 @@ import {
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import NumberFormat from 'react-number-format';
+import { thousandSeparator } from 'app/Utils';
 import KaryawanService from './services/karyawan.service';
 import PaketService from '../paket/services/paket.service';
 import { savePacking, setPackingForm } from './store/actions';
@@ -190,76 +191,91 @@ function PackingForm() {
             </div>
           )}
 
-          {form?.proses?.map((proses, idx) => (
-            <div className="flex mb-16" key={idx}>
-              <KaryawnAutoComplete
-                id={`karyawan-autocomplete-${idx}`}
-                disabled={!!data?.id}
-                style={{ width: '25rem' }}
-                label="Nama Karyawan"
-                data={listKaryawan || []}
-                value={proses.karyawan}
-                required
-                loading={isLoadingKaryawan}
-                onChange={(_event, newValue) => {
-                  if (newValue) {
-                    if (newValue.inputValue) {
-                      setInForm(`proses[${idx}].karyawan`, { nama: newValue.inputValue });
-                    }
+          {form?.proses?.map((proses, idx) => {
+            console.log(proses);
+            return (
+              <div className="flex mb-16" key={idx}>
+                <KaryawnAutoComplete
+                  id={`karyawan-autocomplete-${idx}`}
+                  disabled={!!data?.id}
+                  style={{ width: '25rem' }}
+                  label="Nama Karyawan"
+                  data={listKaryawan || []}
+                  value={proses.karyawan}
+                  required
+                  loading={isLoadingKaryawan}
+                  onChange={(_event, newValue) => {
+                    if (newValue) {
+                      if (newValue.inputValue) {
+                        setInForm(`proses[${idx}].karyawan`, { nama: newValue.inputValue });
+                      }
 
-                    if (newValue.id) {
-                      setInForm(`proses[${idx}].karyawan`, newValue);
+                      if (newValue.id) {
+                        setInForm(`proses[${idx}].karyawan`, newValue);
+                      }
+                    } else {
+                      setInForm(`proses[${idx}].karyawan`, null);
                     }
-                  } else {
-                    setInForm(`proses[${idx}].karyawan`, null);
+                  }}
+                />
+
+                <PaketAutoComplete
+                  id={`paket-autocomplete-${idx}`}
+                  style={{ width: '25rem', margin: '0 2rem 0 2rem' }}
+                  label="Nama Paket"
+                  disabled={!!data?.id}
+                  data={listPaket || []}
+                  value={proses.jenisPaket}
+                  required
+                  loading={isLoadingPaket}
+                  onChange={(_event, newValue) => {
+                    if (newValue) {
+                      if (newValue.inputValue) {
+                        setInForm(`proses[${idx}].jenisPaket`, { nama: newValue.inputValue });
+                      }
+
+                      if (newValue.id) {
+                        setInForm(`proses[${idx}].jenisPaket`, newValue);
+                      }
+                    } else {
+                      setInForm(`proses[${idx}].jenisPaket`, null);
+                    }
+                  }}
+                />
+
+                <NumberFormat
+                  id={`jumlah-paket-${idx}`}
+                  label="Qty"
+                  disabled={!!data?.id}
+                  className="mx-0 sm:mx-20"
+                  value={proses.jumlah || ''}
+                  onValueChange={val => setInForm(`proses[${idx}].jumlah`, val.value)}
+                  customInput={TextField}
+                  thousandSeparator="."
+                  decimalSeparator=","
+                  required
+                />
+
+                <TextField
+                  id={`biaya-karyawan-${idx}`}
+                  label="Biaya"
+                  className="mx-0 sm:mx-20"
+                  value={
+                    proses.jenisPaket ? `Rp. ${thousandSeparator(proses.jumlah * proses.jenisPaket.biayaPacking)}` : '-'
                   }
-                }}
-              />
+                  InputProps={{
+                    readOnly: true
+                  }}
+                />
 
-              <PaketAutoComplete
-                id={`paket-autocomplete-${idx}`}
-                style={{ width: '25rem', margin: '0 2rem 0 2rem' }}
-                label="Nama Paket"
-                disabled={!!data?.id}
-                data={listPaket || []}
-                value={proses.jenisPaket}
-                required
-                loading={isLoadingPaket}
-                onChange={(_event, newValue) => {
-                  if (newValue) {
-                    if (newValue.inputValue) {
-                      setInForm(`proses[${idx}].jenisPaket`, { nama: newValue.inputValue });
-                    }
-
-                    if (newValue.id) {
-                      setInForm(`proses[${idx}].jenisPaket`, newValue);
-                    }
-                  } else {
-                    setInForm(`proses[${idx}].jenisPaket`, null);
-                  }
-                }}
-              />
-
-              <NumberFormat
-                id={`jumlah-paket-${idx}`}
-                label="Qty"
-                disabled={!!data?.id}
-                className="mx-0 sm:mx-20"
-                value={proses.jumlah || ''}
-                onValueChange={val => setInForm(`proses[${idx}].jumlah`, val.value)}
-                customInput={TextField}
-                thousandSeparator="."
-                decimalSeparator=","
-                required
-              />
-
-              {!data?.id && (
-                <IconButton onClick={() => removeProses(idx)}>
-                  <Icon className="text-red">delete_outline</Icon>
-                </IconButton>
-              )}
-            </div>
-          ))}
+                {!data?.id && (
+                  <IconButton onClick={() => removeProses(idx)}>
+                    <Icon className="text-red">delete_outline</Icon>
+                  </IconButton>
+                )}
+              </div>
+            );
+          })}
         </FuseAnimateGroup>
       </DialogContent>
 
