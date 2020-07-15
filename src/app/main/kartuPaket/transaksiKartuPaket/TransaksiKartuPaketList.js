@@ -192,7 +192,7 @@ function TransaksiKartuPaketList() {
                                           <td className="text-12">
                                             {idx + 1}. {item.kartuPaket.nama}
                                           </td>
-                                          <td className="text-12">
+                                          <td className="text-12 pr-12">
                                             {item.jumlah ? thousandSeparator(item.jumlah) : '-'}
                                           </td>
                                         </tr>
@@ -207,7 +207,6 @@ function TransaksiKartuPaketList() {
                               {totalKartuPaket ? (
                                 <NumberFormat
                                   className="hover:underline text-blue cursor-pointer"
-                                  prefix="Rp. "
                                   decimalSeparator=","
                                   value={totalKartuPaket}
                                   displayType="text"

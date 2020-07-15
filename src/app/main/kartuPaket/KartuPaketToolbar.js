@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Typography, TextField, Button, Icon } from '@material-ui/core';
 import {
   openListTransaksiKartuPaketDialog,
-  refreshListTransaksiKartuPaket,
+  openTransaksiKartuPaketDialog,
+  refreshListKartuPaket,
   setTxtCariKartuPaket
 } from './store/actions';
 
@@ -27,7 +28,7 @@ function KartuPaketToolbar() {
           color="primary"
           startIcon={<Icon>refresh</Icon>}
           className="ml-24"
-          onClick={() => dispatch(refreshListTransaksiKartuPaket())}
+          onClick={() => dispatch(refreshListKartuPaket())}
         >
           Refresh
         </Button>
@@ -53,7 +54,7 @@ function KartuPaketToolbar() {
           variant="contained"
           color="primary"
           startIcon={<Icon>add</Icon>}
-          // onClick={() => dispatch(openTransaksiBarangDialog())}
+          onClick={() => dispatch(openTransaksiKartuPaketDialog())}
         >
           Kartu Paket Masuk
         </Button>

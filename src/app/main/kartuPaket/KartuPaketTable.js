@@ -28,7 +28,7 @@ function KartuPaketTable() {
           <TableRow>
             <TableCell style={{ width: '5rem' }}>No</TableCell>
             <TableCell>Nama Kartu Paket</TableCell>
-            <TableCell>Jumlah Stok Tersedia</TableCell>
+            <TableCell align="center">Jumlah Stok Tersedia</TableCell>
           </TableRow>
         </TableHead>
 
@@ -40,7 +40,7 @@ function KartuPaketTable() {
                 <TableCell>
                   <Typography>{item.nama || '-'}</Typography>
                 </TableCell>
-                <TableCell>{item.stok ? thousandSeparator(item.stok) : '-'}</TableCell>
+                <TableCell align="center">{item.stok ? thousandSeparator(item.stok) : '-'}</TableCell>
               </TableRow>
             ))
           ) : (

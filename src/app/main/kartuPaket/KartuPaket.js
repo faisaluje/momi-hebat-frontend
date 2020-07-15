@@ -10,6 +10,7 @@ import reducer from './store/reducers';
 import KartuPaketToolbar from './KartuPaketToolbar';
 import KartuPaketTable from './KartuPaketTable';
 import TransaksiKartuPaketList from './transaksiKartuPaket/TransaksiKartuPaketList';
+import TransaksiKartuPaketDialog from './transaksiKartuPaket/TransaksiKartuPaketDialog';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,7 +26,7 @@ function KartuPaket(props) {
   return (
     <>
       <TransaksiKartuPaketList />
-      {/* <TransaksiBarangDialog /> */}
+      <TransaksiKartuPaketDialog />
       <div className={clsx(classes.root, 'p-8')}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
           <Link color="inherit" to="/" className="flex items-center">
