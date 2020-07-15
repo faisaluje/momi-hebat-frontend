@@ -2,10 +2,10 @@ import { URL_API } from 'app/Constants';
 import ErrorService from 'app/services/error.service';
 import Axios from 'axios';
 
-class TransaksiBarangService {
-  static async getListTransaksiBarang(periodeId = null) {
+class TransaksiKartuPaketService {
+  static async getListTransaksiKartuPaketData(periodeId = null) {
     try {
-      const { data } = await Axios.get(`${URL_API}/transaksi-barang`, {
+      const { data } = await Axios.get(`${URL_API}/transaksi-kartu-paket`, {
         params: {
           periodeId
         },
@@ -25,9 +25,9 @@ class TransaksiBarangService {
     }
   }
 
-  static async createTransaksiBarang(data) {
+  static async createTransaksiKartuPaket(data) {
     try {
-      const result = await Axios.post(`${URL_API}/transaksi-barang`, { ...data }, { timeout: 30000 });
+      const result = await Axios.post(`${URL_API}/transaksi-kartu-paket`, { ...data }, { timeout: 30000 });
       if (!result.data) {
         throw new Error('Hasil tidak diharapkan');
       }
@@ -41,9 +41,9 @@ class TransaksiBarangService {
     }
   }
 
-  static async deleteTransaksiBarang(id) {
+  static async deleteTransaksiKartuPaket(id) {
     try {
-      const result = await Axios.delete(`${URL_API}/transaksi-barang/${id}`, { timeout: 30000 });
+      const result = await Axios.delete(`${URL_API}/transaksi-kartu-paket/${id}`, { timeout: 30000 });
       if (result.status !== 204) {
         throw new Error('Hasil tidak diharapkan');
       }
@@ -58,4 +58,4 @@ class TransaksiBarangService {
   }
 }
 
-export default TransaksiBarangService;
+export default TransaksiKartuPaketService;

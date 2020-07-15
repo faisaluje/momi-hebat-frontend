@@ -9,6 +9,7 @@ import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import reducer from './store/reducers';
 import KartuPaketToolbar from './KartuPaketToolbar';
 import KartuPaketTable from './KartuPaketTable';
+import TransaksiKartuPaketList from './transaksiKartuPaket/TransaksiKartuPaketList';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,8 +24,8 @@ function KartuPaket(props) {
 
   return (
     <>
-      {/* <TransaksiBarangList />
-      <TransaksiBarangDialog /> */}
+      <TransaksiKartuPaketList />
+      {/* <TransaksiBarangDialog /> */}
       <div className={clsx(classes.root, 'p-8')}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
           <Link color="inherit" to="/" className="flex items-center">

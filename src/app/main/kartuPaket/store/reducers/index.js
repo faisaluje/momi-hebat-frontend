@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import table from './table.reducer';
+import transaksi from './transaksi.reducer';
 
 const reducer = combineReducers({
-  table
+  table,
+  transaksi
 });
 
 export default reducer;

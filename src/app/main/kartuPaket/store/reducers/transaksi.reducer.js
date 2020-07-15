@@ -1,18 +1,18 @@
 import {
-  CLOSE_LIST_TRANSAKSI_BARANG_DIALOG,
-  CLOSE_TRANSAKSI_BARANG_DIALOG,
-  EXIT_LIST_TRANSAKSI_BARANG,
-  GET_LIST_TRANSAKSI_BARANG,
-  GET_LIST_TRANSAKSI_BARANG_ERROR,
-  GET_LIST_TRANSAKSI_BARANG_SUCCESS,
-  OPEN_LIST_TRANSAKSI_BARANG_DIALOG,
-  OPEN_TRANSAKSI_BARANG_DIALOG,
-  REFRESH_LIST_TRANSAKSI_BARANG,
-  SAVE_TRANSAKSI_BARANG,
-  SAVE_TRANSAKSI_BARANG_ERROR,
-  SAVE_TRANSAKSI_BARANG_SUCCESS,
-  SET_TRANSAKSI_BARANG_FORM,
-  SET_TXT_CARI_TRANSAKSI_BARANG
+  CLOSE_LIST_TRANSAKSI_KARTU_PAKET_DIALOG,
+  CLOSE_TRANSAKSI_KARTU_PAKET_DIALOG,
+  EXIT_LIST_TRANSAKSI_KARTU_PAKET,
+  GET_LIST_TRANSAKSI_KARTU_PAKET,
+  GET_LIST_TRANSAKSI_KARTU_PAKET_ERROR,
+  GET_LIST_TRANSAKSI_KARTU_PAKET_SUCCESS,
+  OPEN_LIST_TRANSAKSI_KARTU_PAKET_DIALOG,
+  OPEN_TRANSAKSI_KARTU_PAKET_DIALOG,
+  REFRESH_LIST_TRANSAKSI_KARTU_PAKET,
+  SAVE_TRANSAKSI_KARTU_PAKET,
+  SAVE_TRANSAKSI_KARTU_PAKET_ERROR,
+  SAVE_TRANSAKSI_KARTU_PAKET_SUCCESS,
+  SET_TRANSAKSI_KARTU_PAKET_FORM,
+  SET_TXT_CARI_TRANSAKSI_KARTU_PAKET
 } from '../actions';
 
 const initialState = {
@@ -38,22 +38,22 @@ const initialState = {
 
 function transaksiReducer(state = initialState, action) {
   switch (action.type) {
-    case OPEN_LIST_TRANSAKSI_BARANG_DIALOG:
+    case OPEN_LIST_TRANSAKSI_KARTU_PAKET_DIALOG:
       return {
         ...state,
         props: { open: true }
       };
-    case CLOSE_LIST_TRANSAKSI_BARANG_DIALOG:
+    case CLOSE_LIST_TRANSAKSI_KARTU_PAKET_DIALOG:
       return {
         ...state,
         props: { open: false }
       };
-    case REFRESH_LIST_TRANSAKSI_BARANG:
+    case REFRESH_LIST_TRANSAKSI_KARTU_PAKET:
       return {
         ...state,
         isRefresh: true
       };
-    case GET_LIST_TRANSAKSI_BARANG:
+    case GET_LIST_TRANSAKSI_KARTU_PAKET:
       return {
         ...state,
         isLoading: true,
@@ -61,27 +61,27 @@ function transaksiReducer(state = initialState, action) {
         isError: false,
         msg: ''
       };
-    case GET_LIST_TRANSAKSI_BARANG_ERROR:
+    case GET_LIST_TRANSAKSI_KARTU_PAKET_ERROR:
       return {
         ...state,
         isLoading: false,
         isError: true,
         msg: action.payload
       };
-    case GET_LIST_TRANSAKSI_BARANG_SUCCESS:
+    case GET_LIST_TRANSAKSI_KARTU_PAKET_SUCCESS:
       return {
         ...state,
         isLoading: false,
         data: action.payload
       };
-    case SET_TXT_CARI_TRANSAKSI_BARANG:
+    case SET_TXT_CARI_TRANSAKSI_KARTU_PAKET:
       return {
         ...state,
         txtCari: action.txtCari
       };
-    case EXIT_LIST_TRANSAKSI_BARANG:
+    case EXIT_LIST_TRANSAKSI_KARTU_PAKET:
       return { ...initialState };
-    case SET_TRANSAKSI_BARANG_FORM:
+    case SET_TRANSAKSI_KARTU_PAKET_FORM:
       return {
         ...state,
         form: {
@@ -89,7 +89,7 @@ function transaksiReducer(state = initialState, action) {
           data: action.data
         }
       };
-    case OPEN_TRANSAKSI_BARANG_DIALOG:
+    case OPEN_TRANSAKSI_KARTU_PAKET_DIALOG:
       return {
         ...state,
         form: {
@@ -97,14 +97,14 @@ function transaksiReducer(state = initialState, action) {
           props: { open: true }
         }
       };
-    case CLOSE_TRANSAKSI_BARANG_DIALOG:
+    case CLOSE_TRANSAKSI_KARTU_PAKET_DIALOG:
       return {
         ...state,
         form: {
           ...initialState.form
         }
       };
-    case SAVE_TRANSAKSI_BARANG:
+    case SAVE_TRANSAKSI_KARTU_PAKET:
       return {
         ...state,
         form: {
@@ -114,7 +114,7 @@ function transaksiReducer(state = initialState, action) {
           msg: ''
         }
       };
-    case SAVE_TRANSAKSI_BARANG_ERROR:
+    case SAVE_TRANSAKSI_KARTU_PAKET_ERROR:
       return {
         ...state,
         form: {
@@ -124,7 +124,7 @@ function transaksiReducer(state = initialState, action) {
           msg: action.payload
         }
       };
-    case SAVE_TRANSAKSI_BARANG_SUCCESS:
+    case SAVE_TRANSAKSI_KARTU_PAKET_SUCCESS:
       return {
         ...state,
         form: {
