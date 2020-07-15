@@ -11,21 +11,24 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  Typography
 } from '@material-ui/core';
 import AgenStatus from 'app/main/agen/AgenStatus';
 import GreenSwitch from 'app/main/components/GreenSwitch';
 import { closeDialog, openDialog } from 'app/store/actions';
 import { getFilteredArray } from 'app/Utils';
-import { orderBy } from 'lodash';
+import { orderBy, sumBy } from 'lodash';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getListKaryawan } from './store/actions';
+import { getListKaryawan, openKaryawanDialog, saveKaryawan, setKaryawanForm } from './store/actions';
 
 function KaryawanTable() {
   const dispatch = useDispatch();
   const { isRefresh, data, status, txtCari } = useSelector(({ karyawan }) => karyawan.table);
+  const { data: dataPacking } = useSelector(({ packing }) => packing.table);
   const [rows, setRows] = React.useState([]);
+  const [headers, setHeaders] = React.useState([]);
 
   React.useEffect(() => {
     if (isRefresh) {
@@ -40,6 +43,12 @@ function KaryawanTable() {
       setRows(orderBy(filtered, ['no']));
     }
   }, [data, txtCari]);
+
+  React.useEffect(() => {
+    if (dataPacking?.listPaket) {
+      setHeaders(dataPacking.listPaket);
+    }
+  }, [dataPacking]);
 
   const handleChangeStatus = karyawan => {
     dispatch(
@@ -66,13 +75,18 @@ function KaryawanTable() {
   };
 
   const onChangeStatus = karyawan => {
-    // dispatch(
-    //   saveAgen({
-    //     ...karyawan,
-    //     status: karyawan.status === AgenStatus.aktif.value ? AgenStatus.tidak_aktif.value : AgenStatus.aktif.value
-    //   })
-    // );
+    dispatch(
+      saveKaryawan({
+        ...karyawan,
+        status: karyawan.status === AgenStatus.aktif.value ? AgenStatus.tidak_aktif.value : AgenStatus.aktif.value
+      })
+    );
     dispatch(closeDialog());
+  };
+
+  const onClickKaryawan = karyawan => {
+    dispatch(setKaryawanForm(karyawan));
+    dispatch(openKaryawanDialog());
   };
 
   return (
@@ -82,19 +96,53 @@ function KaryawanTable() {
           <TableRow>
             <TableCell style={{ width: '5rem' }}>No.</TableCell>
             <TableCell>Nama Karyawan</TableCell>
-            <TableCell>Paket</TableCell>
-            <TableCell> </TableCell>
+            {headers.length > 0 &&
+              headers.map((paket, idx) => (
+                <TableCell key={idx} align="center">
+                  {paket.nama}
+                </TableCell>
+              ))}
+            <TableCell>Status</TableCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
           {rows.length > 0 ? (
             rows.map(karyawan => {
+              let prosesKaryawan = [];
+
+              if (dataPacking.listPacking) {
+                dataPacking.listPacking.forEach(packing => {
+                  const prosesSelected = packing.proses.filter(proses => proses.karyawan.id === karyawan.id);
+                  if (prosesSelected.length > 0) {
+                    prosesKaryawan = [...prosesKaryawan, ...prosesSelected];
+                  }
+                });
+              }
+
               return (
                 <TableRow key={karyawan.id}>
                   <TableCell>{karyawan.no}</TableCell>
-                  <TableCell>{karyawan.nama}</TableCell>
-                  <TableCell>Paket</TableCell>
+                  <TableCell>
+                    <Typography
+                      className="text-blue hover:underline font-bold text-14"
+                      role="button"
+                      onClick={() => onClickKaryawan(karyawan)}
+                    >
+                      {karyawan.nama}
+                    </Typography>
+                  </TableCell>
+                  {headers.length > 0 &&
+                    headers.map((paket, idx) => {
+                      const paketSelected = prosesKaryawan.filter(proses => proses.jenisPaket.id === paket.id);
+                      const jumlahPaket = paketSelected.length > 0 ? sumBy(paketSelected, 'jumlah') : '-';
+
+                      return (
+                        <TableCell key={idx} align="center">
+                          {jumlahPaket}
+                        </TableCell>
+                      );
+                    })}
                   <TableCell>
                     <FormControlLabel
                       control={

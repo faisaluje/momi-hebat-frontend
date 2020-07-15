@@ -7,6 +7,7 @@ import KaryawanTable from './KaryawanTable';
 import KaryawanToolbar from './KaryawanToolbar';
 import { closeListKaryawanDialog } from './store/actions';
 import reducer from './store/reducers';
+import KaryawanDialog from './KaryawanDialog';
 
 function Karyawan() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function Karyawan() {
         </div>
       ) : (
         <>
+          <KaryawanDialog />
           <Toolbar className="flex flex-row items-center justify-between w-full">
             <div className="flex flex-col items-center w-full">
               <Typography variant="h6" color="inherit" className="w-full mt-12">

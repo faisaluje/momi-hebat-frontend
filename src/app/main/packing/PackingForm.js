@@ -192,7 +192,6 @@ function PackingForm() {
           )}
 
           {form?.proses?.map((proses, idx) => {
-            console.log(proses);
             return (
               <div className="flex mb-16" key={idx}>
                 <KaryawnAutoComplete

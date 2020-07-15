@@ -2,7 +2,7 @@ import { Button, Icon, MenuItem, TextField, Typography } from '@material-ui/core
 import AgenStatus from 'app/main/agen/AgenStatus';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { refreshListKaryawan, setStatusKaryawan, setTxtCariKaryawan } from './store/actions';
+import { openKaryawanDialog, refreshListKaryawan, setStatusKaryawan, setTxtCariKaryawan } from './store/actions';
 
 function KaryawanToolbar() {
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ function KaryawanToolbar() {
           variant="contained"
           color="primary"
           startIcon={<Icon>add</Icon>}
-          // onClick={() => dispatch(openPackingDialog())}
+          onClick={() => dispatch(openKaryawanDialog())}
         >
           Tambah Karyawan
         </Button>
