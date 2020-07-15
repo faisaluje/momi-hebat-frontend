@@ -11,6 +11,7 @@ import SaldoConfig from 'app/main/saldo/SaldoConfig';
 import BarangConfig from 'app/main/barang/BarangConfig';
 import PaketConfig from 'app/main/paket/PaketConfig';
 import PackingConfig from 'app/main/packing/PackingConfig';
+import KartuPaketConfig from 'app/main/kartuPaket/KartuPaketConfig';
 
 const routeConfigs = [
   LoginConfig,
@@ -22,7 +23,8 @@ const routeConfigs = [
   SaldoConfig,
   BarangConfig,
   PaketConfig,
-  PackingConfig
+  PackingConfig,
+  KartuPaketConfig
 ];
 
 const routes = [

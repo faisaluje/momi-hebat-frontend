@@ -25,10 +25,6 @@ function MenuInventory(props) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
-  const handleClickMenu = () => {
-    console.log('You clicked the menu');
-  };
-
   const handleListKeyDown = event => {
     if (event.key === 'Tab') {
       event.preventDefault();
@@ -82,7 +78,7 @@ function MenuInventory(props) {
                   </ListItemIcon>
                   <ListItemText primary="Paket" />
                 </MenuItem>
-                <MenuItem onClick={handleClickMenu}>
+                <MenuItem onClick={() => History.push('/kartu-paket')}>
                   <ListItemIcon>
                     <Icon>payment</Icon>
                   </ListItemIcon>

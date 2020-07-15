@@ -245,7 +245,7 @@ function TransaksiBarangList() {
                     })
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={4} align="center">
+                      <TableCell colSpan={6} align="center">
                         Belum ada Transaksi. . .
                       </TableCell>
                     </TableRow>

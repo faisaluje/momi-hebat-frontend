@@ -150,7 +150,7 @@ function PaketTable() {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={3} align="center">
+              <TableCell colSpan={6} align="center">
                 Belum ada Paket. . .
               </TableCell>
             </TableRow>
