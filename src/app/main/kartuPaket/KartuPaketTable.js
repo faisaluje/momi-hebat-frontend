@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Typography } from '@material-ui/core';
 import { getFilteredArray, thousandSeparator } from 'app/Utils';
 import { getListKartuPaket } from './store/actions';
+import { openKartuPaketDialog, setKartuPaketForm } from './store/actions/form.actions';
 
 function KartuPaketTable() {
   const dispatch = useDispatch();
@@ -21,6 +22,11 @@ function KartuPaketTable() {
     }
   }, [data, txtCari]);
 
+  const onClickKartuPaket = kartuPaket => {
+    dispatch(setKartuPaketForm(kartuPaket));
+    dispatch(openKartuPaketDialog());
+  };
+
   return (
     <TableContainer component={Paper} elevation={8} className="my-12">
       <Table stickyHeader size="small">
@@ -38,7 +44,13 @@ function KartuPaketTable() {
               <TableRow key={idx}>
                 <TableCell>{idx + 1}</TableCell>
                 <TableCell>
-                  <Typography>{item.nama || '-'}</Typography>
+                  <Typography
+                    className="text-blue hover:underline"
+                    role="button"
+                    onClick={() => onClickKartuPaket(item)}
+                  >
+                    {item.nama}
+                  </Typography>
                 </TableCell>
                 <TableCell align="center">{item.stok ? thousandSeparator(item.stok) : '-'}</TableCell>
               </TableRow>

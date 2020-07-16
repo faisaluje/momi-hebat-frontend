@@ -11,6 +11,7 @@ import KartuPaketToolbar from './KartuPaketToolbar';
 import KartuPaketTable from './KartuPaketTable';
 import TransaksiKartuPaketList from './transaksiKartuPaket/TransaksiKartuPaketList';
 import TransaksiKartuPaketDialog from './transaksiKartuPaket/TransaksiKartuPaketDialog';
+import KartuPaketDialog from './KartuPaketDialog';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,6 +26,7 @@ function KartuPaket(props) {
 
   return (
     <>
+      <KartuPaketDialog />
       <TransaksiKartuPaketList />
       <TransaksiKartuPaketDialog />
       <div className={clsx(classes.root, 'p-8')}>
