@@ -1,15 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Typography } from '@material-ui/core';
-import { getFilteredArray } from 'app/Utils';
 import NumberFormat from 'react-number-format';
 import History from '@history';
 import { getListSaldo } from './store/actions';
-import { setDetailAgen } from '../agen/detail/store/actions';
 
 function SaldoTable() {
   const dispatch = useDispatch();
-  const { isRefresh, data, txtCari } = useSelector(({ saldo }) => saldo.table);
+  const { isRefresh, data } = useSelector(({ saldo }) => saldo.table);
   const [rows, setRows] = React.useState([]);
 
   React.useEffect(() => {
@@ -20,12 +18,11 @@ function SaldoTable() {
 
   React.useEffect(() => {
     if (data) {
-      setRows(getFilteredArray(data, txtCari));
+      setRows(data?.docs);
     }
-  }, [data, txtCari]);
+  }, [data]);
 
   const onClickAgen = agen => {
-    dispatch(setDetailAgen(agen));
     History.push(`/agen/${agen.id}`);
   };
 
@@ -43,24 +40,24 @@ function SaldoTable() {
 
         <TableBody>
           {rows.length > 0 ? (
-            rows.map((saldo, idx) => (
+            rows.map((agen, idx) => (
               <TableRow key={idx}>
-                <TableCell>{saldo.agen.no}</TableCell>
+                <TableCell>{agen.no}</TableCell>
                 <TableCell>
                   <Typography
                     className="text-blue hover:underline font-bold text-14"
                     role="button"
-                    onClick={() => onClickAgen(saldo.agen)}
+                    onClick={() => onClickAgen(agen)}
                   >
-                    {saldo.agen.diri.nama?.lengkap}
+                    {agen.diri.nama?.lengkap}
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  {saldo.jumlah ? (
+                  {agen.stok?.saldo ? (
                     <NumberFormat
                       prefix="Rp. "
                       decimalSeparator=","
-                      value={saldo.jumlah}
+                      value={agen.stok.saldo}
                       displayType="text"
                       thousandSeparator="."
                     />
@@ -69,11 +66,11 @@ function SaldoTable() {
                   )}
                 </TableCell>
                 <TableCell>
-                  {saldo.bonus ? (
+                  {agen.stok?.bonus ? (
                     <NumberFormat
                       prefix="Rp. "
                       decimalSeparator=","
-                      value={saldo.bonus}
+                      value={agen.stok.bonus}
                       displayType="text"
                       thousandSeparator="."
                     />

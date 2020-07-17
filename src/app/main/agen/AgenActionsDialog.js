@@ -5,7 +5,6 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useDispatch } from 'react-redux';
 import History from '@history';
 import { setAgenForm, openAgenDialog } from './store/actions';
-import { setDetailAgen } from './detail/store/actions';
 
 function AgenActionsDialog(props) {
   const dispatch = useDispatch();
@@ -16,7 +15,6 @@ function AgenActionsDialog(props) {
   };
 
   const onClickAgenDetail = () => {
-    dispatch(setDetailAgen(agen));
     History.push(`/agen/${agen.id}`);
   };
 

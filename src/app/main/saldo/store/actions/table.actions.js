@@ -1,4 +1,4 @@
-import SaldoService from '../../services/saldo.service';
+import AgenService from 'app/main/agen/services/agen.service';
 
 export const GET_LIST_SALDO = 'GET_LIST_SALDO';
 export const GET_LIST_SALDO_ERROR = 'GET_LIST_SALDO_ERROR';
@@ -14,12 +14,11 @@ export const refreshListSaldo = () => ({ type: REFRESH_LIST_SALDO });
 export const setTxtCariSaldo = txtCari => ({ type: SET_TXT_CARI_SALDO, txtCari });
 export const setPeriodeSaldo = periodeId => ({ type: SET_PERIODE_SALDO, periodeId });
 
-export function getListSaldo(periodeId) {
+export function getListSaldo(params) {
   return async dispatch => {
     dispatch({ type: GET_LIST_SALDO });
 
-    // const listSaldo = await SaldoService.getSaldo(periodeId);
-    const listSaldo = await SaldoService.getSaldoWithAgen(periodeId);
+    const listSaldo = await AgenService.getListAgenData(params);
     if (!listSaldo.success) {
       return dispatch({ type: GET_LIST_SALDO_ERROR, payload: listSaldo.msg || 'Gagal mendapatkan data' });
     }
