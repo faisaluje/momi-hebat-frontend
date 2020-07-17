@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import reducer from './store/reducers';
 import DetailAgenForm from './DetailAgenForm';
 import DetailService from './services/detail.service';
-import { setDetailAgen } from './store/actions';
+import { exitDetailAgen, setDetailAgen } from './store/actions';
 import DetailAgenTabs from './DetailAgenTabs';
 
 const useStyles = makeStyles(theme => ({
@@ -27,7 +27,7 @@ function DetailAgen(props) {
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
-  React.useState(() => {
+  React.useEffect(() => {
     if (!agen && !isError) {
       setIsLoading(true);
       setIsError(false);
@@ -41,7 +41,11 @@ function DetailAgen(props) {
         })
         .finally(() => setIsLoading(false));
     }
-  }, []);
+  }, [agen, dispatch, isError, params.agenId]);
+
+  React.useEffect(() => {
+    return () => dispatch(exitDetailAgen());
+  }, [dispatch]);
 
   return (
     <>

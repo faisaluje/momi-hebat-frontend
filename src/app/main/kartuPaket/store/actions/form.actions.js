@@ -1,5 +1,6 @@
 import KartuPaketService from '../../services/kartuPaket.service';
 import { refreshListKartuPaket } from './table.actions';
+import { refreshListTransaksiKartuPaket } from './transaksi.actions';
 
 export const OPEN_KARTU_PAKET_DIALOG = 'OPEN_KARTU_PAKET_DIALOG';
 export const CLOSE_KARTU_PAKET_DIALOG = 'CLOSE_KARTU_PAKET_DIALOG';
@@ -29,6 +30,7 @@ export function saveKartuPaket(data) {
 
     dispatch({ type: SAVE_KARTU_PAKET_SUCCESS, payload: result.data });
     dispatch(refreshListKartuPaket());
+    dispatch(refreshListTransaksiKartuPaket());
     return dispatch(closeKartuPaketDialog());
   };
 }

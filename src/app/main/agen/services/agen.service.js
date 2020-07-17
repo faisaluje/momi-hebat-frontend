@@ -1,20 +1,14 @@
 import Axios from 'axios';
 import { URL_API } from 'app/Constants';
 import ErrorService from 'app/services/error.service';
-import AgenStatus from '../AgenStatus';
 
 class AgenService {
-  static async getListAgenData(status = AgenStatus.aktif.value) {
+  static async getListAgenData(params) {
     try {
       const { data } = await Axios.get(`${URL_API}/agen`, {
-        params: {
-          status
-        },
+        params,
         timeout: 30000
       });
-      if (!Array.isArray(data)) {
-        throw new Error('Result is not array');
-      }
 
       return { success: true, data };
     } catch (e) {

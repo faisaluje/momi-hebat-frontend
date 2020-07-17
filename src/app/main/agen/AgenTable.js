@@ -15,12 +15,10 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
-import _ from '@lodash';
 import { closeDialog, openDialog } from 'app/store/actions';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getFilteredArray } from 'app/Utils';
 import GreenSwitch from '../components/GreenSwitch';
 import AgenStatus from './AgenStatus';
 import { getListAgen, saveAgen } from './store/actions';
@@ -29,7 +27,7 @@ import AgenActionsDialog from './AgenActionsDialog';
 
 function AgenTable() {
   const dispatch = useDispatch();
-  const { isRefresh, data, txtCari, status, level } = useSelector(({ agen }) => agen.table);
+  const { isRefresh, data, txtCari, status, level, page } = useSelector(({ agen }) => agen.table);
   const [rows, setRows] = React.useState([]);
   const [openSubAgens, setOpenSubAgens] = React.useState(false);
   const [openAgenActions, setOpenAgenActions] = React.useState(false);
@@ -37,20 +35,15 @@ function AgenTable() {
 
   React.useEffect(() => {
     if (isRefresh) {
-      dispatch(getListAgen(status));
+      dispatch(getListAgen({ status, nama: txtCari, level, page }));
     }
-  }, [dispatch, isRefresh, status]);
+  }, [dispatch, isRefresh, level, page, status, txtCari]);
 
   React.useEffect(() => {
     if (data) {
-      let filtered = getFilteredArray(data, txtCari);
-      if (level) {
-        filtered = filtered.filter(item => item.level === parseInt(level));
-      }
-
-      setRows(_.orderBy(filtered, ['level', 'createdAt']));
+      setRows(data.docs || []);
     }
-  }, [data, level, txtCari]);
+  }, [data]);
 
   const onClickAgen = agen => {
     setAgenSelected(agen);

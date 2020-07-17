@@ -3,12 +3,10 @@ import ErrorService from 'app/services/error.service';
 import Axios from 'axios';
 
 class TransaksiKartuPaketService {
-  static async getListTransaksiKartuPaketData(periodeId = null) {
+  static async getListTransaksiKartuPaketData(params) {
     try {
       const { data } = await Axios.get(`${URL_API}/transaksi-kartu-paket`, {
-        params: {
-          periodeId
-        },
+        params,
         timeout: 30000
       });
 

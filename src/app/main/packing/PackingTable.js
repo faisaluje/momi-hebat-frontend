@@ -32,7 +32,6 @@ function PackingTable() {
 
   React.useEffect(() => {
     if (data) {
-      // setHeader(getFilteredArray(data.listPaket, txtCari));
       setHeader(data.listPaket);
       setRows(getFilteredArray(data.listPacking, txtCari));
     }

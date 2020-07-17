@@ -23,7 +23,7 @@ export function getListPacking(periodeId) {
 
     const listPaket = await PaketService.getListPaketData('aktif', periodeId);
     const listPacking = await PackingService.getListPackingData(periodeId);
-    if (!listPacking.success || !listPacking.success) {
+    if (!listPaket.success || !listPacking.success) {
       return dispatch({ type: GET_LIST_PACKING_ERROR, payload: `${listPacking.msg}, ${listPaket.msg}` });
     }
 

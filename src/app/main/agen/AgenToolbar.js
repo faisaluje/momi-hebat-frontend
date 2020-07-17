@@ -1,7 +1,6 @@
 import React from 'react';
-import _ from '@lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Button, Icon, MenuItem } from '@material-ui/core';
+import { TextField, Button, Icon, MenuItem, IconButton } from '@material-ui/core';
 import { setTxtCariAgen, refreshListAgen, openAgenDialog, setStatusAgen, setLevelAgen } from './store/actions';
 import AgenConfirmationDialog from './AgenConfirmationDialog';
 import AgenStatus from './AgenStatus';
@@ -10,9 +9,16 @@ function AgenToolbar() {
   const dispatch = useDispatch();
   const { txtCari, status, data, level } = useSelector(({ agen }) => agen.table);
   const [openConfirmation, setOpenConfirmation] = React.useState(false);
+  const [pencarian, setPencarian] = React.useState(txtCari);
 
   const onTambahAgen = () => {
     setOpenConfirmation(true);
+  };
+
+  const submitPencarian = e => {
+    if (e.key === 'Enter') {
+      dispatch(setTxtCariAgen(pencarian));
+    }
   };
 
   const onJenisSelected = jenisAgen => {
@@ -29,27 +35,28 @@ function AgenToolbar() {
           label="Pencarian"
           color="secondary"
           placeholder="Ketik Disini..."
-          value={txtCari}
-          onChange={event => dispatch(setTxtCariAgen(event.target.value))}
+          value={pencarian}
+          onChange={event => setPencarian(event.target.value)}
+          InputProps={{
+            endAdornment: pencarian && (
+              <IconButton size="small" onClick={() => setPencarian('')}>
+                <Icon>close</Icon>
+              </IconButton>
+            )
+          }}
+          onKeyPress={submitPencarian}
         />
 
-        {data?.length > 0 && (
-          <TextField
-            label="Level Agen"
-            select
-            className="w-80 ml-0 sm:ml-24"
-            color="secondary"
-            value={level}
-            onChange={event => dispatch(setLevelAgen(event.target.value))}
-          >
-            <MenuItem value="">Semua</MenuItem>
-            {Object.keys(_.groupBy(data, 'level')).map(item => (
-              <MenuItem key={item} value={item}>
-                {item}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          startIcon={<Icon>search</Icon>}
+          className="ml-0 sm:ml-8"
+          onClick={() => dispatch(setTxtCariAgen(pencarian))}
+        >
+          Cari
+        </Button>
 
         <Button
           size="small"
@@ -64,6 +71,22 @@ function AgenToolbar() {
       </div>
 
       <div className="flex flex-wrap items-center">
+        {data?.docs?.length > 0 && (
+          <TextField
+            label="Level Agen"
+            select
+            className="w-80 mr-0 sm:mr-24"
+            color="secondary"
+            value={level}
+            onChange={event => dispatch(setLevelAgen(event.target.value))}
+          >
+            <MenuItem value="">Semua</MenuItem>
+            <MenuItem value={1}>Level 1</MenuItem>
+            <MenuItem value={2}>Level 2</MenuItem>
+            <MenuItem value={3}>Level 3</MenuItem>
+          </TextField>
+        )}
+
         <TextField
           select
           classes={{ root: 'w-96' }}
