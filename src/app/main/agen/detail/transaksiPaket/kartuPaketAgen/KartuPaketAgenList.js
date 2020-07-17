@@ -26,6 +26,7 @@ import withReducer from 'app/store/withReducer';
 import { orderBy, sumBy } from 'lodash';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { thousandSeparator } from 'app/Utils';
 import KartuPaketAgenDialog from './KartuPaketAgenDialog';
 import {
   closeListKartuPaketAgenDialog,
@@ -44,10 +45,10 @@ function KartuPaketAgenList() {
   const [headers, setHeaders] = React.useState([]);
 
   React.useEffect(() => {
-    if (isRefresh) {
+    if (isRefresh && agen) {
       dispatch(getListKartuPaketAgen(agen.id));
     }
-  }, [agen.id, dispatch, isRefresh]);
+  }, [agen, dispatch, isRefresh]);
 
   React.useEffect(() => {
     if (data) {
@@ -78,7 +79,7 @@ function KartuPaketAgenList() {
   };
 
   const onDeleteKartuPaket = kartuPaket => {
-    dispatch(deleteTransaksiKartuPaketAgen(kartuPaket.id));
+    dispatch(deleteTransaksiKartuPaketAgen(kartuPaket.id, agen.id));
     dispatch(closeDialog());
   };
 
@@ -192,7 +193,8 @@ function KartuPaketAgenList() {
 
                             return (
                               <TableCell key={kartuPaket.id} align="center">
-                                {jumlahKartuPaketSelected}
+                                {transaksi.jenis === 'masuk' && !!jumlahKartuPaketSelected && '-'}{' '}
+                                {jumlahKartuPaketSelected ? thousandSeparator(jumlahKartuPaketSelected) : '-'}
                               </TableCell>
                             );
                           })}
@@ -213,6 +215,25 @@ function KartuPaketAgenList() {
                       </TableCell>
                     </TableRow>
                   )}
+                  <TableRow>
+                    <TableCell colSpan={2} align="center">
+                      <Typography className="font-bold">Total :</Typography>
+                    </TableCell>
+
+                    {headers.map(kartuPaket => {
+                      const stokSelected = agen.stok?.kartuPakets?.find(item => item.kartuPaket === kartuPaket.id);
+
+                      return (
+                        <TableCell key={kartuPaket.id} align="center">
+                          <Typography className="font-bold">
+                            {stokSelected?.jumlah ? thousandSeparator(stokSelected.jumlah) : '-'}
+                          </Typography>
+                        </TableCell>
+                      );
+                    })}
+
+                    <TableCell> </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>

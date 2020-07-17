@@ -1,3 +1,4 @@
+import { getDetailAgen } from 'app/main/agen/detail/store/actions';
 import KartuPaketService from 'app/main/kartuPaket/services/kartuPaket.service';
 import TransaksiKartuPaketService from 'app/main/kartuPaket/services/transaksiKartuPaket.service';
 import { refreshListKartuPaket, refreshListTransaksiKartuPaket } from 'app/main/kartuPaket/store/actions';
@@ -40,7 +41,7 @@ export function getListKartuPaketAgen(agenId) {
   };
 }
 
-export function deleteTransaksiKartuPaketAgen(id) {
+export function deleteTransaksiKartuPaketAgen(id, agenId) {
   return async dispatch => {
     dispatch({ type: GET_LIST_KARTU_PAKET_AGEN });
 
@@ -49,6 +50,7 @@ export function deleteTransaksiKartuPaketAgen(id) {
       return dispatch({ type: GET_LIST_KARTU_PAKET_AGEN_ERROR, payload: result.msg });
     }
 
+    dispatch(getDetailAgen(agenId));
     dispatch(refreshListKartuPaket());
     dispatch(refreshListTransaksiKartuPaket());
     return dispatch(refreshListKartuPaketAgen());

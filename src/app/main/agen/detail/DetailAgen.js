@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Breadcrumbs, Icon, Typography, CircularProgress } from '@material-ui/core';
+import { makeStyles, Breadcrumbs, Icon, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import clsx from 'clsx';
@@ -8,8 +8,7 @@ import withReducer from 'app/store/withReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import reducer from './store/reducers';
 import DetailAgenForm from './DetailAgenForm';
-import DetailService from './services/detail.service';
-import { exitDetailAgen, setDetailAgen } from './store/actions';
+import { exitDetailAgen, getDetailAgen } from './store/actions';
 import DetailAgenTabs from './DetailAgenTabs';
 
 const useStyles = makeStyles(theme => ({
@@ -22,24 +21,12 @@ const useStyles = makeStyles(theme => ({
 function DetailAgen(props) {
   const classes = useStyles(props);
   const dispatch = useDispatch();
-  const { agen } = useSelector(({ detailAgen }) => detailAgen.panel);
+  const { agen, isError } = useSelector(({ detailAgen }) => detailAgen.panel);
   const { params } = props.match;
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isError, setIsError] = React.useState(false);
 
   React.useEffect(() => {
     if (!agen && !isError) {
-      setIsLoading(true);
-      setIsError(false);
-      DetailService.getDetailAgenData(params.agenId)
-        .then(result => {
-          if (result.success) {
-            dispatch(setDetailAgen(result.data));
-          } else {
-            setIsError(true);
-          }
-        })
-        .finally(() => setIsLoading(false));
+      dispatch(getDetailAgen(params.agenId));
     }
   }, [agen, dispatch, isError, params.agenId]);
 
@@ -62,24 +49,17 @@ function DetailAgen(props) {
         </Breadcrumbs>
       </div>
 
-      {isLoading ? (
-        <div className={clsx(classes.root, 'flex flex-col flex-auto overflow-auto items-center p-24')}>
-          <CircularProgress color="secondary" />
-          <Typography className="mt-8">Sedang memuat data. . .</Typography>
-        </div>
-      ) : (
-        <FuseAnimateGroup
-          enter={{
-            animation: 'transition.slideDownIn',
-            delay: 200,
-            duration: 500
-          }}
-          className={clsx(classes.root, 'flex flex-col flex-auto overflow-auto items-center p-24')}
-        >
-          <DetailAgenForm />
-          <DetailAgenTabs />
-        </FuseAnimateGroup>
-      )}
+      <FuseAnimateGroup
+        enter={{
+          animation: 'transition.slideDownIn',
+          delay: 200,
+          duration: 500
+        }}
+        className={clsx(classes.root, 'flex flex-col flex-auto overflow-auto items-center p-24')}
+      >
+        <DetailAgenForm />
+        <DetailAgenTabs />
+      </FuseAnimateGroup>
     </>
   );
 }

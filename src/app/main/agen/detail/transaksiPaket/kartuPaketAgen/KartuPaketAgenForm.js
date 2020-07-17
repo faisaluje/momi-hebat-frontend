@@ -15,9 +15,11 @@ import { Alert } from '@material-ui/lab';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import JenisTransaksi from 'app/main/components/JenisTransaksi';
 import { closeDialog, openDialog, showMessage } from 'app/store/actions';
+import { thousandSeparator } from 'app/Utils';
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
+import { getDetailAgen } from '../../store/actions';
 import { createTransaksiKartuPaketAgen, setTransaksiKartuPaketAgenForm } from './store/actions';
 
 const defaultTransaksiKartuPaketState = {
@@ -34,8 +36,9 @@ function KartuPaketAgenForm() {
   const { form, setForm, setInForm } = useForm(defaultTransaksiKartuPaketState);
   const [listKartuPaket, setListKartuPaket] = React.useState([]);
   const canBeSubmitted = !!form?.tgl && form?.items?.length > 0;
-  const [stokError, setStokError] = React.useState(false);
-  const words = jenis === 'aktif' ? 'Dikembalikan' : 'Diambil';
+  // const [stokError, setStokError] = React.useState(false);
+  const stokError = false;
+  const words = jenis === 'masuk' ? 'Dikembalikan' : 'Diambil';
 
   React.useEffect(() => {
     if (data) {
@@ -62,8 +65,9 @@ function KartuPaketAgenForm() {
           variant: 'success' // success error info warning null
         })
       );
+      dispatch(getDetailAgen(agen.id));
     }
-  }, [dispatch, isError, isLoading, msg]);
+  }, [agen.id, dispatch, isError, isLoading, msg]);
 
   const handleJumlahChange = (kartuPaket, jumlah) => {
     let itemSelected =
@@ -110,18 +114,18 @@ function KartuPaketAgenForm() {
       agen: agen.id,
       items: form.items.filter(item => !['0', ''].includes(item.jumlah))
     };
-    console.log(newForm);
-    if (newForm?.items?.length > 0) {
-      if (newForm.items.find(item => item.kartuPaket.stok < item.jumlah)) {
-        setStokError(true);
-      } else {
-        setStokError(false);
-        dispatch(createTransaksiKartuPaketAgen(newForm));
-      }
-    } else {
-      setStokError(true);
-    }
+    // if (newForm?.items?.length > 0) {
+    //   if (newForm.items.find(item => item.kartuPaket.stok < item.jumlah)) {
+    //     setStokError(true);
+    //   } else {
+    //     setStokError(false);
+    //     dispatch(createTransaksiKartuPaketAgen(newForm));
+    //   }
+    // } else {
+    //   setStokError(true);
+    // }
 
+    dispatch(createTransaksiKartuPaketAgen(newForm));
     dispatch(closeDialog());
   };
 
@@ -185,10 +189,16 @@ function KartuPaketAgenForm() {
                         ? form?.items.find(item => item.kartuPaket?.id === kartuPaket.id)
                         : undefined;
 
+                    let jumlahTersedia = kartuPaket.stok;
+                    if (jenis === 'masuk') {
+                      const stokSelected = agen.stok?.kartuPakets?.find(item => item.kartuPaket === kartuPaket.id);
+                      jumlahTersedia = stokSelected?.jumlah || 0;
+                    }
+
                     return (
                       <tr key={kartuPaket.id}>
                         <td>- {kartuPaket.nama}</td>
-                        <td align="center">{kartuPaket.stok}</td>
+                        <td align="center">{thousandSeparator(jumlahTersedia)}</td>
                         <td align="center">
                           <NumberFormat
                             id={`jumlah-kartupaket-${kartuPaket.id}`}

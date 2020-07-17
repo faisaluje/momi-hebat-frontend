@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 
 function DetailAgenForm(props) {
   const classes = useStyles(props);
-  const { agen, isLoading, saldo } = useSelector(({ detailAgen }) => detailAgen.panel);
+  const { agen, isLoading } = useSelector(({ detailAgen }) => detailAgen.panel);
 
   return (
     <FuseAnimateGroup
@@ -67,7 +67,7 @@ function DetailAgenForm(props) {
           <NumberFormat
             className="text-20 font-bold"
             decimalSeparator=","
-            value={saldo ? saldo.jumlah + saldo.bonus : 0}
+            value={agen?.stok ? agen.stok.saldo || 0 + agen.stok.bonus || 0 : 0}
             displayType="text"
             thousandSeparator="."
             prefix="Rp. "

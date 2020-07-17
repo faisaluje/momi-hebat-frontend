@@ -7,13 +7,17 @@ import { useDispatch } from 'react-redux';
 import TransaksiPaketPanel from './transaksiPaket/TransaksiPaketPanel';
 import TransaksiSaldoPanel from './transaksiSaldo/TransaksiSaldoPanel';
 import { exitListTransaksiSaldo } from './transaksiSaldo/store/actions';
+import { exitListKartuPaketAgen } from './transaksiPaket/kartuPaketAgen/store/actions';
 
 function DetailAgenTabs() {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
-    return () => dispatch(exitListTransaksiSaldo());
+    return () => {
+      dispatch(exitListTransaksiSaldo());
+      dispatch(exitListKartuPaketAgen());
+    };
   }, [dispatch]);
 
   const handleChange = (_event, newValue) => {
