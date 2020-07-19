@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography, TextField, Button, Icon } from '@material-ui/core';
+import { Typography, TextField, Button, Icon, Paper } from '@material-ui/core';
 import { openPackingDialog, refreshListPacking, setTxtCariPacking } from './store/actions';
 import { openListKaryawanDialog } from './karyawan/store/actions';
 
@@ -9,10 +9,12 @@ function PackingToolbar() {
   const { txtCari } = useSelector(({ packing }) => packing.table);
 
   return (
-    <div className="m-8 mr-0 w-full flex flex-wrap justify-between">
+    <Paper elevation={3} className="p-8 mr-0 w-full flex flex-wrap justify-between">
       <div className="flex flex-wrap items-center">
         <Typography className="mr-8">Cari : </Typography>
         <TextField
+          variant="outlined"
+          size="small"
           placeholder="Ketik Disini..."
           value={txtCari}
           onChange={event => dispatch(setTxtCariPacking(event.target.value))}
@@ -55,7 +57,7 @@ function PackingToolbar() {
           Tambah
         </Button>
       </div>
-    </div>
+    </Paper>
   );
 }
 

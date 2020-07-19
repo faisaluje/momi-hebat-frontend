@@ -9,6 +9,7 @@ import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import reducer from './store/reducers';
 import SaldoTable from './SaldoTable';
 import SaldoToolbar from './SaldoToolbar';
+import SaldoFooter from './SaldoFooter';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,7 +25,7 @@ function Saldo(props) {
   return (
     <>
       <div className={clsx(classes.root, 'p-8')}>
-        <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+        <Breadcrumbs className={classes.root} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
           <Link color="inherit" to="/" className="flex items-center">
             <Icon className="mr-8">home</Icon>
             Menu Utama
@@ -32,7 +33,7 @@ function Saldo(props) {
           {/* <Link color="inherit" to="/getting-started/installation/">
 						Core
           </Link> */}
-          <Typography color="textPrimary">Saldo Agen</Typography>
+          <Typography className={classes.root}>Saldo Agen</Typography>
         </Breadcrumbs>
       </div>
 
@@ -52,6 +53,7 @@ function Saldo(props) {
         >
           <SaldoToolbar />
           <SaldoTable />
+          <SaldoFooter />
         </FuseAnimateGroup>
       )}
     </>

@@ -75,12 +75,12 @@ function TransaksiSaldoTable() {
       <Table stickyHeader size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Tanggal</TableCell>
+            <TableCell style={{ width: '12rem' }}>Tanggal</TableCell>
             <TableCell>Kategori</TableCell>
             <TableCell>Via</TableCell>
             <TableCell>Catatan</TableCell>
-            <TableCell>Masuk</TableCell>
-            <TableCell>Keluar</TableCell>
+            <TableCell style={{ minWidth: '14rem' }}>Masuk</TableCell>
+            <TableCell style={{ minWidth: '14rem' }}>Keluar</TableCell>
             <TableCell> </TableCell>
           </TableRow>
         </TableHead>

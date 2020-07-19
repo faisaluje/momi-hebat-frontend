@@ -127,6 +127,8 @@ function TransaksiKartuPaketList() {
               <div className="flex flex-wrap items-center">
                 <Typography className="mr-8">Cari : </Typography>
                 <TextField
+                  variant="outlined"
+                  size="small"
                   placeholder="Ketik Disini..."
                   value={txtCari}
                   onChange={event => dispatch(setTxtCariTransaksiKartuPaket(event.target.value))}

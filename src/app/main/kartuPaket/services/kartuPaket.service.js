@@ -3,9 +3,14 @@ import ErrorService from 'app/services/error.service';
 import Axios from 'axios';
 
 class KartuPaketService {
-  static async getListKartuPaketData(periodeId = null) {
+  static async getListKartuPaketData(withTransaksi = false, periodeId = null) {
     try {
-      const { data } = await Axios.get(`${URL_API}/kartu-paket`, {
+      let url = `${URL_API}/kartu-paket`;
+      if (withTransaksi) {
+        url = `${url}/with-transaksi`;
+      }
+
+      const { data } = await Axios.get(`${url}`, {
         params: {
           periodeId
         },

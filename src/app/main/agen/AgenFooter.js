@@ -15,7 +15,7 @@ function AgenFooter() {
   };
 
   return (
-    <Paper elevation={3} className="flex flex-wrap mt-10 p-8 justify-between self-start w-full bg-gray-50">
+    <Paper elevation={3} className="flex flex-wrap mt-10 p-8 justify-between self-start w-full">
       <Typography className="font-bold self-center">
         Total Agen {_.startCase(status)} {level && `Level ${level}`} : {data.totalDocs}
       </Typography>

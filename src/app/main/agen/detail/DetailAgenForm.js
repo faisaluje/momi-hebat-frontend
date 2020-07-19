@@ -59,13 +59,13 @@ function DetailAgenForm(props) {
           <Typography>{agen?.diri?.noTlp || '-'}</Typography>
         </div>
       </div>
-      <div className="flex flex-col overflow-auto">
-        <Typography className="font-bold text-20">Total Saldo :</Typography>
+      <div className="flex flex-col overflow-auto mr-160 mt-32 items-center">
+        <Typography className="font-bold text-32">Total Saldo :</Typography>
         {isLoading ? (
           <CircularProgress color="secondary" />
         ) : (
           <NumberFormat
-            className="text-20 font-bold"
+            className="text-32 font-bold"
             decimalSeparator=","
             value={agen?.stok ? agen.stok.saldo || 0 + agen.stok.bonus || 0 : 0}
             displayType="text"

@@ -15,8 +15,9 @@ function TransaksiSaldoToolbar() {
       <div className="m-8 mr-0 flex flex-wrap justify-between w-full">
         <div className="flex flex-wrap items-center">
           <TextField
+            variant="outlined"
+            size="small"
             label="Pencarian"
-            color="secondary"
             placeholder="Ketik Disini..."
             value={txtCari}
             onChange={event => dispatch(setTxtCariTransaksiSaldo(event.target.value))}

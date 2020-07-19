@@ -13,6 +13,8 @@ function KaryawanToolbar() {
       <div className="flex flex-wrap items-center">
         <Typography className="mr-8">Cari : </Typography>
         <TextField
+          variant="outlined"
+          size="small"
           placeholder="Ketik Disini..."
           value={txtCari}
           onChange={event => dispatch(setTxtCariKaryawan(event.target.value))}
@@ -33,7 +35,9 @@ function KaryawanToolbar() {
       <div className="flex flex-wrap items-center">
         <TextField
           select
-          classes={{ root: 'w-96' }}
+          variant="outlined"
+          size="small"
+          style={{ width: '12rem' }}
           color="secondary"
           label="Status Agen"
           value={status}

@@ -36,7 +36,7 @@ function Packing(props) {
       <Karyawan />
       <PackingDialog />
       <div className={clsx(classes.root, 'p-8')}>
-        <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+        <Breadcrumbs className={classes.root} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
           <Link color="inherit" to="/" className="flex items-center">
             <Icon className="mr-8">home</Icon>
             Menu Utama
@@ -44,7 +44,7 @@ function Packing(props) {
           {/* <Link color="inherit" to="/getting-started/installation/">
 						Core
           </Link> */}
-          <Typography color="textPrimary">Packing</Typography>
+          <Typography className={classes.root}>Packing</Typography>
         </Breadcrumbs>
       </div>
 

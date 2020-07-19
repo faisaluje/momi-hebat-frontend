@@ -14,6 +14,7 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
   TableRow,
   Toolbar,
@@ -183,7 +184,7 @@ function KartuPaketAgenList() {
                     rows.map(transaksi => {
                       return (
                         <TableRow key={transaksi.id}>
-                          <TableCell>{transaksi.tgl ? moment(transaksi.tg).format('DD-MM-YYYY') : '-'}</TableCell>
+                          <TableCell>{transaksi.tgl ? moment(transaksi.tgl).format('DD-MM-YYYY') : '-'}</TableCell>
                           <TableCell>{transaksi.jenis === 'masuk' ? 'Pengembalian' : 'Pengambilan'}</TableCell>
                           {headers.map(kartuPaket => {
                             const kartuPaketSelected = transaksi.items.filter(
@@ -215,26 +216,35 @@ function KartuPaketAgenList() {
                       </TableCell>
                     </TableRow>
                   )}
-                  <TableRow>
-                    <TableCell colSpan={2} align="center">
-                      <Typography className="font-bold">Total :</Typography>
-                    </TableCell>
-
-                    {headers.map(kartuPaket => {
-                      const stokSelected = agen.stok?.kartuPakets?.find(item => item.kartuPaket === kartuPaket.id);
-
-                      return (
-                        <TableCell key={kartuPaket.id} align="center">
-                          <Typography className="font-bold">
-                            {stokSelected?.jumlah ? thousandSeparator(stokSelected.jumlah) : '-'}
-                          </Typography>
-                        </TableCell>
-                      );
-                    })}
-
-                    <TableCell> </TableCell>
-                  </TableRow>
                 </TableBody>
+
+                {rows.length > 0 && (
+                  <TableFooter>
+                    <TableRow>
+                      <TableCell colSpan={2} align="center">
+                        <Typography className="font-bold">TOTAL :</Typography>
+                      </TableCell>
+
+                      {headers.map(kartuPaket => {
+                        const stokSelected = agen.stok?.kartuPakets?.find(item => item.kartuPaket === kartuPaket.id);
+
+                        return (
+                          <TableCell key={kartuPaket.id} align="center">
+                            <Typography className="font-bold">
+                              {stokSelected?.jumlah ? thousandSeparator(stokSelected.jumlah) : '-'}
+                            </Typography>
+                          </TableCell>
+                        );
+                      })}
+
+                      <TableCell className="font-bold text-14">
+                        {agen.stok?.kartuPakets?.length > 0
+                          ? thousandSeparator(sumBy(agen.stok?.kartuPakets, 'jumlah')) || ''
+                          : ''}
+                      </TableCell>
+                    </TableRow>
+                  </TableFooter>
+                )}
               </Table>
             </TableContainer>
           </FuseAnimateGroup>

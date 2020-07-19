@@ -28,16 +28,13 @@ function Barang(props) {
       <TransaksiBarangList />
       <TransaksiBarangDialog />
       <div className={clsx(classes.root, 'p-8')}>
-        <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+        <Breadcrumbs className={classes.root} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
           <Link color="inherit" to="/" className="flex items-center">
             <Icon className="mr-8">home</Icon>
             Menu Utama
           </Link>
-          {/* <Link color="inherit" to="/getting-started/installation/">
-						Core
-          </Link> */}
-          <Typography color="textPrimary">Inventory</Typography>
-          <Typography color="textPrimary">Barang</Typography>
+          <Typography className={classes.root}>Inventory</Typography>
+          <Typography className={classes.root}>Barang</Typography>
         </Breadcrumbs>
       </div>
 

@@ -4,6 +4,7 @@ import {
   GET_LIST_SALDO_ERROR,
   GET_LIST_SALDO_SUCCESS,
   REFRESH_LIST_SALDO,
+  SET_LIST_SALDO_PAGE,
   SET_PERIODE_SALDO,
   SET_TXT_CARI_SALDO
 } from '../actions';
@@ -15,7 +16,8 @@ const initialState = {
   isError: false,
   msg: '',
   txtCari: '',
-  periodeId: ''
+  periodeId: '',
+  page: 1
 };
 
 function tableReducer(state = initialState, action) {
@@ -46,16 +48,25 @@ function tableReducer(state = initialState, action) {
         isLoading: false,
         data: action.payload
       };
+    case SET_LIST_SALDO_PAGE:
+      return {
+        ...state,
+        page: action.page,
+        isRefresh: true
+      };
     case SET_TXT_CARI_SALDO:
       return {
         ...state,
-        txtCari: action.txtCari
+        txtCari: action.txtCari,
+        isRefresh: true,
+        page: 1
       };
     case SET_PERIODE_SALDO:
       return {
         ...state,
         periodeId: action.periodeId,
-        isRefresh: true
+        isRefresh: true,
+        page: 1
       };
     case EXIT_LIST_SALDO:
       return { ...initialState };

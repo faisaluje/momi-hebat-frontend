@@ -16,7 +16,8 @@ import History from '@history';
 
 const useStyles = makeStyles(theme => ({
   menu: {
-    background: theme.palette.primary.main
+    background: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText
   }
 }));
 
@@ -68,19 +69,19 @@ function MenuInventory(props) {
               <MenuList id="menu-list-grow" onKeyDown={handleListKeyDown}>
                 <MenuItem onClick={() => History.push('/barang')}>
                   <ListItemIcon>
-                    <Icon>store</Icon>
+                    <Icon className={classes.menu}>store</Icon>
                   </ListItemIcon>
                   <ListItemText primary="Barang" />
                 </MenuItem>
                 <MenuItem onClick={() => History.push('/paket')}>
                   <ListItemIcon>
-                    <Icon>dns</Icon>
+                    <Icon className={classes.menu}>dns</Icon>
                   </ListItemIcon>
                   <ListItemText primary="Paket" />
                 </MenuItem>
                 <MenuItem onClick={() => History.push('/kartu-paket')}>
                   <ListItemIcon>
-                    <Icon>payment</Icon>
+                    <Icon className={classes.menu}>payment</Icon>
                   </ListItemIcon>
                   <ListItemText primary="Kartu Paket" />
                 </MenuItem>

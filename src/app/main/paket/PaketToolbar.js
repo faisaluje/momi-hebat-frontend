@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography, TextField, Button, Icon, MenuItem } from '@material-ui/core';
+import { Typography, TextField, Button, Icon, MenuItem, Paper } from '@material-ui/core';
 import { openPaketDialog, refreshListPaket, setStatusPaket, setTxtCariPaket } from './store/actions';
 import AgenStatus from '../agen/AgenStatus';
 
@@ -9,10 +9,12 @@ function PaketToolbar() {
   const { txtCari, status } = useSelector(({ paket }) => paket.table);
 
   return (
-    <div className="m-8 mr-0 w-full flex flex-wrap justify-between">
+    <Paper elevation={3} className="p-8 mr-0 w-full flex flex-wrap justify-between">
       <div className="flex flex-wrap items-center">
         <Typography className="mr-8">Cari : </Typography>
         <TextField
+          variant="outlined"
+          size="small"
           placeholder="Ketik Disini..."
           value={txtCari}
           onChange={event => dispatch(setTxtCariPaket(event.target.value))}
@@ -34,7 +36,9 @@ function PaketToolbar() {
         {/* <Typography variant="h5">Pilihan Periode</Typography> */}
         <TextField
           select
-          classes={{ root: 'w-96' }}
+          variant="outlined"
+          size="small"
+          style={{ width: '12rem' }}
           color="secondary"
           label="Status Paket"
           value={status}
@@ -69,7 +73,7 @@ function PaketToolbar() {
           Tambah
         </Button>
       </div>
-    </div>
+    </Paper>
   );
 }
 

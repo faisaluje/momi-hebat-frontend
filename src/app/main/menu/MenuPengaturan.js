@@ -16,7 +16,8 @@ import History from '@history';
 
 const useStyles = makeStyles(theme => ({
   menu: {
-    background: theme.palette.primary.main
+    background: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText
   }
 }));
 
@@ -68,13 +69,13 @@ function MenuPengaturan(props) {
               <MenuList id="menu-list-grow" onKeyDown={handleListKeyDown}>
                 <MenuItem onClick={() => History.push('/periode')}>
                   <ListItemIcon>
-                    <Icon>schedule</Icon>
+                    <Icon className={classes.menu}>schedule</Icon>
                   </ListItemIcon>
                   <ListItemText primary="Periode" />
                 </MenuItem>
                 <MenuItem onClick={() => History.push('/pengguna')}>
                   <ListItemIcon>
-                    <Icon>group</Icon>
+                    <Icon className={classes.menu}>group</Icon>
                   </ListItemIcon>
                   <ListItemText primary="Pengguna" />
                 </MenuItem>

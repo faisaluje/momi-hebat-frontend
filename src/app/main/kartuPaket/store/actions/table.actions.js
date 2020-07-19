@@ -18,7 +18,7 @@ export function getListKartuPaket(periodeId) {
   return async dispatch => {
     dispatch({ type: GET_LIST_KARTU_PAKET });
 
-    const listStokKartuPaket = await KartuPaketService.getListKartuPaketData(periodeId);
+    const listStokKartuPaket = await KartuPaketService.getListKartuPaketData(true, periodeId);
     if (!listStokKartuPaket.success) {
       return dispatch({ type: GET_LIST_KARTU_PAKET_ERROR, payload: listStokKartuPaket.msg });
     }

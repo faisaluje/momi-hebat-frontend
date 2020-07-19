@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Button, Icon, MenuItem, IconButton } from '@material-ui/core';
+import { TextField, Button, Icon, MenuItem, IconButton, Paper } from '@material-ui/core';
 import { setTxtCariAgen, refreshListAgen, openAgenDialog, setStatusAgen, setLevelAgen } from './store/actions';
 import AgenConfirmationDialog from './AgenConfirmationDialog';
 import AgenStatus from './AgenStatus';
@@ -29,12 +29,13 @@ function AgenToolbar() {
   };
 
   return (
-    <div className="m-8 mr-0 w-full flex flex-wrap justify-between">
+    <Paper elevation={3} className="p-8 w-full flex flex-wrap justify-between">
       <div className="flex flex-wrap items-center">
         <TextField
           label="Pencarian"
-          color="secondary"
           placeholder="Ketik Disini..."
+          size="small"
+          variant="outlined"
           value={pencarian}
           onChange={event => setPencarian(event.target.value)}
           InputProps={{
@@ -73,10 +74,11 @@ function AgenToolbar() {
       <div className="flex flex-wrap items-center">
         {data?.docs?.length > 0 && (
           <TextField
-            label="Level Agen"
+            label="Level"
             select
-            className="w-80 mr-0 sm:mr-24"
-            color="secondary"
+            size="small"
+            variant="outlined"
+            className="w-96 mr-0 sm:mr-24"
             value={level}
             onChange={event => dispatch(setLevelAgen(event.target.value))}
           >
@@ -89,8 +91,9 @@ function AgenToolbar() {
 
         <TextField
           select
-          classes={{ root: 'w-96' }}
-          color="secondary"
+          variant="outlined"
+          style={{ width: '12rem' }}
+          size="small"
           label="Status Agen"
           value={status}
           onChange={event => dispatch(setStatusAgen(event.target.value))}
@@ -114,7 +117,7 @@ function AgenToolbar() {
           Tambah
         </Button>
       </div>
-    </div>
+    </Paper>
   );
 }
 
