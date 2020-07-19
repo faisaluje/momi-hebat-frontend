@@ -35,7 +35,7 @@ function AgenTable() {
 
   React.useEffect(() => {
     if (isRefresh) {
-      dispatch(getListAgen({ status, nama: txtCari, level, page }));
+      dispatch(getListAgen({ status, nama: txtCari, level, page, detail: 1 }));
     }
   }, [dispatch, isRefresh, level, page, status, txtCari]);
 

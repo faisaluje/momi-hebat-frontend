@@ -14,7 +14,7 @@ function SaldoTable() {
 
   React.useEffect(() => {
     if (isRefresh) {
-      dispatch(getListSaldo({ nama: txtCari, page }));
+      dispatch(getListSaldo({ nama: txtCari, page, detail: 1 }));
     }
   }, [dispatch, isRefresh, page, txtCari]);
 
