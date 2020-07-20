@@ -1,6 +1,7 @@
 import { refreshListBarang, refreshListTransaksiBarang } from 'app/main/barang/store/actions';
 import PaketService from 'app/main/paket/services/paket.service';
 import { refreshListPaket } from 'app/main/paket/store/actions';
+import { refreshListKaryawan } from '../../karyawan/store/actions';
 import PackingService from '../../services/packing.service';
 
 export const GET_LIST_PACKING = 'GET_LIST_PACKING';
@@ -48,6 +49,7 @@ export function deletePacking(id) {
     dispatch(refreshListBarang());
     dispatch(refreshListPaket());
     dispatch(refreshListTransaksiBarang());
+    dispatch(refreshListKaryawan());
     return dispatch(refreshListPacking());
   };
 }

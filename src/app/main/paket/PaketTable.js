@@ -137,7 +137,7 @@ function PaketTable() {
                     '-'
                   )}
                 </TableCell>
-                <TableCell>{paket.stok?.jumlah ? thousandSeparator(paket.stok?.jumlah) : '-'}</TableCell>
+                <TableCell>{paket.stok ? thousandSeparator(paket.stok) : '-'}</TableCell>
                 <TableCell>
                   <FormControlLabel
                     control={

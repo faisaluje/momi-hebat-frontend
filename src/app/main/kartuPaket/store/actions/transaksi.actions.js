@@ -8,6 +8,7 @@ export const GET_LIST_TRANSAKSI_KARTU_PAKET = 'GET_LIST_TRANSAKSI_KARTU_PAKET';
 export const GET_LIST_TRANSAKSI_KARTU_PAKET_ERROR = 'GET_LIST_TRANSAKSI_KARTU_PAKET_ERROR';
 export const GET_LIST_TRANSAKSI_KARTU_PAKET_SUCCESS = 'GET_LIST_TRANSAKSI_KARTU_PAKET_SUCCESS';
 
+export const SET_LIST_TRANSAKSI_KARTU_PAKET_PAGE = 'SET_LIST_TRANSAKSI_KARTU_PAKET_PAGE';
 export const SET_TXT_CARI_TRANSAKSI_KARTU_PAKET = 'SET_TXT_CARI_TRANSAKSI_KARTU_PAKET';
 export const SET_PERIODE_TRANSAKSI_KARTU_PAKET = 'SET_PERIODE_TRANSAKSI_KARTU_PAKET';
 export const REFRESH_LIST_TRANSAKSI_KARTU_PAKET = 'REFRESH_LIST_TRANSAKSI_KARTU_PAKET';
@@ -29,12 +30,13 @@ export const exitListTransaksiKartuPaket = () => ({ type: EXIT_LIST_TRANSAKSI_KA
 export const refreshListTransaksiKartuPaket = () => ({ type: REFRESH_LIST_TRANSAKSI_KARTU_PAKET });
 export const setTxtCariTransaksiKartuPaket = txtCari => ({ type: SET_TXT_CARI_TRANSAKSI_KARTU_PAKET, txtCari });
 export const setPeriodeTransaksiKartuPaket = periodeId => ({ type: SET_PERIODE_TRANSAKSI_KARTU_PAKET, periodeId });
+export const setListTransaksiKartuPaketPage = page => ({ type: SET_LIST_TRANSAKSI_KARTU_PAKET_PAGE, page });
 
-export function getListTransaksiKartuPaket(periodeId) {
+export function getListTransaksiKartuPaket(params) {
   return async dispatch => {
     dispatch({ type: GET_LIST_TRANSAKSI_KARTU_PAKET });
 
-    const listTransaksiKartuPaket = await TransaksiKartuPaketService.getListTransaksiKartuPaketData(periodeId);
+    const listTransaksiKartuPaket = await TransaksiKartuPaketService.getListTransaksiKartuPaketData(params);
     if (!listTransaksiKartuPaket.success) {
       return dispatch({ type: GET_LIST_TRANSAKSI_KARTU_PAKET_ERROR, payload: listTransaksiKartuPaket.msg });
     }

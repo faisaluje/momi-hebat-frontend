@@ -26,34 +26,36 @@ import {
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { getFilteredArray, thousandSeparator } from 'app/Utils';
 import NumberFormat from 'react-number-format';
-import { orderBy, startCase, sumBy } from 'lodash';
+import { startCase, sumBy } from 'lodash';
 import { closeDialog, openDialog } from 'app/store/actions';
+import { Pagination } from '@material-ui/lab';
 import {
   closeListTransaksiKartuPaketDialog,
   deleteTransaksiKartuPaket,
   getListTransaksiKartuPaket,
   refreshListTransaksiKartuPaket,
+  setListTransaksiKartuPaketPage,
   setTxtCariTransaksiKartuPaket
 } from '../store/actions';
 
 function TransaksiKartuPaketList() {
   const dispatch = useDispatch();
-  const { isRefresh, data, isLoading, props, txtCari, periodeId } = useSelector(
+  const { isRefresh, data, isLoading, props, txtCari, periodeId, page } = useSelector(
     ({ kartuPaket }) => kartuPaket.transaksi
   );
   const [rows, setRows] = React.useState([]);
 
   React.useEffect(() => {
     if (isRefresh) {
-      dispatch(getListTransaksiKartuPaket(periodeId));
+      dispatch(getListTransaksiKartuPaket({ periode: periodeId, page }));
     }
-  }, [dispatch, isRefresh, periodeId]);
+  }, [dispatch, isRefresh, page, periodeId]);
 
   React.useEffect(() => {
     if (data) {
-      const filtered = getFilteredArray(data, txtCari);
+      const filtered = getFilteredArray(data.docs, txtCari);
 
-      setRows(orderBy(filtered, ['tgl']));
+      setRows(filtered);
     }
   }, [data, txtCari]);
 
@@ -156,7 +158,7 @@ function TransaksiKartuPaketList() {
                     <TableCell style={{ width: '12rem' }}>Tanggal</TableCell>
                     <TableCell>No. Transaksi</TableCell>
                     <TableCell>Jenis Transaksi</TableCell>
-                    <TableCell>Total Kartu Paket</TableCell>
+                    <TableCell align="center">Total Kartu Paket</TableCell>
                     <TableCell>Catatan</TableCell>
                     <TableCell> </TableCell>
                   </TableRow>
@@ -172,7 +174,7 @@ function TransaksiKartuPaketList() {
                           <TableCell>{moment(transaksi.tgl).format('DD-MM-YYYY')}</TableCell>
                           <TableCell>{transaksi.no}</TableCell>
                           <TableCell>{startCase(transaksi.jenis)}</TableCell>
-                          <TableCell>
+                          <TableCell align="center">
                             <Tooltip
                               title={
                                 <>
@@ -242,6 +244,20 @@ function TransaksiKartuPaketList() {
                 </TableBody>
               </Table>
             </TableContainer>
+
+            <Paper elevation={3} className="flex flex-wrap mt-10 p-8 justify-center w-full">
+              <div className="mt-12 sm:mt-0">
+                {data?.totalPages && (
+                  <Pagination
+                    count={data.totalPages}
+                    page={page}
+                    onChange={(_evt, value) => dispatch(setListTransaksiKartuPaketPage(value))}
+                    showFirstButton
+                    showLastButton
+                  />
+                )}
+              </div>
+            </Paper>
           </FuseAnimateGroup>
         </>
       )}

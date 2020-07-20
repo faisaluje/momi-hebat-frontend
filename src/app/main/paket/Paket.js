@@ -10,6 +10,7 @@ import reducer from './store/reducers';
 import PaketToolbar from './PaketToolbar';
 import PaketTable from './PaketTable';
 import PaketDialog from './PaketDialog';
+import PilihanPaket from './pilihanPaket/PilihanPaket';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,7 +25,7 @@ function Paket(props) {
 
   return (
     <>
-      {/* <TransaksiBarangList /> */}
+      <PilihanPaket />
       <PaketDialog />
       <div className={clsx(classes.root, 'p-8')}>
         <Breadcrumbs className={classes.root} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">

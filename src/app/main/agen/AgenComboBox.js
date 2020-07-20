@@ -32,8 +32,8 @@ function AgenComboBox(props) {
   return (
     <Autocomplete
       openOnFocus
-      autoSelect
       freeSolo
+      autoHighlight
       options={options}
       loading={isLoading}
       className={props.className}

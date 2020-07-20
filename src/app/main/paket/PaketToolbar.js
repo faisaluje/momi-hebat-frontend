@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Typography, TextField, Button, Icon, MenuItem, Paper } from '@material-ui/core';
 import { openPaketDialog, refreshListPaket, setStatusPaket, setTxtCariPaket } from './store/actions';
 import AgenStatus from '../agen/AgenStatus';
+import { openListPilihanPaketDialog } from './pilihanPaket/store/actions';
 
 function PaketToolbar() {
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ function PaketToolbar() {
           variant="contained"
           color="primary"
           startIcon={<Icon>category</Icon>}
-          // onClick={() => dispatch(openListTransaksiBarangDialog())}
+          onClick={() => dispatch(openListPilihanPaketDialog())}
         >
           Pilihan Paket
         </Button>

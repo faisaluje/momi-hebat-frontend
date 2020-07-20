@@ -130,8 +130,8 @@ function PackingForm() {
       proses.karyawan = proses.karyawan.id;
     });
 
-    dispatch(setPackingForm(form));
-    dispatch(savePacking(dataForSave));
+    dispatch(setPackingForm({ ...form }));
+    dispatch(savePacking({ ...dataForSave }));
     dispatch(closeDialog());
   };
 

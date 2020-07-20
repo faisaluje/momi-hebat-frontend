@@ -54,7 +54,7 @@ function KartuPaketAgenList() {
   React.useEffect(() => {
     if (data) {
       setHeaders(data.listKartuPaket);
-      setRows(orderBy(data.listKartuPaketAgen, ['tgl']));
+      setRows(orderBy(data.listKartuPaketAgen?.docs, ['tgl']));
     }
   }, [data]);
 
@@ -221,7 +221,7 @@ function KartuPaketAgenList() {
                 {rows.length > 0 && (
                   <TableFooter>
                     <TableRow>
-                      <TableCell colSpan={2} align="center">
+                      <TableCell colSpan={2} align="center" className="bottom-0 sticky bg-white z-20">
                         <Typography className="font-bold">TOTAL :</Typography>
                       </TableCell>
 
@@ -229,7 +229,7 @@ function KartuPaketAgenList() {
                         const stokSelected = agen.stok?.kartuPakets?.find(item => item.kartuPaket === kartuPaket.id);
 
                         return (
-                          <TableCell key={kartuPaket.id} align="center">
+                          <TableCell key={kartuPaket.id} align="center" className="bottom-0 sticky bg-white z-20">
                             <Typography className="font-bold">
                               {stokSelected?.jumlah ? thousandSeparator(stokSelected.jumlah) : '-'}
                             </Typography>
@@ -237,7 +237,7 @@ function KartuPaketAgenList() {
                         );
                       })}
 
-                      <TableCell className="font-bold text-14">
+                      <TableCell className="font-bold text-14 bottom-0 sticky bg-white z-20">
                         {agen.stok?.kartuPakets?.length > 0
                           ? thousandSeparator(sumBy(agen.stok?.kartuPakets, 'jumlah')) || ''
                           : ''}

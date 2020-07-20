@@ -11,6 +11,7 @@ import {
   SAVE_TRANSAKSI_KARTU_PAKET,
   SAVE_TRANSAKSI_KARTU_PAKET_ERROR,
   SAVE_TRANSAKSI_KARTU_PAKET_SUCCESS,
+  SET_LIST_TRANSAKSI_KARTU_PAKET_PAGE,
   SET_TRANSAKSI_KARTU_PAKET_FORM,
   SET_TXT_CARI_TRANSAKSI_KARTU_PAKET
 } from '../actions';
@@ -19,12 +20,13 @@ const initialState = {
   props: {
     open: false
   },
-  data: [],
+  data: null,
   isLoading: false,
   isRefresh: true,
   isError: false,
   msg: '',
   txtCari: '',
+  page: 1,
   form: {
     data: null,
     props: {
@@ -51,6 +53,12 @@ function transaksiReducer(state = initialState, action) {
     case REFRESH_LIST_TRANSAKSI_KARTU_PAKET:
       return {
         ...state,
+        isRefresh: true
+      };
+    case SET_LIST_TRANSAKSI_KARTU_PAKET_PAGE:
+      return {
+        ...state,
+        page: action.page,
         isRefresh: true
       };
     case GET_LIST_TRANSAKSI_KARTU_PAKET:
