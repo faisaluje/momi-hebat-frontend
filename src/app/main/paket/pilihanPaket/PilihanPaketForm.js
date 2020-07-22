@@ -86,8 +86,6 @@ function PilihanPaketForm() {
     );
   }
 
-  console.log(form?.jenisPaket);
-
   return (
     <form onSubmit={handleSubmit} className="flex flex-col overflow-auto">
       <DialogContent classes={{ root: 'p-24' }}>

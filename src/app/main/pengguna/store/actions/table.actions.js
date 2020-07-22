@@ -13,14 +13,14 @@ export const refreshListPengguna = () => ({ type: REFRESH_LIST_PENGGUNA });
 export const setTxtCariPengguna = txtCari => ({ type: SET_TXT_CARI_PENGGUNA, txtCari });
 
 export function getListPengguna() {
-	return async dispatch => {
-		dispatch({ type: GET_LIST_PENGGUNA });
+  return async dispatch => {
+    dispatch({ type: GET_LIST_PENGGUNA });
 
-		const listPengguna = await PenggunaService.getListPenggunaData();
-		if (!listPengguna.success) {
-			return dispatch({ type: GET_LIST_PENGGUNA_ERROR, payload: listPengguna.msg });
-		}
+    const listPengguna = await PenggunaService.getListPenggunaData();
+    if (!listPengguna.success) {
+      return dispatch({ type: GET_LIST_PENGGUNA_ERROR, payload: listPengguna.msg });
+    }
 
-		return dispatch({ type: GET_LIST_PENGGUNA_SUCCESS, payload: listPengguna.data });
-	};
+    return dispatch({ type: GET_LIST_PENGGUNA_SUCCESS, payload: listPengguna.data });
+  };
 }

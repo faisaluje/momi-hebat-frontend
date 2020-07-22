@@ -4,10 +4,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { AppBar, makeStyles } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import TransaksiPaketPanel from './transaksiPaket/TransaksiPaketPanel';
+import PaketAgenPanel from './paketAgen/PaketAgenPanel';
 import TransaksiSaldoPanel from './transaksiSaldo/TransaksiSaldoPanel';
 import { exitListTransaksiSaldo } from './transaksiSaldo/store/actions';
-import { exitListKartuPaketAgen } from './transaksiPaket/kartuPaketAgen/store/actions';
+import { exitListKartuPaketAgen } from './paketAgen/kartuPaketAgen/store/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,7 +47,7 @@ function DetailAgenTabs(props) {
         </Tabs>
       </AppBar>
       {value === 0 && <TransaksiSaldoPanel />}
-      {value === 1 && <TransaksiPaketPanel />}
+      {value === 1 && <PaketAgenPanel />}
     </Paper>
   );
 }

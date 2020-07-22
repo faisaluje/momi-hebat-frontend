@@ -1,3 +1,4 @@
+import { getDetailAgen } from '../../../store/actions';
 import TransaksiSaldoService from '../../services/transaksiSaldo.service';
 
 export const GET_LIST_TRANSAKSI_SALDO = 'GET_LIST_TRANSAKSI_SALDO';
@@ -9,7 +10,14 @@ export const REFRESH_LIST_TRANSAKSI_SALDO = 'REFRESH_LIST_TRANSAKSI_SALDO';
 export const EXIT_LIST_TRANSAKSI_SALDO = 'EXIT_LIST_TRANSAKSI_SALDO';
 
 export const exitListTransaksiSaldo = () => ({ type: EXIT_LIST_TRANSAKSI_SALDO });
-export const refreshListTransaksiSaldo = () => ({ type: REFRESH_LIST_TRANSAKSI_SALDO });
+export const refreshListTransaksiSaldo = () => {
+  return (dispatch, getState) => {
+    const agenId = getState().detailAgen.panel.agen.id;
+
+    dispatch(getDetailAgen(agenId));
+    return dispatch({ type: REFRESH_LIST_TRANSAKSI_SALDO });
+  };
+};
 export const setTxtCariTransaksiSaldo = txtCari => ({ type: SET_TXT_CARI_TRANSAKSI_SALDO, txtCari });
 
 export function getListTransaksiSaldo(agenId) {

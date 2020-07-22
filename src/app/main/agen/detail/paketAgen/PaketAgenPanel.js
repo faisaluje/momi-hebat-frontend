@@ -2,24 +2,28 @@ import React from 'react';
 import withReducer from 'app/store/withReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress, Typography } from '@material-ui/core';
-import { getListTransaksiSaldo } from '../transaksiSaldo/store/actions';
-import TransaksiPaketToolbar from './TransaksiPaketToolbar';
+import PaketAgenToolbar from './PaketAgenToolbar';
 import KartuPaketAgenList from './kartuPaketAgen/KartuPaketAgenList';
+import reducer from './store/reducers';
+import BonusPaketDialog from './bonusPaket/BonusPaketDialog';
+import { getListPaketAgen } from './store/actions';
+import PaketAgenTable from './PaketAgenTable';
 
-function TransaksiPaketPanel() {
+function PaketAgenPanel() {
   const dispatch = useDispatch();
-  const { isLoading, isRefresh } = useSelector(({ transaksiSaldo }) => transaksiSaldo.table);
+  const { isLoading, isRefresh } = useSelector(({ paketAgen }) => paketAgen.table);
   const { agen } = useSelector(({ detailAgen }) => detailAgen.panel);
 
   React.useEffect(() => {
     if (isRefresh && agen) {
-      dispatch(getListTransaksiSaldo(agen.id));
+      dispatch(getListPaketAgen());
     }
   }, [agen, dispatch, isRefresh]);
 
   return (
     <div className="flex flex-col overflow-auto p-12 items-center justify-center">
       <KartuPaketAgenList />
+      <BonusPaketDialog />
       {isLoading ? (
         <>
           <CircularProgress color="secondary" />
@@ -27,13 +31,12 @@ function TransaksiPaketPanel() {
         </>
       ) : (
         <>
-          <TransaksiPaketToolbar />
-          {/* <TransaksiSaldoTable /> */}
+          <PaketAgenToolbar />
+          <PaketAgenTable />
         </>
       )}
     </div>
   );
 }
 
-// export default withReducer('transaksiSaldo', reducer)(TransaksiPaketPanel);
-export default TransaksiPaketPanel;
+export default withReducer('paketAgen', reducer)(PaketAgenPanel);

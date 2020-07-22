@@ -2,8 +2,9 @@ import React from 'react';
 import { Button, Icon } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { openListKartuPaketAgenDialog } from './kartuPaketAgen/store/actions';
+import { openBonusPaketDialog, refreshListPaketAgen } from './store/actions';
 
-function TransaksiPaketToolbar() {
+function PaketAgenToolbar() {
   const dispatch = useDispatch();
 
   return (
@@ -16,7 +17,7 @@ function TransaksiPaketToolbar() {
             variant="contained"
             color="primary"
             startIcon={<Icon>refresh</Icon>}
-            // onClick={() => dispatch(refreshListTransaksiSaldo())}
+            onClick={() => dispatch(refreshListPaketAgen())}
           >
             Refresh
           </Button>
@@ -49,7 +50,7 @@ function TransaksiPaketToolbar() {
             color="primary"
             startIcon={<Icon>money</Icon>}
             className="ml-0 sm:ml-24"
-            // onClick={() => dispatch(refreshListTransaksiSaldo())}
+            onClick={() => dispatch(openBonusPaketDialog())}
           >
             Atur Bonus
           </Button>
@@ -83,4 +84,4 @@ function TransaksiPaketToolbar() {
   );
 }
 
-export default TransaksiPaketToolbar;
+export default PaketAgenToolbar;

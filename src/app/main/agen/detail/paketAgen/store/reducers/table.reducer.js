@@ -1,10 +1,9 @@
 import {
-  REFRESH_LIST_PENGGUNA,
-  GET_LIST_PENGGUNA,
-  GET_LIST_PENGGUNA_ERROR,
-  GET_LIST_PENGGUNA_SUCCESS,
-  SET_TXT_CARI_PENGGUNA,
-  EXIT_LIST_PENGGUNA
+  REFRESH_LIST_PAKET_AGEN,
+  GET_LIST_PAKET_AGEN,
+  GET_LIST_PAKET_AGEN_ERROR,
+  GET_LIST_PAKET_AGEN_SUCCESS,
+  EXIT_LIST_PAKET_AGEN
 } from '../actions';
 
 const initialState = {
@@ -12,18 +11,17 @@ const initialState = {
   isLoading: false,
   isRefresh: true,
   isError: false,
-  msg: '',
-  txtCari: ''
+  msg: ''
 };
 
 function tableReducer(state = initialState, action) {
   switch (action.type) {
-    case REFRESH_LIST_PENGGUNA:
+    case REFRESH_LIST_PAKET_AGEN:
       return {
         ...state,
         isRefresh: true
       };
-    case GET_LIST_PENGGUNA:
+    case GET_LIST_PAKET_AGEN:
       return {
         ...state,
         isLoading: true,
@@ -31,25 +29,20 @@ function tableReducer(state = initialState, action) {
         isError: false,
         msg: ''
       };
-    case GET_LIST_PENGGUNA_ERROR:
+    case GET_LIST_PAKET_AGEN_ERROR:
       return {
         ...state,
         isLoading: false,
         isError: true,
         msg: action.payload
       };
-    case GET_LIST_PENGGUNA_SUCCESS:
+    case GET_LIST_PAKET_AGEN_SUCCESS:
       return {
         ...state,
         isLoading: false,
         data: action.payload
       };
-    case SET_TXT_CARI_PENGGUNA:
-      return {
-        ...state,
-        txtCari: action.txtCari
-      };
-    case EXIT_LIST_PENGGUNA:
+    case EXIT_LIST_PAKET_AGEN:
       return { ...initialState };
     default:
       return state;
