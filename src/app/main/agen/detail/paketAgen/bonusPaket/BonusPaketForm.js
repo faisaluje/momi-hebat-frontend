@@ -26,7 +26,7 @@ function BonusPaketForm() {
 
   React.useEffect(() => {
     if (agen) {
-      setForm({ ...agen });
+      setForm({ ...agen.stok });
     }
   }, [agen, setForm]);
 
@@ -104,7 +104,9 @@ function BonusPaketForm() {
 
           <div className="flex flex-row mb-16">
             <Typography className="font-bold w-400">Nama Paket</Typography>
-            <Typography className="font-bold w-160">Bonus</Typography>
+            <Typography className="font-bold" style={{ width: '17rem' }}>
+              Bonus
+            </Typography>
             <Typography className="font-bold w-160">Stok Tersedia</Typography>
             <Typography className="font-bold">Total</Typography>
           </div>
@@ -144,10 +146,10 @@ function BonusPaketForm() {
                 />
 
                 <div className="flex flex-row w-136 mx-32">
-                  X <div className="mx-12 w-88">{stok}</div> =
+                  X <div className="mx-12 w-88 text-center">{stok}</div> =
                 </div>
 
-                <Typography className="w-160">Rp. {thousandSeparator((bonusPaket?.nominal || 0) * 500)}</Typography>
+                <Typography className="w-160">Rp. {thousandSeparator((bonusPaket?.nominal || 0) * stok)}</Typography>
               </div>
             );
           })}

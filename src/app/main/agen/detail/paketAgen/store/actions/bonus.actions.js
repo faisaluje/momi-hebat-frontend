@@ -24,7 +24,7 @@ export function saveBonusPaket(data) {
     }
 
     dispatch({ type: SAVE_BONUS_PAKET_SUCCESS, payload: result.data });
-    dispatch(getDetailAgen(id));
+    dispatch(getDetailAgen(data.agen));
     return dispatch(closeBonusPaketDialog());
   };
 }
