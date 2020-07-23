@@ -8,7 +8,7 @@ class BonusPaketService {
       delete data.createdAt;
       delete data.updatedAt;
 
-      const result = await Axios.patch(`${URL_API}/agen/stok/${id}`, data, { timeout: 30000 });
+      const result = await Axios.patch(`${URL_API}/agen/bonus/${id}`, data, { timeout: 30000 });
       if (!result.data) {
         throw new Error('Result is not readable');
       }

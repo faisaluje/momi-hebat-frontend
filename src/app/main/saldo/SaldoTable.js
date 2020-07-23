@@ -69,11 +69,11 @@ function SaldoTable() {
                   )}
                 </TableCell>
                 <TableCell>
-                  {agen.stok?.bonus ? (
+                  {agen.stok?.totalBonus ? (
                     <NumberFormat
                       prefix="Rp. "
                       decimalSeparator=","
-                      value={agen.stok.bonus}
+                      value={agen.stok.totalBonus}
                       displayType="text"
                       thousandSeparator="."
                     />

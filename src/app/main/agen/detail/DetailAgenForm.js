@@ -67,7 +67,7 @@ function DetailAgenForm(props) {
           <NumberFormat
             className="text-32 font-bold"
             decimalSeparator=","
-            value={agen?.stok ? (agen.stok.saldo || 0) + (agen.stok.bonus || 0) : 0}
+            value={agen?.stok ? (agen.stok.saldo || 0) + (agen.stok.totalBonus || 0) : 0}
             displayType="text"
             thousandSeparator="."
             prefix="Rp. "

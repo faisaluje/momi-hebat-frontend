@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { useForm } from '@fuse/hooks';
 import {
@@ -86,6 +87,8 @@ function BonusPaketForm() {
     dispatch(closeDialog());
   };
 
+  let totalBonusPaket = 0;
+
   return (
     <form onSubmit={handleSubmit} className="flex flex-col overflow-auto">
       <DialogContent classes={{ root: 'p-24' }}>
@@ -121,6 +124,9 @@ function BonusPaketForm() {
             const paketSelected = form?.pakets?.find(item => item.paket === paket.id);
             const stok = paketSelected?.jumlah || 0;
 
+            const bonus = (bonusPaket?.nominal || 0) * stok;
+            totalBonusPaket += bonus;
+
             return (
               <div key={paket.id} className="flex flex-row mb-16 w-full items-center">
                 <Typography className="w-360 font-bold ">- {paket.nama}</Typography>
@@ -149,10 +155,17 @@ function BonusPaketForm() {
                   X <div className="mx-12 w-88 text-center">{stok}</div> =
                 </div>
 
-                <Typography className="w-160">Rp. {thousandSeparator((bonusPaket?.nominal || 0) * stok)}</Typography>
+                <Typography className="w-160">Rp. {thousandSeparator(bonus)}</Typography>
               </div>
             );
           })}
+
+          <div className="flex flex-row mt-40">
+            <Typography className="font-bold text-right pr-80 text-14" style={{ width: '72rem' }}>
+              TOTAL:
+            </Typography>
+            <Typography className="font-bold text-14">{thousandSeparator(totalBonusPaket)}</Typography>
+          </div>
         </FuseAnimateGroup>
       </DialogContent>
 
