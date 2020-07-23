@@ -115,16 +115,6 @@ function KartuPaketAgenForm() {
       items: form.items.filter(item => !['0', ''].includes(item.jumlah)),
       catatan: `${words} Agen ${agen.diri.nama.lengkap}`
     };
-    // if (newForm?.items?.length > 0) {
-    //   if (newForm.items.find(item => item.kartuPaket.stok < item.jumlah)) {
-    //     setStokError(true);
-    //   } else {
-    //     setStokError(false);
-    //     dispatch(createTransaksiKartuPaketAgen(newForm));
-    //   }
-    // } else {
-    //   setStokError(true);
-    // }
 
     dispatch(createTransaksiKartuPaketAgen(newForm));
     dispatch(closeDialog());

@@ -20,12 +20,9 @@ class AturPaketService {
 
   static async createAturPaketAgen(data) {
     try {
-      const result = await Axios.post(`${URL_API}/pengaturan-paket-agen`, { ...data }, { timeout: 30000 });
-      if (!result.data) {
-        throw new Error('Hasil tidak diharapkan');
-      }
+      await Axios.post(`${URL_API}/pengaturan-paket-agen`, { ...data }, { timeout: 30000 });
 
-      return { success: true, data: result.data };
+      return { success: true };
     } catch (e) {
       return {
         success: false,

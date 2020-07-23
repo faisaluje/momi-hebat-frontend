@@ -21,8 +21,14 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thousandSeparator } from 'app/Utils';
 import { startCase } from 'lodash';
-import { closeListAturPaketAgenDialog, getListAturPaketAgen, refreshListAturPaketAgen } from './store/actions';
+import {
+  closeListAturPaketAgenDialog,
+  getListAturPaketAgen,
+  openAturPaketAgenDialog,
+  refreshListAturPaketAgen
+} from './store/actions';
 import reducer from './store/reducers';
+import AturPaketAgenDialog from './AturPaketAgenDialog';
 
 function AturPaketAgenList() {
   const dispatch = useDispatch();
@@ -63,6 +69,7 @@ function AturPaketAgenList() {
         </div>
       ) : (
         <>
+          <AturPaketAgenDialog />
           <Toolbar className="flex flex-row items-center justify-between w-full">
             <div className="flex flex-col items-center w-full">
               <Typography variant="h6" color="inherit" className="w-full mt-12">
@@ -103,7 +110,7 @@ function AturPaketAgenList() {
                   color="primary"
                   startIcon={<Icon>add_shopping_cart</Icon>}
                   className="ml-24"
-                  // onClick={() => dispatch(openTransaksiKartuPaketAgenDialog('keluar'))}
+                  onClick={() => dispatch(openAturPaketAgenDialog('booking'))}
                 >
                   Booking
                 </Button>
@@ -114,7 +121,7 @@ function AturPaketAgenList() {
                   color="primary"
                   startIcon={<Icon>remove_shopping_cart</Icon>}
                   className="ml-24"
-                  // onClick={() => dispatch(openTransaksiKartuPaketAgenDialog('masuk'))}
+                  onClick={() => dispatch(openAturPaketAgenDialog('cancel'))}
                 >
                   Cancel
                 </Button>
@@ -125,15 +132,19 @@ function AturPaketAgenList() {
               <Table stickyHeader size="small">
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ width: '12rem' }}>Tanggal</TableCell>
-                    <TableCell>Status</TableCell>
+                    <TableCell className="font-bold" style={{ width: '12rem' }}>
+                      Tanggal
+                    </TableCell>
+                    <TableCell className="font-bold">Status</TableCell>
                     {dataPaket.length > 0 &&
                       dataPaket.map((paket, idx) => (
-                        <TableCell key={idx} align="center">
-                          <Typography>{paket.nama}</Typography>
+                        <TableCell key={idx} align="center" className="font-bold">
+                          {paket.nama}
                         </TableCell>
                       ))}
-                    <TableCell align="center">Biaya</TableCell>
+                    <TableCell align="center" className="font-bold">
+                      Biaya
+                    </TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -152,12 +163,15 @@ function AturPaketAgenList() {
                               totalBiaya += (paketSelected?.jumlah || 0) * paket.harga;
                               return (
                                 <TableCell key={idx} align="center">
-                                  <Typography>{thousandSeparator(paketSelected?.jumlah || 0)}</Typography>
+                                  {paketSelected?.jumlah && aturPaket.jenis === 'cancel' ? '- ' : ''}
+                                  {thousandSeparator(paketSelected?.jumlah || 0)}
                                 </TableCell>
                               );
                             })}
                           <TableCell align="center" style={{ width: '14.5rem' }}>
-                            {totalBiaya ? `Rp. ${thousandSeparator(totalBiaya)}` : '-'}
+                            {totalBiaya
+                              ? `Rp. ${aturPaket.jenis === 'booking' ? '- ' : ''} ${thousandSeparator(totalBiaya)}`
+                              : '-'}
                           </TableCell>
                         </TableRow>
                       );

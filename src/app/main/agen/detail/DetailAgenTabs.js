@@ -8,6 +8,7 @@ import PaketAgenPanel from './paketAgen/PaketAgenPanel';
 import TransaksiSaldoPanel from './transaksiSaldo/TransaksiSaldoPanel';
 import { exitListTransaksiSaldo } from './transaksiSaldo/store/actions';
 import { exitListKartuPaketAgen } from './paketAgen/kartuPaketAgen/store/actions';
+import { exitListAturPaketAgen } from './paketAgen/aturPaketAgen/store/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,6 +32,7 @@ function DetailAgenTabs(props) {
     return () => {
       dispatch(exitListTransaksiSaldo());
       dispatch(exitListKartuPaketAgen());
+      dispatch(exitListAturPaketAgen());
     };
   }, [dispatch]);
 

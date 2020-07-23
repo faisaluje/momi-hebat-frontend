@@ -164,7 +164,7 @@ function BonusPaketForm() {
             <Typography className="font-bold text-right pr-80 text-14" style={{ width: '72rem' }}>
               TOTAL:
             </Typography>
-            <Typography className="font-bold text-14">{thousandSeparator(totalBonusPaket)}</Typography>
+            <Typography className="font-bold text-14">Rp. {thousandSeparator(totalBonusPaket)}</Typography>
           </div>
         </FuseAnimateGroup>
       </DialogContent>
