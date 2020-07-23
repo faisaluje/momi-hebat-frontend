@@ -1,33 +1,31 @@
 import React from 'react';
-import { TextField, Button, Icon } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { refreshListTransaksiSaldo, setTxtCariTransaksiSaldo, openTransaksiSaldoDialog } from './store/actions';
+import { Button, Icon } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { refreshListTransaksiSaldo, openTransaksiSaldoDialog } from './store/actions';
 import TransaksiSaldoDialog from './TransaksiSaldoDialog';
 import TransaksiSaldoKategori from './TransaksiSaldoKategori';
 
 function TransaksiSaldoToolbar() {
   const dispatch = useDispatch();
-  const { txtCari } = useSelector(({ transaksiSaldo }) => transaksiSaldo.table);
 
   return (
     <>
       <TransaksiSaldoDialog />
       <div className="m-8 mr-0 flex flex-wrap justify-between w-full">
         <div className="flex flex-wrap items-center">
-          <TextField
+          {/* <TextField
             variant="outlined"
             size="small"
             label="Pencarian"
             placeholder="Ketik Disini..."
             value={txtCari}
             onChange={event => dispatch(setTxtCariTransaksiSaldo(event.target.value))}
-          />
+          /> */}
           <Button
             size="small"
             variant="contained"
             color="primary"
             startIcon={<Icon>refresh</Icon>}
-            className="ml-0 sm:ml-24"
             onClick={() => dispatch(refreshListTransaksiSaldo())}
           >
             Refresh

@@ -8,6 +8,7 @@ import reducer from './store/reducers';
 import BonusPaketDialog from './bonusPaket/BonusPaketDialog';
 import { getListPaketAgen } from './store/actions';
 import PaketAgenTable from './PaketAgenTable';
+import AturPaketAgenList from './aturPaketAgen/AturPaketAgenList';
 
 function PaketAgenPanel() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function PaketAgenPanel() {
     <div className="flex flex-col overflow-auto p-12 items-center justify-center">
       <KartuPaketAgenList />
       <BonusPaketDialog />
+      <AturPaketAgenList />
       {isLoading ? (
         <>
           <CircularProgress color="secondary" />

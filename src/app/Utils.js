@@ -10,5 +10,5 @@ export function getFilteredArray(data, txtCari) {
 }
 
 export function thousandSeparator(value, separator = '.') {
-  return value === 0 ? 0 : value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+  return !value ? '-' : value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }

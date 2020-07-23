@@ -1,9 +1,11 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { thousandSeparator } from 'app/Utils';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 function PaketAgenTable() {
   const { data } = useSelector(({ paketAgen }) => paketAgen.table);
+  const { stok } = useSelector(({ detailAgen }) => detailAgen.panel.agen);
   const [rows, setRows] = React.useState([]);
 
   React.useEffect(() => {
@@ -28,11 +30,14 @@ function PaketAgenTable() {
         <TableBody>
           {rows?.length > 0 ? (
             rows.map((paket, idx) => {
+              const stokPaket = stok?.pakets?.find(item => item.paket === paket.id);
+              const stokTersedia = stokPaket?.jumlah || 0;
+
               return (
                 <TableRow key={idx}>
                   <TableCell style={{ width: '5rem' }}>{idx + 1}.</TableCell>
                   <TableCell className="font-bold text-14">{paket.nama}</TableCell>
-                  <TableCell align="center">-</TableCell>
+                  <TableCell align="center">{thousandSeparator(stokTersedia)}</TableCell>
                   <TableCell align="center">-</TableCell>
                   <TableCell align="center">-</TableCell>
                 </TableRow>

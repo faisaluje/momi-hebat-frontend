@@ -3,6 +3,7 @@ import { Button, Icon } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { openListKartuPaketAgenDialog } from './kartuPaketAgen/store/actions';
 import { openBonusPaketDialog, refreshListPaketAgen } from './store/actions';
+import { openListAturPaketAgenDialog } from './aturPaketAgen/store/actions';
 
 function PaketAgenToolbar() {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function PaketAgenToolbar() {
             color="primary"
             startIcon={<Icon>event_available</Icon>}
             className="ml-0 sm:ml-24"
-            // onClick={() => dispatch(refreshListTransaksiSaldo())}
+            onClick={() => dispatch(openListAturPaketAgenDialog())}
           >
             Atur Ketersediaan
           </Button>

@@ -1,5 +1,5 @@
 import { getDetailAgen } from '../../../store/actions';
-import BonusPaketService from '../../services/bonus-paket.service';
+import BonusPaketService from '../../services/bonusPaket.service';
 
 export const OPEN_BONUS_PAKET_DIALOG = 'OPEN_BONUS_PAKET_DIALOG';
 export const CLOSE_BONUS_PAKET_DIALOG = 'CLOSE_BONUS_PAKET_DIALOG';

@@ -90,10 +90,10 @@ function KartuPaketAgenList() {
 
   return (
     <Dialog
-      classes={{ paper: 'rounded-8 w-full' }}
+      classes={{ paper: 'rounded-8' }}
       {...props}
       onClose={handleClose}
-      maxWidth="md"
+      maxWidth="lg"
       disableBackdropClick
       disableEscapeKeyDown
     >
@@ -180,7 +180,7 @@ function KartuPaketAgenList() {
                 </TableHead>
 
                 <TableBody>
-                  {rows.length > 0 ? (
+                  {rows?.length > 0 ? (
                     rows.map(transaksi => {
                       return (
                         <TableRow key={transaksi.id}>
