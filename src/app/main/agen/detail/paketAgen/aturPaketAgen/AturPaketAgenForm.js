@@ -11,6 +11,7 @@ import {
   ExpansionPanelDetails,
   ExpansionPanelSummary,
   Icon,
+  makeStyles,
   Paper,
   TextField,
   Typography
@@ -20,6 +21,7 @@ import { Alert } from '@material-ui/lab';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import { closeDialog, openDialog, showMessage } from 'app/store/actions';
 import { thousandSeparator } from 'app/Utils';
+import clsx from 'clsx';
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
@@ -235,15 +237,23 @@ function AturPaketAgenForm() {
                         form?.items?.length > 0 ? form.items.find(item => item.paket === paket.id) : undefined;
                       const biaya = total.biaya[paket.id];
 
+                      const bgColor = paket.bgColor || '#FFF';
+                      const style = makeStyles(theme => ({
+                        root: {
+                          background: bgColor,
+                          color: theme.palette.getContrastText(bgColor)
+                        }
+                      }));
+
                       return (
-                        <div key={idx} className="flex flex-row mb-8">
+                        <div key={idx} className={clsx(style().root, 'flex flex-row py-4')}>
                           <Typography style={{ width: '22.4rem' }}>
                             <b>-</b> {paket.nama}
                           </Typography>
                           <Typography style={{ width: '14rem' }}>Rp. {thousandSeparator(paket.harga)}</Typography>
                           <NumberFormat
                             id={`jumlah-paket-${paket.id}`}
-                            className="mr-32 w-72"
+                            className="mr-32 w-72 h-0"
                             value={paketSelected?.jumlah || ''}
                             onValueChange={val => handleJumlahChange(paket, val.value)}
                             customInput={TextField}
@@ -251,6 +261,14 @@ function AturPaketAgenForm() {
                             decimalSeparator=","
                             size="small"
                             allowNegative={false}
+                            autoFocus={idx === 0}
+                            inputProps={{
+                              className: style().root
+                            }}
+                            // eslint-disable-next-line react/jsx-no-duplicate-props
+                            InputProps={{
+                              readOnly: !!data?.id
+                            }}
                           />
                           <Typography>{biaya ? `Rp. ${thousandSeparator(biaya)}` : '-'}</Typography>
                         </div>
@@ -291,8 +309,16 @@ function AturPaketAgenForm() {
                         form?.items?.length > 0 ? form.items.find(item => item.paket === paket.id) : undefined;
                       const cashback = total.cashback[paket.id];
 
+                      const bgColor = paket.bgColor || '#FFF';
+                      const style = makeStyles(theme => ({
+                        root: {
+                          background: bgColor,
+                          color: theme.palette.getContrastText(bgColor)
+                        }
+                      }));
+
                       return (
-                        <div key={idx} className="flex flex-row mb-8">
+                        <div key={idx} className={clsx(style().root, 'flex flex-row py-4')}>
                           <Typography style={{ width: '22.4rem' }}>
                             <b>-</b> {paket.nama}
                           </Typography>
@@ -303,7 +329,7 @@ function AturPaketAgenForm() {
                       );
                     })}
 
-                  <div className="flex flex-row">
+                  <div className="flex flex-row mt-16">
                     <Typography className="font-bold text-right pr-64" style={{ width: '49.4rem' }}>
                       Total Cashback :{' '}
                     </Typography>
@@ -327,7 +353,9 @@ function AturPaketAgenForm() {
                   <div className="flex flex-row mb-16">
                     <Typography className="font-bold w-216">Pilihan Paket</Typography>
                     <Typography className="font-bold w-160">Bonus Satuan</Typography>
-                    <Typography className="font-bold w-160">Jumlah</Typography>
+                    <Typography className="font-bold" style={{ width: '13rem' }}>
+                      Jumlah
+                    </Typography>
                     <Typography className="font-bold">Total</Typography>
                   </div>
 
@@ -338,21 +366,29 @@ function AturPaketAgenForm() {
                         form?.items?.length > 0 ? form.items.find(item => item.paket === paket.id) : undefined;
                       const bonus = total.bonus[paket.id];
 
+                      const bgColor = paket.bgColor || '#FFF';
+                      const style = makeStyles(theme => ({
+                        root: {
+                          background: bgColor,
+                          color: theme.palette.getContrastText(bgColor)
+                        }
+                      }));
+
                       return (
-                        <div key={idx} className="flex flex-row mb-8">
+                        <div key={idx} className={clsx(style().root, 'flex flex-row py-4')}>
                           <Typography style={{ width: '22.4rem' }}>
                             <b>-</b> {paket.nama}
                           </Typography>
                           <Typography style={{ width: '16rem' }}>
                             Rp. {thousandSeparator(bonusSelected?.nominal)}
                           </Typography>
-                          <Typography style={{ width: '11rem' }}>{paketSelected?.jumlah || '-'}</Typography>
+                          <Typography style={{ width: '9rem' }}>{paketSelected?.jumlah || '-'}</Typography>
                           <Typography>{bonus ? `Rp. ${thousandSeparator(bonus)}` : '-'}</Typography>
                         </div>
                       );
                     })}
 
-                  <div className="flex flex-row">
+                  <div className="flex flex-row mt-16">
                     <Typography className="font-bold text-right pr-64" style={{ width: '49.4rem' }}>
                       Total Bonus :{' '}
                     </Typography>
@@ -409,15 +445,19 @@ function AturPaketAgenForm() {
       </DialogContent>
 
       <DialogActions className="flex flex-row justify-between items-center border-t">
-        <Typography className="text-14 font-bold">
-          Total Saldo Saat Ini : Rp. {thousandSeparator(saldoTotal)}
-        </Typography>
-        {jenis === 'booking' && saldoTotal - hitungan < 0 && (
-          <Alert variant="outlined" severity="error" className="font-bold text-14">
-            Saldo Tidak mencukupi
-          </Alert>
+        {!data?.id && (
+          <>
+            <Typography className="text-14 font-bold">
+              Total Saldo Saat Ini : Rp. {thousandSeparator(saldoTotal)}
+            </Typography>
+            {jenis === 'booking' && saldoTotal - hitungan < 0 && (
+              <Alert variant="outlined" severity="error" className="font-bold text-14">
+                Saldo Tidak mencukupi
+              </Alert>
+            )}
+            <div className="mx-8" />
+          </>
         )}
-        <div className="mx-8" />
         <div className="flex flex-row">
           <Button
             disabled={!canBeSubmitted}
@@ -431,14 +471,16 @@ function AturPaketAgenForm() {
 
           <div className="mx-8" />
 
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={!canBeSubmitted || (jenis === 'booking' && saldoTotal - hitungan < 0)}
-          >
-            Proses
-          </Button>
+          {!data?.id && (
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              disabled={!canBeSubmitted || (jenis === 'booking' && saldoTotal - hitungan < 0)}
+            >
+              Proses
+            </Button>
+          )}
         </div>
       </DialogActions>
     </form>

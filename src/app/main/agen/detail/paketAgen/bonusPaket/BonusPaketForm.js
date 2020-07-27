@@ -7,12 +7,14 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  makeStyles,
   Paper,
   TextField,
   Typography
 } from '@material-ui/core';
 import { closeDialog, openDialog, showMessage } from 'app/store/actions';
 import { thousandSeparator } from 'app/Utils';
+import clsx from 'clsx';
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
@@ -127,8 +129,16 @@ function BonusPaketForm() {
             const bonus = (bonusPaket?.nominal || 0) * stok;
             totalBonusPaket += bonus;
 
+            const bgColor = paket.bgColor || '#FFF';
+            const style = makeStyles(theme => ({
+              root: {
+                background: bgColor,
+                color: theme.palette.getContrastText(bgColor)
+              }
+            }));
+
             return (
-              <div key={paket.id} className="flex flex-row mb-16 w-full items-center">
+              <div key={paket.id} className={clsx(style().root, 'flex flex-row py-8 w-full items-center')}>
                 <Typography className="w-360 font-bold ">- {paket.nama}</Typography>
 
                 <NumberFormat
@@ -149,6 +159,9 @@ function BonusPaketForm() {
                   customInput={TextField}
                   thousandSeparator="."
                   decimalSeparator=","
+                  inputProps={{
+                    className: style().root
+                  }}
                 />
 
                 <div className="flex flex-row w-136 mx-32">

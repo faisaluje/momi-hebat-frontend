@@ -12,6 +12,7 @@ import {
   ListItem
 } from '@material-ui/core';
 import FuseAnimate from '@fuse/core/FuseAnimate';
+import { Link } from 'react-router-dom';
 
 function SubAgenDialog(props) {
   const { onClose, open, agen } = props;
@@ -36,8 +37,11 @@ function SubAgenDialog(props) {
         <FuseAnimate animation="transition.whirlIn" duration={500}>
           <List component="nav">
             {agen?.subAgens?.map(subAgen => (
-              <ListItem button key={subAgen.no}>
-                <ListItemText primary={`${subAgen.no} - ${subAgen.diri.nama.lengkap}`} />
+              <ListItem component={Link} color="primary" to={`/agen/${subAgen.id}`} key={subAgen.no}>
+                <ListItemText
+                  primary={`${subAgen.no} - ${subAgen.diri.nama.lengkap}`}
+                  className="text-blue hover:underline"
+                />
               </ListItem>
             ))}
           </List>

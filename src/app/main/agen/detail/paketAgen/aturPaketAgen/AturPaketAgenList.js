@@ -25,7 +25,8 @@ import {
   closeListAturPaketAgenDialog,
   getListAturPaketAgen,
   openAturPaketAgenDialog,
-  refreshListAturPaketAgen
+  refreshListAturPaketAgen,
+  setAturPaketAgenForm
 } from './store/actions';
 import reducer from './store/reducers';
 import AturPaketAgenDialog from './AturPaketAgenDialog';
@@ -51,6 +52,11 @@ function AturPaketAgenList() {
 
   const handleClose = () => {
     dispatch(closeListAturPaketAgenDialog());
+  };
+
+  const onClickDetail = aturPaket => {
+    dispatch(setAturPaketAgenForm(aturPaket));
+    dispatch(openAturPaketAgenDialog());
   };
 
   return (
@@ -169,9 +175,14 @@ function AturPaketAgenList() {
                               );
                             })}
                           <TableCell align="center" style={{ width: '14.5rem' }}>
-                            {totalBiaya
-                              ? `Rp. ${aturPaket.jenis === 'booking' ? '- ' : ''} ${thousandSeparator(totalBiaya)}`
-                              : '-'}
+                            <Typography
+                              className="text-blue hover:underline cursor-pointer"
+                              onClick={() => onClickDetail(aturPaket)}
+                            >
+                              {totalBiaya
+                                ? `Rp. ${aturPaket.jenis === 'booking' ? '- ' : ''} ${thousandSeparator(totalBiaya)}`
+                                : '-'}
+                            </Typography>
                           </TableCell>
                         </TableRow>
                       );

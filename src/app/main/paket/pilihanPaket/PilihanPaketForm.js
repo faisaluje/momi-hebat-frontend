@@ -16,6 +16,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PaketAutoComplete from 'app/main/components/PaketAutoComplete';
 import NumberFormat from 'react-number-format';
+import ColorsPicker from 'app/main/components/ColorsPicker';
 import { savePilihanPaket, setPilihanPaketForm } from './store/actions';
 
 function PilihanPaketForm() {
@@ -150,6 +151,16 @@ function PilihanPaketForm() {
               customInput={TextField}
               thousandSeparator="."
               decimalSeparator=","
+            />
+          </div>
+
+          <div className="flex mb-16">
+            <Typography className="min-w-160 font-bold pt-12">Warna Background:</Typography>
+
+            <ColorsPicker
+              className="w-76"
+              color={form?.bgColor || '#FFF'}
+              onChangeComplete={color => setInForm('bgColor', color.hex)}
             />
           </div>
         </FuseAnimateGroup>

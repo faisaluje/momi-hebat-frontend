@@ -1,6 +1,7 @@
 import { URL_API } from 'app/Constants';
 import ErrorService from 'app/services/error.service';
 import Axios from 'axios';
+import { sortBy } from 'lodash';
 
 class PilihanPaketService {
   static async getListPilihanPaketData(params) {
@@ -10,7 +11,7 @@ class PilihanPaketService {
         timeout: 30000
       });
 
-      return { success: true, data };
+      return { success: true, data: sortBy(data, ['jenisPaket.createdAt', 'createdAt']) };
     } catch (e) {
       if (e.response?.status === 404) {
         return { success: true, data: [] };
