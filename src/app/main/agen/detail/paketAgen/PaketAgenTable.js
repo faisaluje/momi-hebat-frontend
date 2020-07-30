@@ -39,7 +39,7 @@ function PaketAgenTable() {
                   <TableCell className="font-bold text-14">{paket.nama}</TableCell>
                   <TableCell align="center">{thousandSeparator(stokTersedia)}</TableCell>
                   <TableCell align="center">-</TableCell>
-                  <TableCell align="center">-</TableCell>
+                  <TableCell align="center">{thousandSeparator(stokPaket?.stok || 0)}</TableCell>
                 </TableRow>
               );
             })

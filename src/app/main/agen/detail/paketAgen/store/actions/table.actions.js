@@ -11,6 +11,7 @@ export const EXIT_LIST_PAKET_AGEN = 'EXIT_LIST_PAKET_AGEN';
 export const exitListPaketAgen = () => ({ type: EXIT_LIST_PAKET_AGEN });
 export const refreshListPaketAgen = () => {
   return (dispatch, getState) => {
+    console.log(getState().detailAgen.panel);
     const agenId = getState().detailAgen.panel.agen.id;
 
     dispatch(getDetailAgen(agenId));
