@@ -1,13 +1,21 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Icon, MenuItem, IconButton, Paper } from '@material-ui/core';
-import { setTxtCariAgen, refreshListAgen, openAgenDialog, setStatusAgen, setLevelAgen } from './store/actions';
+import { DatePicker } from '@material-ui/pickers';
+import {
+  setTxtCariAgen,
+  refreshListAgen,
+  openAgenDialog,
+  setStatusAgen,
+  setLevelAgen,
+  setTglLahirAgen
+} from './store/actions';
 import AgenConfirmationDialog from './AgenConfirmationDialog';
 import AgenStatus from './AgenStatus';
 
 function AgenToolbar() {
   const dispatch = useDispatch();
-  const { txtCari, status, data, level } = useSelector(({ agen }) => agen.table);
+  const { txtCari, status, data, level, tglLahir } = useSelector(({ agen }) => agen.table);
   const [openConfirmation, setOpenConfirmation] = React.useState(false);
   const [pencarian, setPencarian] = React.useState(txtCari);
 
@@ -72,6 +80,17 @@ function AgenToolbar() {
       </div>
 
       <div className="flex flex-wrap items-center">
+        <DatePicker
+          inputVariant="outlined"
+          format="DD-MM-YYYY"
+          clearable
+          size="small"
+          label="Tgl Lahir"
+          value={tglLahir}
+          className="w-128 mr-0 sm:mr-24"
+          onChange={val => dispatch(setTglLahirAgen(val ? val.format('YYYY-MM-DD') : null))}
+        />
+
         {data?.docs?.length > 0 && (
           <TextField
             label="Level"

@@ -4,6 +4,10 @@ import {
   Button,
   CircularProgress,
   Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Icon,
   IconButton,
   Paper,
@@ -14,6 +18,7 @@ import {
   TableHead,
   TableRow,
   Toolbar,
+  Tooltip,
   Typography
 } from '@material-ui/core';
 import withReducer from 'app/store/withReducer';
@@ -21,8 +26,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thousandSeparator } from 'app/Utils';
 import { startCase } from 'lodash';
+import { closeDialog, openDialog } from 'app/store/actions';
 import {
   closeListTransaksiPaketAgenDialog,
+  deleteTransaksiPaketAgen,
   getListTransaksiPaketAgen,
   openTransaksiPaketAgenDialog,
   refreshListTransaksiPaketAgen,
@@ -55,7 +62,33 @@ function TransaksiPaketAgenList() {
 
   const onClickDetail = transaksi => {
     dispatch(setTransaksiPaketAgenForm(transaksi));
-    dispatch(openTransaksiPaketAgenDialog());
+    dispatch(openTransaksiPaketAgenDialog(transaksi.jenis));
+  };
+
+  const handleDeleteTransaksiPaketAgen = transaksi => {
+    dispatch(
+      openDialog({
+        children: (
+          <>
+            <DialogTitle id="alert-dialog-title">Konfirmasi</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">Kartu paket akan dihapus ?</DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => dispatch(closeDialog())}>Tidak</Button>
+              <Button onClick={() => onDeleteTransaksiPaketAgen(transaksi)} autoFocus>
+                Iya
+              </Button>
+            </DialogActions>
+          </>
+        )
+      })
+    );
+  };
+
+  const onDeleteTransaksiPaketAgen = transaksi => {
+    dispatch(deleteTransaksiPaketAgen(transaksi.id));
+    dispatch(closeDialog());
   };
 
   return (
@@ -125,6 +158,7 @@ function TransaksiPaketAgenList() {
                     <TableCell align="center" className="font-bold">
                       Total Paket
                     </TableCell>
+                    <TableCell> </TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -155,12 +189,19 @@ function TransaksiPaketAgenList() {
                               {thousandSeparator(totalPaket)}
                             </Typography>
                           </TableCell>
+                          <TableCell align="center">
+                            <Tooltip title="Hapus Transaksi" placement="left">
+                              <IconButton size="small" onClick={() => handleDeleteTransaksiPaketAgen(transaksi)}>
+                                <Icon className="text-red">close</Icon>
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
                         </TableRow>
                       );
                     })
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={3 + dataPaket.length} align="center">
+                      <TableCell colSpan={4 + dataPaket.length} align="center">
                         Belum ada Transaksi. . .
                       </TableCell>
                     </TableRow>

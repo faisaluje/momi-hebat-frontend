@@ -7,7 +7,8 @@ import {
   EXIT_LIST_AGEN,
   SET_STATUS_AGEN,
   SET_LEVEL_AGEN,
-  SET_LIST_AGEN_PAGE
+  SET_LIST_AGEN_PAGE,
+  SET_TGL_LAHIR_AGEN
 } from '../actions';
 import AgenStatus from '../../AgenStatus';
 
@@ -20,7 +21,8 @@ const initialState = {
   txtCari: '',
   status: AgenStatus.aktif.value,
   level: '',
-  page: 1
+  page: 1,
+  tglLahir: null
 };
 
 function tableReducer(state = initialState, action) {
@@ -75,6 +77,13 @@ function tableReducer(state = initialState, action) {
       return {
         ...state,
         level: action.level,
+        isRefresh: true,
+        page: 1
+      };
+    case SET_TGL_LAHIR_AGEN:
+      return {
+        ...state,
+        tglLahir: action.tglLahir,
         isRefresh: true,
         page: 1
       };

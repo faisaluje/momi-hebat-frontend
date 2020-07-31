@@ -235,12 +235,14 @@ function TransaksiPaketAgenForm() {
           </FuseAnimateGroup>
         </DialogContent>
 
-        <DialogActions className="flex flex-row justify-between">
-          <div className="mx-8" />
-          <Button variant="contained" color="primary" type="submit" disabled={!canBeSubmitted}>
-            Simpan
-          </Button>
-        </DialogActions>
+        {!data?.id && (
+          <DialogActions className="flex flex-row justify-between">
+            <div className="mx-8" />
+            <Button variant="contained" color="primary" type="submit" disabled={!canBeSubmitted}>
+              Simpan
+            </Button>
+          </DialogActions>
+        )}
       </form>
     </>
   );

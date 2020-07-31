@@ -27,7 +27,7 @@ import AgenActionsDialog from './AgenActionsDialog';
 
 function AgenTable() {
   const dispatch = useDispatch();
-  const { isRefresh, data, txtCari, status, level, page } = useSelector(({ agen }) => agen.table);
+  const { isRefresh, data, txtCari, status, level, page, tglLahir } = useSelector(({ agen }) => agen.table);
   const [rows, setRows] = React.useState([]);
   const [openSubAgens, setOpenSubAgens] = React.useState(false);
   const [openAgenActions, setOpenAgenActions] = React.useState(false);
@@ -35,9 +35,9 @@ function AgenTable() {
 
   React.useEffect(() => {
     if (isRefresh) {
-      dispatch(getListAgen({ status, nama: txtCari, level, page, detail: 1 }));
+      dispatch(getListAgen({ status, nama: txtCari, level, page, detail: 1, tglLahir }));
     }
-  }, [dispatch, isRefresh, level, page, status, txtCari]);
+  }, [dispatch, isRefresh, level, page, status, tglLahir, txtCari]);
 
   React.useEffect(() => {
     if (data) {
