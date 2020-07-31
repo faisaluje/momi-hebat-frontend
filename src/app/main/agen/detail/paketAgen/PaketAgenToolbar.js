@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { openListKartuPaketAgenDialog } from './kartuPaketAgen/store/actions';
 import { openBonusPaketDialog, refreshListPaketAgen } from './store/actions';
 import { openListAturPaketAgenDialog } from './aturPaketAgen/store/actions';
+import { openListTransaksiPaketAgenDialog, openTransaksiPaketAgenDialog } from './transaksiPaketAgen/store/actions';
 
 function PaketAgenToolbar() {
   const dispatch = useDispatch();
@@ -63,8 +64,19 @@ function PaketAgenToolbar() {
             size="small"
             variant="contained"
             color="primary"
+            startIcon={<Icon>history</Icon>}
+            onClick={() => dispatch(openListTransaksiPaketAgenDialog())}
+          >
+            Histori
+          </Button>
+
+          <Button
+            className="ml-0 sm:ml-12"
+            size="small"
+            variant="contained"
+            color="primary"
             startIcon={<Icon>arrow_upward</Icon>}
-            // onClick={() => dispatch(openTransaksiSaldoDialog(TransaksiSaldoKategori.SETORAN))}
+            onClick={() => dispatch(openTransaksiPaketAgenDialog('pengambilan'))}
           >
             Pengambilan
           </Button>
@@ -75,7 +87,7 @@ function PaketAgenToolbar() {
             variant="contained"
             color="primary"
             startIcon={<Icon>arrow_downward</Icon>}
-            // onClick={() => dispatch(openTransaksiSaldoDialog(TransaksiSaldoKategori.PENARIKAN))}
+            onClick={() => dispatch(openTransaksiPaketAgenDialog('pengembalian'))}
           >
             Pengembalian
           </Button>

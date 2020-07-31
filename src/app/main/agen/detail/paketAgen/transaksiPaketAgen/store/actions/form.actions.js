@@ -12,7 +12,7 @@ export const SAVE_TRANSAKSI_PAKET_AGEN_ERROR = 'SAVE_TRANSAKSI_PAKET_AGEN_ERROR'
 export const SAVE_TRANSAKSI_PAKET_AGEN_SUCCESS = 'SAVE_TRANSAKSI_PAKET_AGEN_SUCCESS';
 
 export const setTransaksiPaketAgenForm = data => ({ type: SET_TRANSAKSI_PAKET_AGEN_FORM, data });
-export const openTransaksiPaketAgenDialog = () => ({ type: OPEN_TRANSAKSI_PAKET_AGEN_DIALOG });
+export const openTransaksiPaketAgenDialog = jenis => ({ type: OPEN_TRANSAKSI_PAKET_AGEN_DIALOG, jenis });
 export const closeTransaksiPaketAgenDialog = () => ({ type: CLOSE_TRANSAKSI_PAKET_AGEN_DIALOG });
 
 export function createTransaksiPaketAgen(data) {

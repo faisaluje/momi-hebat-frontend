@@ -9,6 +9,8 @@ import BonusPaketDialog from './bonusPaket/BonusPaketDialog';
 import { getListPaketAgen } from './store/actions';
 import PaketAgenTable from './PaketAgenTable';
 import AturPaketAgenList from './aturPaketAgen/AturPaketAgenList';
+import TransaksiPaketAgenList from './transaksiPaketAgen/TransaksiPaketAgenList';
+import TransaksiPaketAgenDialog from './transaksiPaketAgen/TransaksiPaketAgenDialog';
 
 function PaketAgenPanel() {
   const dispatch = useDispatch();
@@ -26,6 +28,8 @@ function PaketAgenPanel() {
       <KartuPaketAgenList />
       <BonusPaketDialog />
       <AturPaketAgenList />
+      <TransaksiPaketAgenList />
+      <TransaksiPaketAgenDialog />
       {isLoading ? (
         <>
           <CircularProgress color="secondary" />

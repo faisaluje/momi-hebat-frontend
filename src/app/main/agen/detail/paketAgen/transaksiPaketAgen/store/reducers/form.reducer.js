@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   data: null,
+  jenis: 'pengambilan',
   props: {
     open: false
   },
@@ -27,6 +28,7 @@ function formReduceer(state = initialState, action) {
     case OPEN_TRANSAKSI_PAKET_AGEN_DIALOG:
       return {
         ...state,
+        jenis: action.jenis,
         props: { open: true }
       };
     case CLOSE_TRANSAKSI_PAKET_AGEN_DIALOG:

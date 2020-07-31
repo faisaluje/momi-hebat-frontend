@@ -21,7 +21,7 @@ function PaketAgenTable() {
           <TableRow>
             <TableCell style={{ width: '5rem' }}>No.</TableCell>
             <TableCell>Nama Paket</TableCell>
-            <TableCell align="center">Stok Tersedia</TableCell>
+            <TableCell align="center">Booking</TableCell>
             <TableCell align="center">Stok Diambil</TableCell>
             <TableCell align="center">Stok Sisa</TableCell>
           </TableRow>
@@ -31,14 +31,14 @@ function PaketAgenTable() {
           {rows?.length > 0 ? (
             rows.map((paket, idx) => {
               const stokPaket = stok?.pakets?.find(item => item.paket === paket.id);
-              const stokTersedia = stokPaket?.jumlah || 0;
+              const booking = stokPaket?.jumlah || 0;
 
               return (
                 <TableRow key={idx}>
                   <TableCell style={{ width: '5rem' }}>{idx + 1}.</TableCell>
                   <TableCell className="font-bold text-14">{paket.nama}</TableCell>
-                  <TableCell align="center">{thousandSeparator(stokTersedia)}</TableCell>
-                  <TableCell align="center">-</TableCell>
+                  <TableCell align="center">{thousandSeparator(booking)}</TableCell>
+                  <TableCell align="center">{thousandSeparator(booking - (stokPaket?.stok || 0))}</TableCell>
                   <TableCell align="center">{thousandSeparator(stokPaket?.stok || 0)}</TableCell>
                 </TableRow>
               );
