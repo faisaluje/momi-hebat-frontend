@@ -223,7 +223,7 @@ function TransaksiKartuPaketList() {
                           </TableCell>
                           <TableCell>{transaksi.catatan}</TableCell>
                           <TableCell className="w-24">
-                            {transaksi.jenis !== 'keluar' && (
+                            {!transaksi.agen && (
                               <Tooltip title="Hapus Transaksi" placement="left">
                                 <IconButton size="small" onClick={() => handleDeleteTransaksiKartuPaket(transaksi)}>
                                   <Icon className="text-red">close</Icon>
