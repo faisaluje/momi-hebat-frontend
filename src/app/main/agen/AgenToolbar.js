@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Icon, MenuItem, IconButton, Paper } from '@material-ui/core';
 import { DatePicker } from '@material-ui/pickers';
+import moment from 'moment';
 import {
   setTxtCariAgen,
   refreshListAgen,
@@ -12,6 +13,9 @@ import {
 } from './store/actions';
 import AgenConfirmationDialog from './AgenConfirmationDialog';
 import AgenStatus from './AgenStatus';
+import 'moment/locale/id';
+
+moment.locale('id');
 
 function AgenToolbar() {
   const dispatch = useDispatch();
@@ -35,6 +39,10 @@ function AgenToolbar() {
       dispatch(openAgenDialog(jenisAgen));
     }
   };
+
+  // const onCetakAgen = () => {
+  //   PrintAgenService.printListAgen({ status, nama: txtCari, level, detail: 1, tglLahir, limit: data?.totalDocs || 0 });
+  // };
 
   return (
     <Paper elevation={3} className="p-8 w-full flex flex-wrap justify-between">
@@ -135,6 +143,17 @@ function AgenToolbar() {
         >
           Tambah
         </Button>
+
+        {/* <Button
+          className="ml-0 sm:ml-12"
+          size="small"
+          variant="contained"
+          color="primary"
+          startIcon={<Icon>print</Icon>}
+          onClick={onCetakAgen}
+        >
+          Cetak
+        </Button> */}
       </div>
     </Paper>
   );

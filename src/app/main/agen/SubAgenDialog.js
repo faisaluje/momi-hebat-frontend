@@ -12,10 +12,9 @@ import {
   ListItem
 } from '@material-ui/core';
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Link } from 'react-router-dom';
 
 function SubAgenDialog(props) {
-  const { onClose, open, agen } = props;
+  const { onClose, open, agen, onSelected } = props;
 
   const handleClose = () => {
     onClose();
@@ -37,11 +36,8 @@ function SubAgenDialog(props) {
         <FuseAnimate animation="transition.whirlIn" duration={500}>
           <List component="nav">
             {agen?.subAgens?.map(subAgen => (
-              <ListItem component={Link} color="primary" to={`/agen/${subAgen.id}`} key={subAgen.no}>
-                <ListItemText
-                  primary={`${subAgen.no} - ${subAgen.diri.nama.lengkap}`}
-                  className="text-blue hover:underline"
-                />
+              <ListItem button key={subAgen.no} onClick={() => onSelected(subAgen)}>
+                <ListItemText primary={`${subAgen.no} - ${subAgen.diri.nama.lengkap}`} />
               </ListItem>
             ))}
           </List>
@@ -54,7 +50,8 @@ function SubAgenDialog(props) {
 SubAgenDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  agen: PropTypes.object
+  agen: PropTypes.object,
+  onSelected: PropTypes.func.isRequired
 };
 
 export default SubAgenDialog;

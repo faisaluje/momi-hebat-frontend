@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import GreenSwitch from '../components/GreenSwitch';
 import AgenStatus from './AgenStatus';
-import { getListAgen, saveAgen } from './store/actions';
+import { getListAgen, saveAgen, setLevelAgen, setListAgenPage, setTglLahirAgen, setTxtCariAgen } from './store/actions';
 import SubAgenDialog from './SubAgenDialog';
 import AgenActionsDialog from './AgenActionsDialog';
 
@@ -89,9 +89,21 @@ function AgenTable() {
     setOpenSubAgens(true);
   };
 
+  const onSubAgenSelected = subAgen => {
+    dispatch(setLevelAgen(''));
+    dispatch(setListAgenPage(1));
+    dispatch(setTglLahirAgen(null));
+    dispatch(setTxtCariAgen(subAgen.diri?.nama?.lengkap));
+  };
+
   return (
     <>
-      <SubAgenDialog open={openSubAgens} onClose={() => setOpenSubAgens(false)} agen={agenSelected} />
+      <SubAgenDialog
+        open={openSubAgens}
+        onClose={() => setOpenSubAgens(false)}
+        agen={agenSelected}
+        onSelected={onSubAgenSelected}
+      />
       <AgenActionsDialog open={openAgenActions} onClose={() => setOpenAgenActions(false)} agen={agenSelected} />
       <TableContainer component={Paper} elevation={8} className="mt-12">
         <Table stickyHeader size="small">

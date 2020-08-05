@@ -56,7 +56,7 @@ function AturPaketAgenList() {
 
   const onClickDetail = aturPaket => {
     dispatch(setAturPaketAgenForm(aturPaket));
-    dispatch(openAturPaketAgenDialog());
+    dispatch(openAturPaketAgenDialog(aturPaket.jenis));
   };
 
   return (
