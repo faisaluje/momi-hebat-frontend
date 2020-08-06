@@ -9,11 +9,9 @@ import { strOrStrip } from 'app/Utils';
 import moment from 'moment';
 import reducer from '../store/reducers';
 
-function AgenPrint() {
+function AgenDetailPrint() {
   const { data } = useSelector(({ agen }) => agen.form);
   const { periode } = useSelector(({ auth }) => auth.user.data);
-
-  console.log(data);
 
   if (!data) {
     History.push('/agen');
@@ -37,7 +35,7 @@ function AgenPrint() {
         </div>
 
         <div className="flex flex-1 flex-row-reverse">
-          <Button variant="contained" color="primary" endIcon={<Icon>print</Icon>} onClick={() => window.print()}>
+          <Button variant="contained" color="primary" startIcon={<Icon>print</Icon>} onClick={() => window.print()}>
             Print
           </Button>
         </div>
@@ -182,4 +180,4 @@ function AgenPrint() {
   );
 }
 
-export default withReducer('agen', reducer)(AgenPrint);
+export default withReducer('agen', reducer)(AgenDetailPrint);

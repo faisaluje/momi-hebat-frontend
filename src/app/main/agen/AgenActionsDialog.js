@@ -27,7 +27,7 @@ function AgenActionsDialog(props) {
   const onClickCetakAgen = () => {
     dispatch(setAgenForm(agen));
     // PrintAgenService.printAgenDetail(agen, periode);
-    History.push('/agen/print');
+    History.push('/agen/printDetail');
   };
 
   return (
