@@ -27,7 +27,7 @@ function Barang(props) {
     <>
       <TransaksiBarangList />
       <TransaksiBarangDialog />
-      <div className={clsx(classes.root, 'p-8')}>
+      <div className={clsx(classes.root, 'p-8 print:hidden')}>
         <Breadcrumbs className={classes.root} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
           <Link color="inherit" to="/" className="flex items-center">
             <Icon className="mr-8">home</Icon>
@@ -50,7 +50,7 @@ function Barang(props) {
             delay: 200,
             duration: 500
           }}
-          className={clsx(classes.root, 'flex flex-col flex-auto overflow-auto items-center p-24')}
+          className={clsx(classes.root, 'flex flex-col flex-auto overflow-auto items-center p-24 print:hidden')}
         >
           <BarangToolbar />
           <BarangTable />

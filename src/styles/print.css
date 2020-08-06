@@ -13,10 +13,24 @@
   /* html and body tweaks */
   html,
   body {
+    background-color: #fff;
     height: auto !important;
     overflow: initial !important;
-    background: none;
     -webkit-print-color-adjust: exact;
+  }
+
+  #print-foot {
+    display: block;
+    position: fixed;
+    bottom: 0pt;
+    right: 0pt;
+
+    font-size: 200%;
+  }
+
+  #print-foot:after {
+    counter-increment: page;
+    content: counter(page);
   }
 
   /* Page breaks */

@@ -49,8 +49,22 @@ function AgenDetailPrint() {
           <div className="flex items-center justify-center">
             <img width="128" src="assets/images/logos/momi-hebat.svg" alt="logo" />
           </div>
-          <div className="flex flex-1 text-center items-center justify-center ml-8">
+          <div className="flex flex-1 flex-col text-center items-center justify-center ml-8">
             <Typography className="font-black text-28">DATA AGEN {periode.referensi.judul?.toUpperCase()}</Typography>
+
+            <div className="flex justify-between items-center">
+              <div className="flex flex-row items-center">
+                <img width="26" src="assets/images/logos/whatsapp.svg" className="mr-8" alt="whatsapp" />
+                <Typography className="text-16">{strOrStrip(periode.referensi.noHp)}</Typography>
+              </div>
+
+              <div className="mx-44" />
+
+              <div className="flex flex-row items-center">
+                <img width="26" src="assets/images/logos/instagram.svg" className="mr-8" alt="instagram" />
+                <Typography className="text-16">{strOrStrip(periode.referensi.ig)}</Typography>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -100,7 +114,7 @@ function AgenDetailPrint() {
             <Typography className="w-192">Tempat, Tanggal Lahir</Typography>
             <Typography>
               : {strOrStrip(data.diri.lahir?.tempat)}
-              {data.diri.lahir?.tanggal ? `, ${moment(data.diri.lahir?.tanggal).format('DD MMMM YYYY')}` : ''}
+              {data.diri.lahir?.tanggal ? `, ${moment(data.diri.lahir?.tanggal).format('D MMMM YYYY')}` : ''}
             </Typography>
           </div>
 
@@ -161,7 +175,7 @@ function AgenDetailPrint() {
             <Typography className="w-192">Tempat, Tanggal Lahir</Typography>
             <Typography>
               : {strOrStrip(data.keluarga?.lahir?.tempat)}
-              {data.keluarga?.lahir?.tanggal ? `, ${moment(data.keluarga?.lahir?.tanggal).format('DD MMMM YYYY')}` : ''}
+              {data.keluarga?.lahir?.tanggal ? `, ${moment(data.keluarga?.lahir?.tanggal).format('D MMMM YYYY')}` : ''}
             </Typography>
           </div>
 

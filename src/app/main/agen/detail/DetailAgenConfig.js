@@ -8,10 +8,6 @@ const DetailAgenConfig = {
   auth: authRoles.user,
   routes: [
     {
-      path: '/agen/printList',
-      component: lazy(() => import('../print/AgenListPrint'))
-    },
-    {
       path: '/agen/printDetail',
       component: lazy(() => import('../print/AgenDetailPrint'))
     },

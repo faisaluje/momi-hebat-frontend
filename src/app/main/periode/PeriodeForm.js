@@ -171,6 +171,15 @@ function PeriodeForm() {
                 validationError="No. Hp harus angka"
                 fullWidth
               />
+
+              <TextFieldFormsy
+                className="mt-12"
+                type="text"
+                name="referensi.ig"
+                value={data?.referensi?.ig || 'paketmomihebat'}
+                label="Instagram"
+                fullWidth
+              />
             </Paper>
           </div>
         </FuseAnimateGroup>

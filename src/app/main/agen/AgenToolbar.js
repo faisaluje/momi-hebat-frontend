@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Icon, MenuItem, IconButton, Paper } from '@material-ui/core';
 import { DatePicker } from '@material-ui/pickers';
-import History from '@history';
 import moment from 'moment';
 import {
   setTxtCariAgen,
@@ -41,9 +40,9 @@ function AgenToolbar() {
     }
   };
 
-  const onCetakAgen = () => {
-    History.push('agen/printList');
-  };
+  // const onCetakAgen = () => {
+  //   History.push('agen/printList');
+  // };
 
   return (
     <Paper elevation={3} className="p-8 w-full flex flex-wrap justify-between">
@@ -133,7 +132,7 @@ function AgenToolbar() {
           ))}
         </TextField>
 
-        <Button
+        {/* <Button
           className="ml-0 sm:ml-12"
           size="small"
           variant="contained"
@@ -142,7 +141,7 @@ function AgenToolbar() {
           onClick={onCetakAgen}
         >
           Cetak
-        </Button>
+        </Button> */}
 
         <AgenConfirmationDialog open={openConfirmation} onClose={onJenisSelected} />
         <Button

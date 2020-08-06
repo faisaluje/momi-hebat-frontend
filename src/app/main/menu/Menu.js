@@ -8,6 +8,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { useSelector } from 'react-redux';
 import MenuInventory from './MenuInventory';
 import MenuPengaturan from './MenuPengaturan';
+import MenuLaporan from './MenuLaporan';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -111,18 +112,7 @@ function Menu(props) {
               </Link>
             </div>
 
-            <div className="w-224 h-224 p-16">
-              <Link
-                to="/"
-                className={clsx(classes.board, 'flex flex-col items-center justify-center w-full h-full rounded py-24')}
-                role="button"
-              >
-                <Icon className="text-56">assessment</Icon>
-                <Typography className="text-16 font-300 text-center pt-16 px-32" color="inherit">
-                  Laporan
-                </Typography>
-              </Link>
-            </div>
+            <MenuLaporan classes={classes} />
 
             {!role?.find(val => val === 'user') && <MenuPengaturan classes={classes} />}
           </FuseAnimateGroup>

@@ -33,13 +33,16 @@ import {
   getListTransaksiBarang,
   refreshListTransaksiBarang,
   setTxtCariTransaksiBarang,
-  deleteTransaksiBarang
+  deleteTransaksiBarang,
+  setTransaksiBarangForm
 } from '../store/actions';
+import TransaksiBarangPrint from './TransaksiBarangPrint';
 
 function TransaksiBarangList() {
   const dispatch = useDispatch();
   const { isRefresh, data, isLoading, props, txtCari } = useSelector(({ barang }) => barang.transaksi);
   const [rows, setRows] = React.useState([]);
+  const [openCetak, setOpenCetak] = React.useState(false);
 
   React.useEffect(() => {
     if (isRefresh) {
@@ -85,9 +88,15 @@ function TransaksiBarangList() {
     dispatch(closeDialog());
   };
 
+  const onCetakTransaksi = transaksi => {
+    dispatch(setTransaksiBarangForm(transaksi));
+    setOpenCetak(true);
+  };
+
   return (
     <Dialog
       classes={{ paper: 'rounded-8 w-full' }}
+      className="print:bg-white"
       {...props}
       onClose={handleClose}
       maxWidth="md"
@@ -101,7 +110,8 @@ function TransaksiBarangList() {
         </div>
       ) : (
         <>
-          <Toolbar className="flex flex-row items-center justify-between w-full">
+          <TransaksiBarangPrint open={openCetak} onClose={() => setOpenCetak(false)} />
+          <Toolbar className="flex flex-row items-center justify-between w-full print:hidden">
             <div className="flex flex-col items-center w-full">
               <Typography variant="h6" color="inherit" className="w-full mt-12">
                 Daftar Transaksi
@@ -119,7 +129,7 @@ function TransaksiBarangList() {
               delay: 200,
               duration: 500
             }}
-            className="flex flex-col flex-auto overflow-auto items-center p-24"
+            className="flex flex-col flex-auto overflow-auto items-center p-24 print:hidden"
           >
             <div className="m-8 mr-0 w-full flex flex-wrap justify-between">
               <div className="flex flex-wrap items-center">
@@ -156,7 +166,7 @@ function TransaksiBarangList() {
                     <TableCell>Jenis Transaksi</TableCell>
                     <TableCell>Total Biaya</TableCell>
                     <TableCell>Catatan</TableCell>
-                    <TableCell> </TableCell>
+                    <TableCell className="w-96"> </TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -233,13 +243,22 @@ function TransaksiBarangList() {
                             </Tooltip>
                           </TableCell>
                           <TableCell>{transaksi.catatan}</TableCell>
-                          <TableCell className="w-24">
+                          <TableCell className="flex flex-row">
+                            <Tooltip title="Cetak Transaksi" placement="left">
+                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi)}>
+                                <Icon>print</Icon>
+                              </IconButton>
+                            </Tooltip>
+
                             {transaksi.catatan !== 'Packing' && (
-                              <Tooltip title="Hapus Transaksi" placement="left">
-                                <IconButton size="small" onClick={() => handleDeleteTransaksiBarang(transaksi)}>
-                                  <Icon className="text-red">close</Icon>
-                                </IconButton>
-                              </Tooltip>
+                              <>
+                                <div className="mx-8" />
+                                <Tooltip title="Hapus Transaksi" placement="left">
+                                  <IconButton size="small" onClick={() => handleDeleteTransaksiBarang(transaksi)}>
+                                    <Icon className="text-red">close</Icon>
+                                  </IconButton>
+                                </Tooltip>
+                              </>
                             )}
                           </TableCell>
                         </TableRow>

@@ -1,3 +1,5 @@
+import moment from 'moment';
+import 'moment/locale/id';
 import MomentUtils from '@date-io/moment';
 import FuseAuthorization from '@fuse/core/FuseAuthorization';
 import FuseLayout from '@fuse/core/FuseLayout';
@@ -16,38 +18,40 @@ import { Auth } from './auth';
 import routes from './fuse-configs/routesConfig';
 import store from './store';
 
+moment.locale('id');
+
 const jss = create({
-	...jssPreset(),
-	plugins: [...jssPreset().plugins, jssExtend(), rtl()],
-	insertionPoint: document.getElementById('jss-insertion-point')
+  ...jssPreset(),
+  plugins: [...jssPreset().plugins, jssExtend(), rtl()],
+  insertionPoint: document.getElementById('jss-insertion-point')
 });
 
 const generateClassName = createGenerateClassName();
 
 const App = () => {
-	return (
-		<AppContext.Provider
-			value={{
-				routes
-			}}
-		>
-			<StylesProvider jss={jss} generateClassName={generateClassName}>
-				<Provider store={store}>
-					<MuiPickersUtilsProvider utils={MomentUtils}>
-						<Auth>
-							<Router history={history}>
-								<FuseAuthorization>
-									<FuseTheme>
-										<FuseLayout />
-									</FuseTheme>
-								</FuseAuthorization>
-							</Router>
-						</Auth>
-					</MuiPickersUtilsProvider>
-				</Provider>
-			</StylesProvider>
-		</AppContext.Provider>
-	);
+  return (
+    <AppContext.Provider
+      value={{
+        routes
+      }}
+    >
+      <StylesProvider jss={jss} generateClassName={generateClassName}>
+        <Provider store={store}>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <Auth>
+              <Router history={history}>
+                <FuseAuthorization>
+                  <FuseTheme>
+                    <FuseLayout />
+                  </FuseTheme>
+                </FuseAuthorization>
+              </Router>
+            </Auth>
+          </MuiPickersUtilsProvider>
+        </Provider>
+      </StylesProvider>
+    </AppContext.Provider>
+  );
 };
 
 export default App;

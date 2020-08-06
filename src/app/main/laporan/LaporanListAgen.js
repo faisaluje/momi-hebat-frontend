@@ -17,45 +17,71 @@ import withReducer from 'app/store/withReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { DatePicker } from '@material-ui/pickers';
 import { strOrStrip } from 'app/Utils';
-import reducer from '../store/reducers';
-import { refreshListAgen, setLevelAgen, setStatusAgen, setTglLahirAgen, setTxtCariAgen } from '../store/actions';
-import AgenStatus from '../AgenStatus';
-import AgenService from '../services/agen.service';
+import reducer from '../agen/store/reducers';
+import {
+  getListAgen,
+  refreshListAgen,
+  setLevelAgen,
+  setStatusAgen,
+  setTglLahirAgen,
+  setTxtCariAgen
+} from '../agen/store/actions';
+import AgenStatus from '../agen/AgenStatus';
 
-function AgenListPrint() {
+function LaporanListAgen() {
   const dispatch = useDispatch();
-  const { txtCari, status, level, tglLahir } = useSelector(({ agen }) => agen.table);
+  const { txtCari, status, level, tglLahir, isRefresh, data, isLoading } = useSelector(({ agen }) => agen.table);
   const { periode } = useSelector(({ auth }) => auth.user.data);
   const [pencarian, setPencarian] = React.useState(txtCari);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [rows, setRows] = React.useState([]);
-
-  console.log(rows);
+  const [rows, setRows] = React.useState(null);
 
   React.useEffect(() => {
-    setIsLoading(true);
-    AgenService.getListAgenData({
-      status,
-      nama: txtCari,
-      level,
-      detail: 1,
-      tglLahir,
-      limit: 'all'
-    })
-      .then(result => {
-        if (result?.data?.docs?.length < 1) {
-          return [];
-        }
+    if (!rows || isRefresh) {
+      dispatch(
+        getListAgen({
+          status,
+          nama: txtCari,
+          level,
+          detail: 1,
+          tglLahir,
+          limit: 'all'
+        })
+      );
+    }
+  }, [dispatch, isRefresh, level, rows, status, tglLahir, txtCari]);
 
-        return setRows(result.data.docs);
-      })
-      .finally(() => setIsLoading(false));
-  }, [level, status, tglLahir, txtCari]);
+  React.useEffect(() => {
+    if (data?.docs?.length < 1) {
+      setRows([]);
+    } else {
+      setRows(data.docs);
+    }
+  }, [data]);
 
   const submitPencarian = e => {
     if (e.key === 'Enter') {
       dispatch(setTxtCariAgen(pencarian));
     }
+  };
+
+  const onPrint = () => {
+    const css = '@page { size: A4 landscape; max-height:100%; max-width:100% }';
+    const head = document.head || document.getElementsByTagName('head')[0];
+    const style = document.createElement('style');
+
+    style.media = 'print';
+
+    if (style.styleSheet) {
+      style.styleSheet.cssText = css;
+    } else {
+      style.appendChild(document.createTextNode(css));
+    }
+
+    head.appendChild(style);
+
+    window.print();
+
+    head.removeChild(style);
   };
 
   if (isLoading) {
@@ -75,10 +101,8 @@ function AgenListPrint() {
             <Icon className="mr-8">home</Icon>
             Menu Utama
           </Link>
-          <Link to="/agen" style={{ color: '#b20a0a' }}>
-            Agen
-          </Link>
-          <Typography className="font-bold">Print</Typography>
+          <Typography className="font-bold">Laporan</Typography>
+          <Typography className="font-bold">List Agen</Typography>
         </Breadcrumbs>
 
         <div className="pt-8 w-full flex flex-wrap justify-between">
@@ -172,7 +196,7 @@ function AgenListPrint() {
               variant="contained"
               color="primary"
               startIcon={<Icon>print</Icon>}
-              onClick={() => window.print()}
+              onClick={onPrint}
             >
               Cetak
             </Button>
@@ -182,20 +206,35 @@ function AgenListPrint() {
 
       <Paper
         elevation={3}
-        className="flex flex-col w-xl mx-auto print:bg-white print:w-full mt-24 print:m-0 print:shadow-none p-24 print:p-0"
+        className="flex flex-col w-2xl mx-auto print:w-full mt-24 print:m-0 print:shadow-none p-24 print:p-0"
       >
         <div className="flex flex-row border-black border-b pb-16">
           <div className="flex items-center justify-center">
             <img width="128" src="assets/images/logos/momi-hebat.svg" alt="logo" />
           </div>
-          <div className="flex flex-1 text-center items-center justify-center ml-8">
-            <Typography className="font-black text-28">
+
+          <div className="flex flex-1 flex-col text-center items-center justify-center ml-8">
+            <Typography className="font-black text-24">
               DAFTAR AGEN {status.toUpperCase()} {periode.referensi.judul?.toUpperCase()}
             </Typography>
+
+            <div className="flex justify-between items-center">
+              <div className="flex flex-row items-center">
+                <img width="26" src="assets/images/logos/whatsapp.svg" className="mr-8" alt="whatsapp" />
+                <Typography className="text-16">{strOrStrip(periode.referensi.noHp)}</Typography>
+              </div>
+
+              <div className="mx-84" />
+
+              <div className="flex flex-row items-center">
+                <img width="26" src="assets/images/logos/instagram.svg" className="mr-8" alt="instagram" />
+                <Typography className="text-16">{strOrStrip(periode.referensi.ig)}</Typography>
+              </div>
+            </div>
           </div>
         </div>
 
-        <table className="border-collapse mt-24 p-8 print:pr-24">
+        <table className="border-collapse mt-24 p-8">
           <thead>
             <tr>
               <th className="border">No.</th>
@@ -213,7 +252,9 @@ function AgenListPrint() {
               rows.map((agen, idx) => (
                 <tr key={idx}>
                   <td className="border p-4">{idx + 1}</td>
-                  <td className="border p-4">{agen.no}</td>
+                  <td className="border p-4" align="right">
+                    {agen.no}
+                  </td>
                   <td className="border p-4">{agen.diri?.nama?.lengkap}</td>
                   <td className="border p-4">{`${agen.diri?.lahir?.tempat || '-'}${
                     agen.diri?.lahir?.tanggal ? `, ${moment(agen.diri?.lahir?.tanggal).format('DD-MM-YYYY')}` : ''
@@ -238,4 +279,4 @@ function AgenListPrint() {
   );
 }
 
-export default withReducer('agen', reducer)(AgenListPrint);
+export default withReducer('agen', reducer)(LaporanListAgen);
