@@ -12,3 +12,7 @@ export function getFilteredArray(data, txtCari) {
 export function thousandSeparator(value, separator = '.') {
   return !value ? '-' : value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
+
+export function strOrStrip(str) {
+  return str || '-';
+}

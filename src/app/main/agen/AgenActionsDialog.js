@@ -24,6 +24,12 @@ function AgenActionsDialog(props) {
     handleClose();
   };
 
+  const onClickCetakAgen = () => {
+    dispatch(setAgenForm(agen));
+    // PrintAgenService.printAgenDetail(agen, periode);
+    History.push('/agen/print');
+  };
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogContent>
@@ -34,6 +40,9 @@ function AgenActionsDialog(props) {
             </ListItem>
             <ListItem button onClick={onClickEditAgen}>
               <ListItemText primary="- Edit Data Agen" />
+            </ListItem>
+            <ListItem button onClick={onClickCetakAgen}>
+              <ListItemText primary="- Cetak Agen Detail" />
             </ListItem>
           </List>
         </FuseAnimate>

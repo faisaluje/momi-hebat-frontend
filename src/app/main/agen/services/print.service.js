@@ -2,6 +2,9 @@ import JsPDF from 'jspdf';
 import 'jspdf-autotable';
 import moment from 'moment';
 import AgenService from './agen.service';
+import 'app/fonts/Muli-bold';
+import 'app/fonts/Muli-normal';
+import 'app/fonts/Excluded-normal';
 
 class PrintAgenService {
   static async getListAgen(params) {
