@@ -23,12 +23,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sumBy } from 'lodash';
 import { closeDialog, openDialog } from 'app/store/actions';
 import { deletePacking, openPackingDialog, setPackingForm } from './store/actions';
+import PackingPrint from './PackingPrint';
 
 function PackingTable() {
   const dispatch = useDispatch();
   const { data, txtCari } = useSelector(({ packing }) => packing.table);
   const [rows, setRows] = React.useState([]);
   const [header, setHeader] = React.useState([]);
+  const [openCetak, setOpenCetak] = React.useState(false);
 
   React.useEffect(() => {
     if (data) {
@@ -68,8 +70,14 @@ function PackingTable() {
     dispatch(openPackingDialog());
   };
 
+  const onCetakPacking = packing => {
+    dispatch(setPackingForm(packing));
+    setOpenCetak(true);
+  };
+
   return (
     <TableContainer component={Paper} elevation={5} className="my-12">
+      <PackingPrint open={openCetak} onClose={() => setOpenCetak(false)} />
       <Table stickyHeader size="small">
         <TableHead>
           <TableRow>
@@ -82,8 +90,12 @@ function PackingTable() {
                   <Typography variant="caption">Rp. {thousandSeparator(paket.biayaPacking)} / paket</Typography>
                 </TableCell>
               ))}
-            <TableCell align="center">Total Biaya</TableCell>
-            <TableCell align="center"> </TableCell>
+            <TableCell align="center" className="w-136">
+              Total Biaya
+            </TableCell>
+            <TableCell align="center" className="w-96">
+              {' '}
+            </TableCell>
           </TableRow>
         </TableHead>
 
@@ -116,7 +128,15 @@ function PackingTable() {
                     );
                   })}
                   <TableCell align="center">Rp. {thousandSeparator(totalBiaya)}</TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center" className="flex flex-row">
+                    <Tooltip title="Cetak Packing" placement="left">
+                      <IconButton size="small" onClick={() => onCetakPacking(packing)}>
+                        <Icon>print</Icon>
+                      </IconButton>
+                    </Tooltip>
+
+                    <div className="mx-8" />
+
                     <Tooltip title="Hapus Packing" placement="left">
                       <IconButton size="small" onClick={() => handleDeletePacking(packing)}>
                         <Icon className="text-red">close</Icon>

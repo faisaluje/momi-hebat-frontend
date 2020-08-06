@@ -15,7 +15,7 @@ function HeaderTransaksiPrint({ data }) {
       </div>
 
       <div className="flex flex-1 flex-row border-l items-center ml-32 pl-24">
-        <div className="flex flex-col">
+        <div className="flex flex-col mr-16 print:max-w-256">
           <Typography>{strOrStrip(periode.referensi?.judul)}</Typography>
           <div className="flex flex-row items-center" style={{ marginLeft: '-0.3rem' }}>
             <Icon style={{ marginRight: '0.5rem' }}>home</Icon>
@@ -51,14 +51,16 @@ function HeaderTransaksiPrint({ data }) {
                 </td>
               </tr>
 
-              <tr>
-                <td className="text-right">
-                  <Typography color="textSecondary">Jenis</Typography>
-                </td>
-                <td className="px-16">
-                  <Typography>{data?.jenis}</Typography>
-                </td>
-              </tr>
+              {data?.jenis && (
+                <tr>
+                  <td className="text-right">
+                    <Typography color="textSecondary">Jenis</Typography>
+                  </td>
+                  <td className="px-16">
+                    <Typography>{data?.jenis}</Typography>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

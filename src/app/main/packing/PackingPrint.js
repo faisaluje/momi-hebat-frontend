@@ -9,15 +9,15 @@ import {
   Toolbar,
   Typography
 } from '@material-ui/core';
-import { sumBy, startCase } from 'lodash';
 import PropTypes from 'prop-types';
 import { strOrStrip, thousandSeparator } from 'app/Utils';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import HeaderTransaksiPrint from 'app/main/components/HeaderTransaksiPrint';
 
-function TransaksiBarangPrint({ onClose, open }) {
-  const { data } = useSelector(({ barang }) => barang.transaksi.form);
+function PackingPrint({ onClose, open }) {
+  const { data } = useSelector(({ packing }) => packing.form);
+  console.log(data);
 
   const handleClose = () => {
     onClose();
@@ -26,6 +26,8 @@ function TransaksiBarangPrint({ onClose, open }) {
   const onCetak = () => {
     window.print();
   };
+
+  let totalBiaya = 0;
 
   return (
     <Dialog open={open} onClose={handleClose} fullScreen fullWidth hideBackdrop>
@@ -36,7 +38,7 @@ function TransaksiBarangPrint({ onClose, open }) {
               <IconButton color="inherit" onClick={handleClose}>
                 <Icon>close</Icon>
               </IconButton>
-              <Typography variant="h6">Cetak Transaksi Barang</Typography>
+              <Typography variant="h6">Cetak Transaksi Kartu Paket</Typography>
             </div>
 
             <IconButton color="inherit" onClick={onCetak}>
@@ -53,50 +55,50 @@ function TransaksiBarangPrint({ onClose, open }) {
         >
           <HeaderTransaksiPrint
             data={{
-              no: data?.no,
-              tgl: data?.tgl,
-              jenis: `Barang ${startCase(data?.jenis)}`
+              no: 'Packing',
+              tgl: data?.tgl
             }}
           />
 
           <div className="my-12" />
 
-          {data?.catatan && (
-            <div className="flex mb-8">
-              <Typography className="italic">Catatan: {data.catatan}</Typography>
-            </div>
-          )}
-
           <table className="border-collapse border-black">
             <thead>
               <tr>
                 <th className="p-4 border w-48">No.</th>
-                <th className="p-4 border">Nama Barang</th>
+                <th className="p-4 border">Karyawan</th>
+                <th className="p-4 border">Nama Paket</th>
                 <th className="p-4 border w-76">Qty</th>
                 <th className="p-4 border w-136">Biaya</th>
               </tr>
             </thead>
 
             <tbody>
-              {data?.items?.length > 0 &&
-                data.items.map((item, idx) => (
-                  <tr key={idx}>
-                    <td className="p-4 border-r border-l border-black" align="right">
-                      {idx + 1}
-                    </td>
-                    <td className="p-4 border-r border-black">{strOrStrip(item.barang?.nama)}</td>
-                    <td className="p-4 border-r border-black">{thousandSeparator(item.jumlah)}</td>
-                    <td className="p-4 border-r border-black">Rp. {thousandSeparator(item.biaya)}</td>
-                  </tr>
-                ))}
+              {data?.proses?.length > 0 &&
+                data.proses.map((proses, idx) => {
+                  const biaya = (proses.jenisPaket?.biayaPacking || 0) * (proses.jumlah || 0);
+                  totalBiaya += biaya;
+
+                  return (
+                    <tr key={idx}>
+                      <td className="p-4 border-r border-l border-black" align="right">
+                        {idx + 1}
+                      </td>
+                      <td className="p-4 border-r border-black">{strOrStrip(proses.karyawan?.nama)}</td>
+                      <td className="p-4 border-r border-black">{strOrStrip(proses.jenisPaket?.nama)}</td>
+                      <td className="p-4 border-r border-black">{thousandSeparator(proses.jumlah)}</td>
+                      <td className="p-4 border-r border-black">Rp. {thousandSeparator(biaya)}</td>
+                    </tr>
+                  );
+                })}
 
               <tr className="border-t border-black">
-                <th className="p-4 pt-12" colSpan={3} align="right">
+                <th className="p-4 pt-12" colSpan={4} align="right">
                   Total :
                 </th>
 
                 <th className="p-4 pt-12" align="left">
-                  Rp. {thousandSeparator(sumBy(data?.items, 'biaya'))}
+                  Rp. {thousandSeparator(totalBiaya)}
                 </th>
               </tr>
             </tbody>
@@ -107,9 +109,9 @@ function TransaksiBarangPrint({ onClose, open }) {
   );
 }
 
-TransaksiBarangPrint.propTypes = {
+PackingPrint.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired
 };
 
-export default TransaksiBarangPrint;
+export default PackingPrint;

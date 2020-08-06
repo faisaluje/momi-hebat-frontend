@@ -35,8 +35,10 @@ import {
   getListTransaksiKartuPaket,
   refreshListTransaksiKartuPaket,
   setListTransaksiKartuPaketPage,
+  setTransaksiKartuPaketForm,
   setTxtCariTransaksiKartuPaket
 } from '../store/actions';
+import TransaksiKartuPaketPrint from './TransaksiKartuPaketPrint';
 
 function TransaksiKartuPaketList() {
   const dispatch = useDispatch();
@@ -44,6 +46,7 @@ function TransaksiKartuPaketList() {
     ({ kartuPaket }) => kartuPaket.transaksi
   );
   const [rows, setRows] = React.useState([]);
+  const [openCetak, setOpenCetak] = React.useState(false);
 
   React.useEffect(() => {
     if (isRefresh) {
@@ -89,6 +92,11 @@ function TransaksiKartuPaketList() {
     dispatch(closeDialog());
   };
 
+  const onCetakTransaksi = transaksi => {
+    dispatch(setTransaksiKartuPaketForm(transaksi));
+    setOpenCetak(true);
+  };
+
   return (
     <Dialog
       classes={{ paper: 'rounded-8 w-full' }}
@@ -97,6 +105,9 @@ function TransaksiKartuPaketList() {
       maxWidth="md"
       disableBackdropClick
       disableEscapeKeyDown
+      BackdropProps={{
+        className: 'print:hidden'
+      }}
     >
       {isLoading ? (
         <div className="flex flex-col justify-center text-center items-center h-full p-16">
@@ -105,6 +116,7 @@ function TransaksiKartuPaketList() {
         </div>
       ) : (
         <>
+          <TransaksiKartuPaketPrint open={openCetak} onClose={() => setOpenCetak(false)} />
           <Toolbar className="flex flex-row items-center justify-between w-full">
             <div className="flex flex-col items-center w-full">
               <Typography variant="h6" color="inherit" className="w-full mt-12">
@@ -123,7 +135,7 @@ function TransaksiKartuPaketList() {
               delay: 200,
               duration: 500
             }}
-            className="flex flex-col flex-auto overflow-auto items-center p-24"
+            className="flex flex-col flex-auto overflow-auto items-center p-24 print:hidden"
           >
             <div className="m-8 mr-0 w-full flex flex-wrap justify-between">
               <div className="flex flex-wrap items-center">
@@ -160,7 +172,7 @@ function TransaksiKartuPaketList() {
                     <TableCell>Jenis Transaksi</TableCell>
                     <TableCell align="center">Total Kartu Paket</TableCell>
                     <TableCell>Catatan</TableCell>
-                    <TableCell> </TableCell>
+                    <TableCell className="w-96"> </TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -196,7 +208,7 @@ function TransaksiKartuPaketList() {
                                           <td className="text-12">
                                             {idx + 1}. {item.kartuPaket.nama}
                                           </td>
-                                          <td className="text-12 pr-12">
+                                          <td className="text-12 pr-24">
                                             {item.jumlah ? thousandSeparator(item.jumlah) : '-'}
                                           </td>
                                         </tr>
@@ -222,13 +234,22 @@ function TransaksiKartuPaketList() {
                             </Tooltip>
                           </TableCell>
                           <TableCell>{transaksi.catatan}</TableCell>
-                          <TableCell className="w-24">
+                          <TableCell className="flex flex-row">
+                            <Tooltip title="Cetak Transaksi" placement="left">
+                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi)}>
+                                <Icon>print</Icon>
+                              </IconButton>
+                            </Tooltip>
+
                             {!transaksi.agen && (
-                              <Tooltip title="Hapus Transaksi" placement="left">
-                                <IconButton size="small" onClick={() => handleDeleteTransaksiKartuPaket(transaksi)}>
-                                  <Icon className="text-red">close</Icon>
-                                </IconButton>
-                              </Tooltip>
+                              <>
+                                <div className="mx-8" />
+                                <Tooltip title="Hapus Transaksi" placement="left">
+                                  <IconButton size="small" onClick={() => handleDeleteTransaksiKartuPaket(transaksi)}>
+                                    <Icon className="text-red">close</Icon>
+                                  </IconButton>
+                                </Tooltip>
+                              </>
                             )}
                           </TableCell>
                         </TableRow>

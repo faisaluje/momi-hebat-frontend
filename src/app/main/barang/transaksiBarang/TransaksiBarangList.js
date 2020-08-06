@@ -96,12 +96,14 @@ function TransaksiBarangList() {
   return (
     <Dialog
       classes={{ paper: 'rounded-8 w-full' }}
-      className="print:bg-white"
       {...props}
       onClose={handleClose}
       maxWidth="md"
       disableBackdropClick
       disableEscapeKeyDown
+      BackdropProps={{
+        className: 'print:hidden'
+      }}
     >
       {isLoading ? (
         <div className="flex flex-col justify-center text-center items-center h-full p-16">

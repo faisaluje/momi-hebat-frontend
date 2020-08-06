@@ -9,15 +9,15 @@ import {
   Toolbar,
   Typography
 } from '@material-ui/core';
-import { sumBy, startCase } from 'lodash';
+import { sumBy } from 'lodash';
 import PropTypes from 'prop-types';
 import { strOrStrip, thousandSeparator } from 'app/Utils';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import HeaderTransaksiPrint from 'app/main/components/HeaderTransaksiPrint';
 
-function TransaksiBarangPrint({ onClose, open }) {
-  const { data } = useSelector(({ barang }) => barang.transaksi.form);
+function TransaksiKartuPaketPrint({ onClose, open }) {
+  const { data } = useSelector(({ kartuPaket }) => kartuPaket.transaksi.form);
 
   const handleClose = () => {
     onClose();
@@ -36,7 +36,7 @@ function TransaksiBarangPrint({ onClose, open }) {
               <IconButton color="inherit" onClick={handleClose}>
                 <Icon>close</Icon>
               </IconButton>
-              <Typography variant="h6">Cetak Transaksi Barang</Typography>
+              <Typography variant="h6">Cetak Transaksi Kartu Paket</Typography>
             </div>
 
             <IconButton color="inherit" onClick={onCetak}>
@@ -55,7 +55,12 @@ function TransaksiBarangPrint({ onClose, open }) {
             data={{
               no: data?.no,
               tgl: data?.tgl,
-              jenis: `Barang ${startCase(data?.jenis)}`
+              jenis:
+                data?.jenis === 'masuk'
+                  ? data?.agen
+                    ? 'Pengembalian Kartu Paket'
+                    : 'Kartu Paket Stok Masuk'
+                  : 'Pengambilan Kartu Paket'
             }}
           />
 
@@ -71,9 +76,8 @@ function TransaksiBarangPrint({ onClose, open }) {
             <thead>
               <tr>
                 <th className="p-4 border w-48">No.</th>
-                <th className="p-4 border">Nama Barang</th>
+                <th className="p-4 border">Nama Katu Paket</th>
                 <th className="p-4 border w-76">Qty</th>
-                <th className="p-4 border w-136">Biaya</th>
               </tr>
             </thead>
 
@@ -84,19 +88,18 @@ function TransaksiBarangPrint({ onClose, open }) {
                     <td className="p-4 border-r border-l border-black" align="right">
                       {idx + 1}
                     </td>
-                    <td className="p-4 border-r border-black">{strOrStrip(item.barang?.nama)}</td>
+                    <td className="p-4 border-r border-black">{strOrStrip(item.kartuPaket?.nama)}</td>
                     <td className="p-4 border-r border-black">{thousandSeparator(item.jumlah)}</td>
-                    <td className="p-4 border-r border-black">Rp. {thousandSeparator(item.biaya)}</td>
                   </tr>
                 ))}
 
               <tr className="border-t border-black">
-                <th className="p-4 pt-12" colSpan={3} align="right">
+                <th className="p-4 pt-12" colSpan={2} align="right">
                   Total :
                 </th>
 
                 <th className="p-4 pt-12" align="left">
-                  Rp. {thousandSeparator(sumBy(data?.items, 'biaya'))}
+                  {thousandSeparator(sumBy(data?.items, 'jumlah'))}
                 </th>
               </tr>
             </tbody>
@@ -107,9 +110,9 @@ function TransaksiBarangPrint({ onClose, open }) {
   );
 }
 
-TransaksiBarangPrint.propTypes = {
+TransaksiKartuPaketPrint.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired
 };
 
-export default TransaksiBarangPrint;
+export default TransaksiKartuPaketPrint;
