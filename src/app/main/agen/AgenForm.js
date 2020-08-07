@@ -143,7 +143,6 @@ function AgenForm() {
               <Typography className="min-w-160 font-bold pt-12">Agen Referral:</Typography>
               <AgenComboBox
                 className="w-1/3"
-                currentAgen={form}
                 value={form.topAgen}
                 onChange={(_event, val) => setInForm('topAgen', val)}
                 disabled={!!data?.topAgen}

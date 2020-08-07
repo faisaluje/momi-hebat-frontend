@@ -5,7 +5,7 @@ import { CircularProgress, Typography } from '@material-ui/core';
 import TransaksiSaldoToolbar from './TransaksiSaldoToolbar';
 import reducer from './store/reducers';
 import TransaksiSaldoTable from './TransaksiSaldoTable';
-import { getListTransaksiSaldo } from './store/actions';
+import { getListTransaksiSaldoByAgen } from './store/actions';
 
 function TransaksiSaldoPanel() {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ function TransaksiSaldoPanel() {
 
   React.useEffect(() => {
     if (isRefresh && agen) {
-      dispatch(getListTransaksiSaldo(agen.id));
+      dispatch(getListTransaksiSaldoByAgen(agen.id));
     }
   }, [agen, dispatch, isRefresh]);
 

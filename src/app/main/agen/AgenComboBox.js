@@ -36,6 +36,8 @@ function AgenComboBox(props) {
       autoHighlight
       options={options}
       loading={isLoading}
+      size={props.size}
+      // classes={{ inputRoot: 'p-0' }}
       className={props.className}
       disabled={props.disabled || false}
       onChange={props.onChange}
@@ -49,9 +51,10 @@ function AgenComboBox(props) {
           variant={props.variant}
           onChange={onTextChanged}
           fullWidth
-          inputProps={{
-            ...params.inputProps,
-            className: 'text-black'
+          label={props.label}
+          InputProps={{
+            ...params.InputProps,
+            className: 'p-0'
           }}
         />
       )}
@@ -63,8 +66,9 @@ AgenComboBox.propTypes = {
   className: PropTypes.string,
   variant: PropTypes.oneOf(['standard', 'filled', 'outlined']),
   onChange: PropTypes.func.isRequired,
-  currentAgen: PropTypes.object,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  label: PropTypes.string,
+  size: PropTypes.oneOf(['small', 'medium'])
 };
 
 export default AgenComboBox;

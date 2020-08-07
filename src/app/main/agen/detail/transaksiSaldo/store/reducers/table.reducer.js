@@ -1,10 +1,12 @@
+import { getFirstDateOfMonth, getLastDateOfMonth } from 'app/Utils';
 import {
   REFRESH_LIST_TRANSAKSI_SALDO,
   GET_LIST_TRANSAKSI_SALDO,
   GET_LIST_TRANSAKSI_SALDO_ERROR,
   GET_LIST_TRANSAKSI_SALDO_SUCCESS,
   SET_TXT_CARI_TRANSAKSI_SALDO,
-  EXIT_LIST_TRANSAKSI_SALDO
+  EXIT_LIST_TRANSAKSI_SALDO,
+  SET_PARAMS_TRANSAKSI_SALDO
 } from '../actions';
 
 const initialState = {
@@ -13,11 +15,21 @@ const initialState = {
   isRefresh: true,
   isError: false,
   msg: '',
-  txtCari: ''
+  txtCari: '',
+  params: {
+    dateFirst: getFirstDateOfMonth(),
+    dateLast: getLastDateOfMonth()
+  }
 };
 
 function tableReducer(state = initialState, action) {
   switch (action.type) {
+    case SET_PARAMS_TRANSAKSI_SALDO:
+      return {
+        ...state,
+        params: action.params,
+        isRefresh: true
+      };
     case REFRESH_LIST_TRANSAKSI_SALDO:
       return {
         ...state,

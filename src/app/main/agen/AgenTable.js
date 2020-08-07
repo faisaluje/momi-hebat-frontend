@@ -21,7 +21,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import GreenSwitch from '../components/GreenSwitch';
 import AgenStatus from './AgenStatus';
-import { getListAgen, saveAgen, setLevelAgen, setListAgenPage, setTglLahirAgen, setTxtCariAgen } from './store/actions';
+import {
+  getListAgen,
+  refreshListAgen,
+  saveAgen,
+  setLevelAgen,
+  setListAgenPage,
+  setTglLahirAgen,
+  setTxtCariAgen
+} from './store/actions';
 import SubAgenDialog from './SubAgenDialog';
 import AgenActionsDialog from './AgenActionsDialog';
 
@@ -41,9 +49,13 @@ function AgenTable() {
 
   React.useEffect(() => {
     if (data) {
-      setRows(data.docs || []);
+      if (data.docs?.length > 50) {
+        dispatch(refreshListAgen());
+      } else {
+        setRows(data.docs || []);
+      }
     }
-  }, [data]);
+  }, [data, dispatch]);
 
   const onClickAgen = agen => {
     setAgenSelected(agen);
