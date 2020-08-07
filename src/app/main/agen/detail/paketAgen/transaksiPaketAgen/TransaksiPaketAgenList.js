@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import moment from 'moment';
 import {
@@ -36,6 +37,7 @@ import {
   setTransaksiPaketAgenForm
 } from './store/actions';
 import reducer from './store/reducers';
+import TransaksiPaketAgenPrint from './TransaksiPaketAgenPrint';
 
 function TransaksiPaketAgenList() {
   const dispatch = useDispatch();
@@ -43,6 +45,7 @@ function TransaksiPaketAgenList() {
   const { agen } = useSelector(({ detailAgen }) => detailAgen.panel);
   const { data: dataPaket } = useSelector(({ paketAgen }) => paketAgen.table);
   const [rows, setRows] = React.useState([]);
+  const [openCetak, setOpenCetak] = React.useState(false);
 
   React.useEffect(() => {
     if (isRefresh && agen) {
@@ -91,6 +94,11 @@ function TransaksiPaketAgenList() {
     dispatch(closeDialog());
   };
 
+  const onCetakTransaksi = transaksi => {
+    dispatch(setTransaksiPaketAgenForm(transaksi));
+    setOpenCetak(true);
+  };
+
   return (
     <Dialog
       classes={{ paper: 'rounded-8' }}
@@ -99,6 +107,9 @@ function TransaksiPaketAgenList() {
       maxWidth="lg"
       disableBackdropClick
       disableEscapeKeyDown
+      BackdropProps={{
+        className: 'print:hidden'
+      }}
     >
       {isLoading ? (
         <div className="flex flex-col justify-center text-center items-center h-full p-16">
@@ -107,6 +118,7 @@ function TransaksiPaketAgenList() {
         </div>
       ) : (
         <>
+          <TransaksiPaketAgenPrint open={openCetak} onClose={() => setOpenCetak(false)} />
           <Toolbar className="flex flex-row items-center justify-between w-full">
             <div className="flex flex-col items-center w-full">
               <Typography variant="h6" color="inherit" className="w-full mt-12">
@@ -125,7 +137,7 @@ function TransaksiPaketAgenList() {
               delay: 200,
               duration: 500
             }}
-            className="flex flex-col flex-auto overflow-auto items-center p-24"
+            className="flex flex-col flex-auto overflow-auto items-center p-24 print:hidden"
           >
             <div className="m-8 mr-0 w-full flex flex-wrap-reverse justify-between">
               <div className="flex flex-wrap items-center">
@@ -174,7 +186,7 @@ function TransaksiPaketAgenList() {
                           {dataPaket.length > 0 &&
                             dataPaket.map((paket, idx) => {
                               const paketSelected = transaksi.items?.find(item => item.paket === paket.id);
-                              totalPaket += paketSelected?.jumlah || 0;
+                              totalPaket += parseInt(paketSelected?.jumlah) || 0;
                               return (
                                 <TableCell key={idx} align="center">
                                   {thousandSeparator(paketSelected?.jumlah || 0)}
@@ -189,7 +201,15 @@ function TransaksiPaketAgenList() {
                               {thousandSeparator(totalPaket)}
                             </Typography>
                           </TableCell>
-                          <TableCell align="center">
+                          <TableCell align="center" className="flex flex-row">
+                            <Tooltip title="Cetak Transaksi" placement="left">
+                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi)}>
+                                <Icon>print</Icon>
+                              </IconButton>
+                            </Tooltip>
+
+                            <div className="mx-8" />
+
                             <Tooltip title="Hapus Transaksi" placement="left">
                               <IconButton size="small" onClick={() => handleDeleteTransaksiPaketAgen(transaksi)}>
                                 <Icon className="text-red">close</Icon>

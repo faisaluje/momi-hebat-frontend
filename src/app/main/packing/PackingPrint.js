@@ -17,7 +17,6 @@ import HeaderTransaksiPrint from 'app/main/components/HeaderTransaksiPrint';
 
 function PackingPrint({ onClose, open }) {
   const { data } = useSelector(({ packing }) => packing.form);
-  console.log(data);
 
   const handleClose = () => {
     onClose();

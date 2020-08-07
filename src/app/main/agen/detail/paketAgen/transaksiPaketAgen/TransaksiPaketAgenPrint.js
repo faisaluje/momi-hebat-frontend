@@ -1,3 +1,4 @@
+import { startCase, sumBy } from 'lodash';
 import {
   AppBar,
   Dialog,
@@ -9,17 +10,17 @@ import {
   Toolbar,
   Typography
 } from '@material-ui/core';
-import { sumBy } from 'lodash';
+
 import PropTypes from 'prop-types';
 import { strOrStrip, thousandSeparator } from 'app/Utils';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import HeaderTransaksiPrint from 'app/main/components/HeaderTransaksiPrint';
-import withReducer from 'app/store/withReducer';
-import reducer from '../store/reducers';
 
-function TransaksiKartuPaketPrint({ onClose, open }) {
-  const { data } = useSelector(({ kartuPaket }) => kartuPaket.transaksi.form);
+function TransaksiPaketAgenPrint({ onClose, open }) {
+  const { data } = useSelector(({ transaksiPaketAgen }) => transaksiPaketAgen.form);
+  const { agen } = useSelector(({ detailAgen }) => detailAgen.panel);
+  const { data: dataPaket } = useSelector(({ paketAgen }) => paketAgen.table);
 
   const handleClose = () => {
     onClose();
@@ -38,7 +39,7 @@ function TransaksiKartuPaketPrint({ onClose, open }) {
               <IconButton color="inherit" onClick={handleClose}>
                 <Icon>close</Icon>
               </IconButton>
-              <Typography variant="h6">Cetak Transaksi Kartu Paket</Typography>
+              <Typography variant="h6">Cetak Transaksi Paket Agen</Typography>
             </div>
 
             <IconButton color="inherit" onClick={onCetak}>
@@ -55,18 +56,25 @@ function TransaksiKartuPaketPrint({ onClose, open }) {
         >
           <HeaderTransaksiPrint
             data={{
-              no: data?.no,
+              no: 'Paket',
               tgl: data?.tgl,
-              jenis:
-                data?.jenis === 'masuk'
-                  ? data?.agen
-                    ? 'Pengembalian Kartu Paket'
-                    : 'Kartu Paket Stok Masuk'
-                  : 'Pengambilan Kartu Paket'
+              jenis: startCase(data?.jenis)
             }}
           />
 
           <div className="my-12" />
+
+          {agen?.diri?.nama?.lengkap && (
+            <div className="flex mb-8">
+              <Typography className="italic">Agen: {agen.diri.nama.lengkap}</Typography>
+            </div>
+          )}
+
+          {data?.alamat && (
+            <div className="flex mb-8">
+              <Typography className="italic">Alamat Pengiriman: {data.alamat}</Typography>
+            </div>
+          )}
 
           {data?.catatan && (
             <div className="flex mb-8">
@@ -78,22 +86,26 @@ function TransaksiKartuPaketPrint({ onClose, open }) {
             <thead>
               <tr>
                 <th className="p-4 border w-48">No.</th>
-                <th className="p-4 border">Nama Katu Paket</th>
+                <th className="p-4 border">Nama Paket</th>
                 <th className="p-4 border w-76">Qty</th>
               </tr>
             </thead>
 
             <tbody>
               {data?.items?.length > 0 &&
-                data.items.map((item, idx) => (
-                  <tr key={idx}>
-                    <td className="p-4 border-r border-l border-black" align="right">
-                      {idx + 1}
-                    </td>
-                    <td className="p-4 border-r border-black">{strOrStrip(item.kartuPaket?.nama)}</td>
-                    <td className="p-4 border-r border-black">{thousandSeparator(item.jumlah)}</td>
-                  </tr>
-                ))}
+                data.items.map((item, idx) => {
+                  const paketSelected = dataPaket.find(paket => paket.id === item.paket);
+
+                  return (
+                    <tr key={idx}>
+                      <td className="p-4 border-r border-l border-black" align="right">
+                        {idx + 1}
+                      </td>
+                      <td className="p-4 border-r border-black">{strOrStrip(paketSelected?.nama)}</td>
+                      <td className="p-4 border-r border-black">{thousandSeparator(item.jumlah)}</td>
+                    </tr>
+                  );
+                })}
 
               <tr className="border-t border-black">
                 <th className="p-4 pt-12" colSpan={2} align="right">
@@ -112,9 +124,9 @@ function TransaksiKartuPaketPrint({ onClose, open }) {
   );
 }
 
-TransaksiKartuPaketPrint.propTypes = {
+TransaksiPaketAgenPrint.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired
 };
 
-export default withReducer('kartuPaket', reducer)(TransaksiKartuPaketPrint);
+export default TransaksiPaketAgenPrint;

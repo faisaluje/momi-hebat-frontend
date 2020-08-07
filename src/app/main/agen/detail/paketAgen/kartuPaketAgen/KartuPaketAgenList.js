@@ -28,6 +28,8 @@ import { orderBy, sumBy } from 'lodash';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thousandSeparator } from 'app/Utils';
+import { setTransaksiKartuPaketForm } from 'app/main/kartuPaket/store/actions';
+import TransaksiKartuPaketPrint from 'app/main/kartuPaket/transaksiKartuPaket/TransaksiKartuPaketPrint';
 import KartuPaketAgenDialog from './KartuPaketAgenDialog';
 import {
   closeListKartuPaketAgenDialog,
@@ -44,6 +46,7 @@ function KartuPaketAgenList() {
   const { agen } = useSelector(({ detailAgen }) => detailAgen.panel);
   const [rows, setRows] = React.useState([]);
   const [headers, setHeaders] = React.useState([]);
+  const [openCetak, setOpenCetak] = React.useState(false);
 
   React.useEffect(() => {
     if (isRefresh && agen) {
@@ -88,6 +91,11 @@ function KartuPaketAgenList() {
     dispatch(closeListKartuPaketAgenDialog());
   };
 
+  const onCetakTransaksi = transaksi => {
+    dispatch(setTransaksiKartuPaketForm(transaksi));
+    setOpenCetak(true);
+  };
+
   return (
     <Dialog
       classes={{ paper: 'rounded-8' }}
@@ -96,6 +104,9 @@ function KartuPaketAgenList() {
       maxWidth="lg"
       disableBackdropClick
       disableEscapeKeyDown
+      BackdropProps={{
+        className: 'print:hidden'
+      }}
     >
       {isLoading ? (
         <div className="flex flex-col justify-center text-center items-center h-full p-16">
@@ -105,6 +116,7 @@ function KartuPaketAgenList() {
       ) : (
         <>
           <KartuPaketAgenDialog />
+          <TransaksiKartuPaketPrint open={openCetak} onClose={() => setOpenCetak(false)} />
           <Toolbar className="flex flex-row items-center justify-between w-full">
             <div className="flex flex-col items-center w-full">
               <Typography variant="h6" color="inherit" className="w-full mt-12">
@@ -123,7 +135,7 @@ function KartuPaketAgenList() {
               delay: 200,
               duration: 500
             }}
-            className="flex flex-col flex-auto overflow-auto items-center p-24"
+            className="flex flex-col flex-auto overflow-auto items-center p-24 print:hidden"
           >
             <div className="m-8 mr-0 w-full flex flex-wrap justify-between">
               <div className="flex flex-wrap items-center">
@@ -175,7 +187,9 @@ function KartuPaketAgenList() {
                           <Typography>{kartuPaket.nama}</Typography>
                         </TableCell>
                       ))}
-                    <TableCell align="center"> </TableCell>
+                    <TableCell align="center" className="w-96">
+                      {' '}
+                    </TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -199,7 +213,15 @@ function KartuPaketAgenList() {
                               </TableCell>
                             );
                           })}
-                          <TableCell align="center">
+                          <TableCell align="center" className="flex flex-row">
+                            <Tooltip title="Cetak Packing" placement="left">
+                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi)}>
+                                <Icon>print</Icon>
+                              </IconButton>
+                            </Tooltip>
+
+                            <div className="mx-8" />
+
                             <Tooltip title="Hapus Transaksi" placement="left">
                               <IconButton size="small" onClick={() => handleDeleteKartuPaketAgen(transaksi)}>
                                 <Icon className="text-red">close</Icon>
