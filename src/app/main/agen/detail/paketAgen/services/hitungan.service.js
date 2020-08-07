@@ -6,7 +6,7 @@ import moment from 'moment';
 class HitunganService {
   static printHitungan({ data, agen, listPaket, listBonus, total, hitungan }) {
     const title = `Hitung ${startCase(data.jenis)} Paket Agen ${agen?.no}. ${agen?.diri?.nama?.lengkap}`;
-    const doc = new JsPdf();
+    const doc = new JsPdf().setProperties({ title: `Hitungan Agen ${agen?.no}. ${agen?.diri?.nama?.lengkap}` });
     const items = data?.items || [];
     doc.setFont('helvetica');
     doc.setFontSize(18);
@@ -92,8 +92,8 @@ class HitunganService {
       y + 26
     );
 
-    // doc.output('dataurlnewwindow');
-    doc.save(`Hitung ${startCase(data.jenis)} Paket Agen ${agen?.no}. ${agen?.diri?.nama?.lengkap}.pdf`);
+    doc.output('dataurlnewwindow');
+    // doc.save(`Hitung ${startCase(data.jenis)} Paket Agen ${agen?.no}. ${agen?.diri?.nama?.lengkap}.pdf`);
   }
 }
 

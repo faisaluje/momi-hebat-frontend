@@ -25,11 +25,13 @@ import JenisTransaksi from 'app/main/components/JenisTransaksi';
 import { openDialog, closeDialog } from 'app/store/actions';
 import { setTransaksiSaldoForm, openTransaksiSaldoDialog, deleteTransaksiSaldo } from './store/actions';
 import TransaksiSaldoKategori from './TransaksiSaldoKategori';
+import TransaksiSaldoPrint from './TransaksiSaldoPrint';
 
 function TransaksiSaldoTable() {
   const dispatch = useDispatch();
   const { data, txtCari } = useSelector(({ transaksiSaldo }) => transaksiSaldo.table);
   const [rows, setRows] = React.useState([]);
+  const [openCetak, setOpenCetak] = React.useState(false);
 
   React.useEffect(() => {
     if (data) {
@@ -70,8 +72,14 @@ function TransaksiSaldoTable() {
     dispatch(closeDialog());
   };
 
+  const onCetakTransaksi = transaksi => {
+    dispatch(setTransaksiSaldoForm(transaksi));
+    setOpenCetak(true);
+  };
+
   return (
     <TableContainer component={Paper} className="mt-12">
+      <TransaksiSaldoPrint open={openCetak} onClose={() => setOpenCetak(false)} />
       <Table stickyHeader size="small">
         <TableHead>
           <TableRow>
@@ -81,7 +89,7 @@ function TransaksiSaldoTable() {
             <TableCell>Catatan</TableCell>
             <TableCell style={{ minWidth: '14rem' }}>Masuk</TableCell>
             <TableCell style={{ minWidth: '14rem' }}>Keluar</TableCell>
-            <TableCell> </TableCell>
+            <TableCell className="w-96"> </TableCell>
           </TableRow>
         </TableHead>
 
@@ -121,13 +129,22 @@ function TransaksiSaldoTable() {
                     />
                   )}
                 </TableCell>
-                <TableCell className="w-24">
+                <TableCell className="flex flex-row">
+                  <Tooltip title="Cetak Transaksi" placement="left">
+                    <IconButton size="small" onClick={() => onCetakTransaksi(transaksi)}>
+                      <Icon>print</Icon>
+                    </IconButton>
+                  </Tooltip>
+
                   {![TransaksiSaldoKategori.CASHBACK, TransaksiSaldoKategori.PAKET].includes(transaksi.kategori) && (
-                    <Tooltip title="Hapus Transaksi" placement="left">
-                      <IconButton size="small" onClick={() => handleDeleteTransaksiSaldo(transaksi)}>
-                        <Icon className="text-red">close</Icon>
-                      </IconButton>
-                    </Tooltip>
+                    <>
+                      <div className="mx-8" />
+                      <Tooltip title="Hapus Transaksi" placement="left">
+                        <IconButton size="small" onClick={() => handleDeleteTransaksiSaldo(transaksi)}>
+                          <Icon className="text-red">close</Icon>
+                        </IconButton>
+                      </Tooltip>
+                    </>
                   )}
                 </TableCell>
               </TableRow>
