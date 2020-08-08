@@ -33,7 +33,7 @@ function PenggunaDialog() {
           <Toolbar className="flex flex-row items-center justify-between w-full">
             <div className="flex flex-col items-center w-full">
               <Typography variant="h6" color="inherit" className="w-full mt-12">
-                {!data ? 'Tambah Pengguna' : data.iat ? 'Profile Saya' : 'Ubah Pengguna'}
+                {!data ? 'Tambah Pengguna' : data.periode ? 'Profile Saya' : 'Ubah Pengguna'}
               </Typography>
 
               <IconButton className="absolute right-0" color="inherit" onClick={handleClose}>

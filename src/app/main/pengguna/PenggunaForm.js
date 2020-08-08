@@ -118,7 +118,7 @@ function PenggunaForm() {
             />
           </div>
 
-          {!data?.iat && (
+          {!data?.periode && (
             <div className="flex mb-16">
               <Typography className="min-w-160 font-bold pt-12">Username:</Typography>
 
@@ -197,7 +197,7 @@ function PenggunaForm() {
             />
           </div>
 
-          {!data?.iat && (
+          {!data?.periode && (
             <div className="flex mb-16">
               <Typography className="min-w-160 font-bold pt-12">Status:</Typography>
 
