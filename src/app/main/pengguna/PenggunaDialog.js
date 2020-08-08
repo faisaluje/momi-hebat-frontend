@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dialog, CircularProgress, Typography, Toolbar, IconButton, Icon } from '@material-ui/core';
+import withReducer from 'app/store/withReducer';
 import { closePenggunaDialog } from './store/actions';
 import PenggunaForm from './PenggunaForm';
+import reducer from './store/reducers';
 
 function PenggunaDialog() {
   const dispatch = useDispatch();
@@ -31,7 +33,7 @@ function PenggunaDialog() {
           <Toolbar className="flex flex-row items-center justify-between w-full">
             <div className="flex flex-col items-center w-full">
               <Typography variant="h6" color="inherit" className="w-full mt-12">
-                {data ? 'Ubah' : 'Tambah'} Pengguna
+                {!data ? 'Tambah Pengguna' : data.iat ? 'Profile Saya' : 'Ubah Pengguna'}
               </Typography>
 
               <IconButton className="absolute right-0" color="inherit" onClick={handleClose}>
@@ -47,4 +49,4 @@ function PenggunaDialog() {
   );
 }
 
-export default PenggunaDialog;
+export default withReducer('pengguna', reducer)(PenggunaDialog);

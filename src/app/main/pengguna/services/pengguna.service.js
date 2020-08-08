@@ -54,6 +54,22 @@ class PenggunaService {
       };
     }
   }
+
+  static async updatePassword(id, data) {
+    try {
+      const result = await Axios.patch(`${URL_API}/pengguna/changePassword/${id}`, data, { timeout: 30000 });
+      if (!result.data) {
+        throw new Error('Result is not readable');
+      }
+
+      return { success: true, data: result.data };
+    } catch (e) {
+      return {
+        success: false,
+        msg: ErrorService.getErrorMessage(e)
+      };
+    }
+  }
 }
 
 export default PenggunaService;

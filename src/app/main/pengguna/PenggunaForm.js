@@ -118,22 +118,24 @@ function PenggunaForm() {
             />
           </div>
 
-          <div className="flex mb-16">
-            <Typography className="min-w-160 font-bold pt-12">Username:</Typography>
+          {!data?.iat && (
+            <div className="flex mb-16">
+              <Typography className="min-w-160 font-bold pt-12">Username:</Typography>
 
-            <TextFieldFormsy
-              type="text"
-              name="username"
-              value={data?.username || ''}
-              fullWidth
-              validations="minLength:4"
-              validationErrors={{
-                minLength: 'Minimal 4 karakter',
-                isDefaultRequiredValue: 'Username tidak boleh kosong'
-              }}
-              required
-            />
-          </div>
+              <TextFieldFormsy
+                type="text"
+                name="username"
+                value={data?.username || ''}
+                fullWidth
+                validations="minLength:4"
+                validationErrors={{
+                  minLength: 'Minimal 4 karakter',
+                  isDefaultRequiredValue: 'Username tidak boleh kosong'
+                }}
+                required
+              />
+            </div>
+          )}
 
           {!data?.id && (
             <div className="flex mb-16">
@@ -195,26 +197,28 @@ function PenggunaForm() {
             />
           </div>
 
-          <div className="flex mb-16">
-            <Typography className="min-w-160 font-bold pt-12">Status:</Typography>
+          {!data?.iat && (
+            <div className="flex mb-16">
+              <Typography className="min-w-160 font-bold pt-12">Status:</Typography>
 
-            <RadioGroupFormsy
-              row
-              name="status"
-              value={data?.status || 'aktif'}
-              validationError="Status harus diisi"
-              required
-            >
-              {Object.values(PenggunaStatus).map(status => (
-                <FormControlLabel
-                  key={status.value}
-                  value={status.value}
-                  control={<Radio color="primary" />}
-                  label={status.label}
-                />
-              ))}
-            </RadioGroupFormsy>
-          </div>
+              <RadioGroupFormsy
+                row
+                name="status"
+                value={data?.status || 'aktif'}
+                validationError="Status harus diisi"
+                required
+              >
+                {Object.values(PenggunaStatus).map(status => (
+                  <FormControlLabel
+                    key={status.value}
+                    value={status.value}
+                    control={<Radio color="primary" />}
+                    label={status.label}
+                  />
+                ))}
+              </RadioGroupFormsy>
+            </div>
+          )}
         </FuseAnimateGroup>
       </DialogContent>
 
