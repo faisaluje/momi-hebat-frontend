@@ -20,6 +20,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useForm } from '@fuse/hooks';
 import { setAgenForm, saveAgen } from './store/actions';
 import AgenComboBox from './AgenComboBox';
+import AgenFotoDialog from './AgenFotoDialog';
 
 const defaultBiodataState = {
   nama: { lengkap: '', panggilan: '' },
@@ -122,19 +123,23 @@ function AgenForm() {
             <div className="flex mb-16">
               <Typography className="min-w-160 font-bold pt-12">No. Agen:</Typography>
 
-              <TextField
-                name="no"
-                onChange={handleChange}
-                value={form.no}
-                className="w-1/3"
-                autoFocus
-                required
-                error={!form.no}
-                helperText={!form.no && 'Tidak boleh kosong'}
-                InputProps={{
-                  readOnly: !!data?.id
-                }}
-              />
+              <div className="flex w-full justify-between">
+                <TextField
+                  name="no"
+                  onChange={handleChange}
+                  value={form.no}
+                  className="w-1/3"
+                  autoFocus
+                  required
+                  error={!form.no}
+                  helperText={!form.no && 'Tidak boleh kosong'}
+                  InputProps={{
+                    readOnly: !!data?.id
+                  }}
+                />
+
+                {data?.id && <AgenFotoDialog />}
+              </div>
             </div>
           )}
 

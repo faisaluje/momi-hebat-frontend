@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import History from '@history';
 import { strOrStrip } from 'app/Utils';
 import moment from 'moment';
+import { URL_BACKEND } from 'app/Constants';
 import reducer from '../store/reducers';
 
 function AgenDetailPrint() {
@@ -77,55 +78,69 @@ function AgenDetailPrint() {
           Data Diri
         </Paper>
 
-        <div className="flex flex-col mt-24 border border-black p-8">
-          <div className="flex items-center">
-            <Typography className="w-192">Nama Lengkap</Typography>
-            <Typography>: {strOrStrip(data.diri.nama?.lengkap)}</Typography>
+        <div className="flex justify-between mt-24 border border-black p-8">
+          <div className="flex flex-1 flex-col">
+            <div className="flex items-center">
+              <Typography className="w-192">Nama Lengkap</Typography>
+              <Typography>: {strOrStrip(data.diri.nama?.lengkap)}</Typography>
+            </div>
+
+            <div className="flex items-center mt-12">
+              <Typography className="w-192">Nama panggilan</Typography>
+              <Typography>: {strOrStrip(data.diri.nama?.panggilan)}</Typography>
+            </div>
+
+            <div className="flex items-center mt-12">
+              <Typography className="w-192">Alamat Lengkap</Typography>
+              <Typography>: {strOrStrip(data.diri.alamat?.jalan)}</Typography>
+            </div>
+
+            <div className="flex items-center">
+              <div className="w-192" />
+              <Typography className="ml-8">RT : {strOrStrip(data.diri.alamat?.rt)}</Typography>
+              <Typography className="ml-8">RW : {strOrStrip(data.diri.alamat?.rw)}</Typography>
+              <Typography className="ml-8">Kelurahan : {strOrStrip(data.diri.alamat?.keluraha)}</Typography>
+            </div>
+
+            <div className="flex items-center">
+              <div className="w-192" />
+              <Typography className="ml-8">Kecamatan : {strOrStrip(data.diri.alamat?.kecamatan)}</Typography>
+            </div>
+
+            <div className="flex items-center">
+              <div className="w-192" />
+              <Typography className="ml-8">Kab / Kota : {strOrStrip(data.diri.alamat?.kabKota)}</Typography>
+            </div>
+
+            <div className="flex items-center mt-12">
+              <Typography className="w-192">Tempat, Tanggal Lahir</Typography>
+              <Typography>
+                : {strOrStrip(data.diri.lahir?.tempat)}
+                {data.diri.lahir?.tanggal ? `, ${moment(data.diri.lahir?.tanggal).format('D MMMM YYYY')}` : ''}
+              </Typography>
+            </div>
+
+            <div className="flex items-center mt-12">
+              <Typography className="w-192">Pekerjaan</Typography>
+              <Typography>: {strOrStrip(data.diri.pekerjaan)}</Typography>
+            </div>
+
+            <div className="flex items-center mt-12">
+              <Typography className="w-192">No. Telp</Typography>
+              <Typography>: {strOrStrip(data.diri.noTlp)}</Typography>
+            </div>
           </div>
 
-          <div className="flex items-center mt-12">
-            <Typography className="w-192">Nama panggilan</Typography>
-            <Typography>: {strOrStrip(data.diri.nama?.panggilan)}</Typography>
-          </div>
-
-          <div className="flex items-center mt-12">
-            <Typography className="w-192">Alamat Lengkap</Typography>
-            <Typography>: {strOrStrip(data.diri.alamat?.jalan)}</Typography>
-          </div>
-
-          <div className="flex items-center">
-            <div className="w-192" />
-            <Typography className="ml-8">RT : {strOrStrip(data.diri.alamat?.rt)}</Typography>
-            <Typography className="ml-8">RW : {strOrStrip(data.diri.alamat?.rw)}</Typography>
-            <Typography className="ml-8">Kelurahan : {strOrStrip(data.diri.alamat?.keluraha)}</Typography>
-          </div>
-
-          <div className="flex items-center">
-            <div className="w-192" />
-            <Typography className="ml-8">Kecamatan : {strOrStrip(data.diri.alamat?.kecamatan)}</Typography>
-          </div>
-
-          <div className="flex items-center">
-            <div className="w-192" />
-            <Typography className="ml-8">Kab / Kota : {strOrStrip(data.diri.alamat?.kabKota)}</Typography>
-          </div>
-
-          <div className="flex items-center mt-12">
-            <Typography className="w-192">Tempat, Tanggal Lahir</Typography>
-            <Typography>
-              : {strOrStrip(data.diri.lahir?.tempat)}
-              {data.diri.lahir?.tanggal ? `, ${moment(data.diri.lahir?.tanggal).format('D MMMM YYYY')}` : ''}
-            </Typography>
-          </div>
-
-          <div className="flex items-center mt-12">
-            <Typography className="w-192">Pekerjaan</Typography>
-            <Typography>: {strOrStrip(data.diri.pekerjaan)}</Typography>
-          </div>
-
-          <div className="flex items-center mt-12">
-            <Typography className="w-192">No. Telp</Typography>
-            <Typography>: {strOrStrip(data.diri.noTlp)}</Typography>
+          <div className="flex w-128 h-160 rounded-4 shadow-1 mr-24 mt-24">
+            <img
+              className="max-w-none w-auto h-full"
+              src={`${URL_BACKEND}/profile-pictures/${data.id}.jpg?${new Date().getTime()}`}
+              alt="profile"
+              onError={e => {
+                e.target.onerror = null;
+                e.target.src = `${URL_BACKEND}/profile-pictures/profile.jpg`;
+              }}
+            />
           </div>
         </div>
 
