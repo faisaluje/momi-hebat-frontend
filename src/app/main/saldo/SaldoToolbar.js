@@ -1,12 +1,26 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography, TextField, Button, Icon, IconButton, Paper } from '@material-ui/core';
+import { thousandSeparator } from 'app/Utils';
+import Axios from 'axios';
+import { URL_API } from 'app/Constants';
 import { refreshListSaldo, setTxtCariSaldo } from './store/actions';
 
 function SaldoToolbar() {
   const dispatch = useDispatch();
   const { txtCari } = useSelector(({ saldo }) => saldo.table);
   const [pencarian, setPencarian] = React.useState(txtCari);
+  const [totalSaldo, setTotalSaldo] = React.useState(undefined);
+
+  React.useEffect(() => {
+    if (typeof totalSaldo === 'undefined') {
+      Axios.get(`${URL_API}/agen/total-saldo`, { timeout: 30000 })
+        .then(result => {
+          setTotalSaldo(result.data?.saldo || 0);
+        })
+        .catch(() => setTotalSaldo(0));
+    }
+  }, [totalSaldo]);
 
   const submitPencarian = e => {
     if (e.key === 'Enter') {
@@ -47,6 +61,10 @@ function SaldoToolbar() {
       </div>
 
       <div className="flex flex-wrap items-center">
+        <Typography className="font-bold text-20">
+          Total Seluruh Saldo Agen : Rp. {thousandSeparator(totalSaldo)}
+        </Typography>
+
         <Button
           size="small"
           variant="contained"

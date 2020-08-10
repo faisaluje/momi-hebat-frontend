@@ -1,5 +1,4 @@
 import { Button, CircularProgress, Dialog, makeStyles, Tooltip, Typography } from '@material-ui/core';
-import { orange } from '@material-ui/core/colors';
 import { URL_BACKEND, URL_API } from 'app/Constants';
 import { showMessage } from 'app/store/actions';
 import Axios from 'axios';
@@ -8,37 +7,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
-  productImageFeaturedStar: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    color: orange[400],
-    opacity: 0
-  },
   productImageUpload: {
     transitionProperty: 'box-shadow',
     transitionDuration: theme.transitions.duration.short,
     transitionTimingFunction: theme.transitions.easing.easeInOut
-  },
-  productImageItem: {
-    transitionProperty: 'box-shadow',
-    transitionDuration: theme.transitions.duration.short,
-    transitionTimingFunction: theme.transitions.easing.easeInOut,
-    '&:hover': {
-      '& $productImageFeaturedStar': {
-        opacity: 0.8
-      }
-    },
-    '&.featured': {
-      pointerEvents: 'none',
-      boxShadow: theme.shadows[3],
-      '& $productImageFeaturedStar': {
-        opacity: 1
-      },
-      '&:hover $productImageFeaturedStar': {
-        opacity: 1
-      }
-    }
   }
 }));
 
@@ -115,7 +87,7 @@ function AgenFotoDialog(props) {
                 alt="profile"
                 onError={e => {
                   e.target.onerror = null;
-                  e.target.src = `${URL_BACKEND}/profile-pictures/profile.jpg`;
+                  e.target.src = `${URL_BACKEND}/assets/images/avatars/profile.jpg`;
                 }}
               />
             </label>

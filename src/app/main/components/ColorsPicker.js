@@ -19,7 +19,7 @@ function ColorsPicker(props) {
 
   return (
     <>
-      <Paper elevation={3} onClick={handleClick} className={clsx(props.className, 'p-8')}>
+      <Paper elevation={3} onClick={handleClick} className={clsx(props.className, 'p-8 cursor-pointer hover:shadow-5')}>
         <div style={{ backgroundColor: props.color }} className="w-full h-full" />
       </Paper>
       <Popover

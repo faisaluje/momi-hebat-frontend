@@ -138,7 +138,7 @@ function AgenDetailPrint() {
               alt="profile"
               onError={e => {
                 e.target.onerror = null;
-                e.target.src = `${URL_BACKEND}/profile-pictures/profile.jpg`;
+                e.target.src = `${URL_BACKEND}/assets/images/avatars/profile.jpg`;
               }}
             />
           </div>

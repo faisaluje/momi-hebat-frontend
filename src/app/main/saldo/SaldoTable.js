@@ -38,6 +38,8 @@ function SaldoTable() {
             <TableCell>Saldo</TableCell>
             <TableCell>Bonus</TableCell>
             <TableCell>Kartu Paket</TableCell>
+            <TableCell>Booking Paket</TableCell>
+            <TableCell>Sisa Paket</TableCell>
           </TableRow>
         </TableHead>
 
@@ -81,8 +83,17 @@ function SaldoTable() {
                     '-'
                   )}
                 </TableCell>
+
                 <TableCell>
                   {agen.stok?.kartuPakets ? thousandSeparator(sumBy(agen.stok.kartuPakets, 'jumlah')) || '-' : '-'}
+                </TableCell>
+
+                <TableCell>
+                  {agen.stok?.pakets ? thousandSeparator(sumBy(agen.stok.pakets, 'jumlah')) || '-' : '-'}
+                </TableCell>
+
+                <TableCell>
+                  {agen.stok?.pakets ? thousandSeparator(sumBy(agen.stok.pakets, 'stok')) || '-' : '-'}
                 </TableCell>
               </TableRow>
             ))
