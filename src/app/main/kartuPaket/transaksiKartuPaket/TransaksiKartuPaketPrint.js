@@ -1,5 +1,6 @@
 import {
   AppBar,
+  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -16,10 +17,34 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import HeaderTransaksiPrint from 'app/main/components/HeaderTransaksiPrint';
 import withReducer from 'app/store/withReducer';
+import DetailService from 'app/main/agen/detail/services/detail.service';
 import reducer from '../store/reducers';
 
 function TransaksiKartuPaketPrint({ onClose, open }) {
   const { data } = useSelector(({ kartuPaket }) => kartuPaket.transaksi.form);
+  const [agen, setAgen] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const jenis =
+    data?.jenis === 'masuk'
+      ? data?.agen
+        ? 'Pengembalian Kartu Paket'
+        : 'Kartu Paket Stok Masuk'
+      : 'Pengambilan Kartu Paket';
+
+  React.useEffect(() => {
+    if (!agen && data?.agen) {
+      setIsLoading(true);
+      DetailService.getDetailAgenData(data.agen)
+        .then(result => {
+          if (!result.success) {
+            setAgen(result.msg);
+          } else {
+            setAgen(result.data);
+          }
+        })
+        .finally(() => setIsLoading(false));
+    }
+  }, [agen, data]);
 
   const handleClose = () => {
     onClose();
@@ -68,10 +93,25 @@ function TransaksiKartuPaketPrint({ onClose, open }) {
 
           <div className="my-12" />
 
-          {data?.catatan && (
-            <div className="flex mb-8">
-              <Typography className="italic">Catatan: {data.catatan}</Typography>
-            </div>
+          {data?.agen ? (
+            isLoading ? (
+              <div className="flex flex-row items-center mb-8">
+                <CircularProgress />
+                <Typography className="mt-8">Sedang memproses. . .</Typography>
+              </div>
+            ) : (
+              <div className="flex mb-8">
+                <Typography className="italic">
+                  Catatan: {jenis} Oleh Agen {agen?.no} - {agen?.diri?.nama?.lengkap}{' '}
+                </Typography>
+              </div>
+            )
+          ) : (
+            data?.catatan && (
+              <div className="flex mb-8">
+                <Typography className="italic">Catatan: {data.catatan}</Typography>
+              </div>
+            )
           )}
 
           <table className="border-collapse border-black">

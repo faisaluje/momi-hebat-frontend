@@ -19,7 +19,7 @@ function TransaksiSaldoPanel() {
   }, [agen, dispatch, isRefresh]);
 
   return (
-    <div className="flex flex-col overflow-auto p-12 items-center justify-center">
+    <div className="flex flex-col overflow-auto p-12 items-center justify-center print:hidden">
       {isLoading ? (
         <>
           <CircularProgress color="secondary" />

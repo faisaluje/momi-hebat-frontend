@@ -69,14 +69,18 @@ function AgenDetailPrint() {
           </div>
         </div>
 
-        <Paper
-          className="flex w-c mt-24 ml-12 text-16 text-white font-extrabold text-20 px-12 py-8"
-          style={{ backgroundColor: '#b20a0a', width: 'fit-content' }}
-          variant="outlined"
-          square
-        >
-          Data Diri
-        </Paper>
+        <div className="flex justify-between mt-24">
+          <Paper
+            className="flex ml-12 text-16 text-white font-extrabold text-20 px-12 py-8"
+            style={{ backgroundColor: '#b20a0a', width: 'fit-content' }}
+            variant="outlined"
+            square
+          >
+            Data Diri
+          </Paper>
+
+          <Typography className="font-bold text-16 mr-40">No. Agen : {data.no}</Typography>
+        </div>
 
         <div className="flex justify-between mt-24 border border-black p-8">
           <div className="flex flex-1 flex-col">

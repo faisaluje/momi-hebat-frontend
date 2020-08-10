@@ -71,46 +71,59 @@ function TransaksiSaldoPrint({ onClose, open }) {
             </Typography>
           </div>
 
-          <div className="flex mb-8 items-center">
-            <Typography className="w-160">Agen</Typography>
+          <div className="flex justify-between">
+            <div className="flex flex-col w-full">
+              <div className="flex mb-8 items-center">
+                <Typography className="w-160">Agen</Typography>
 
-            <Typography>
-              : {agen?.no} - {agen?.diri?.nama?.lengkap}
-            </Typography>
-          </div>
+                <Typography>
+                  : {agen?.no} - {agen?.diri?.nama?.lengkap}
+                </Typography>
+              </div>
 
-          <div className="flex mb-8 items-center">
-            <Typography className="w-160">Banyaknya Uang</Typography>
+              <div className="flex mb-8 items-center">
+                <Typography className="min-w-160 w-160">Banyaknya Uang</Typography>
 
-            <span>: </span>
+                <span>: </span>
 
-            <Typography className="pl-4 text-20 font-bold italic">
-              {data?.nominal ? startCase(`${terbilang(data?.nominal)} rupiah`) : ''}
-            </Typography>
-          </div>
+                <Typography className="pl-4 text-20 font-bold italic">
+                  {data?.nominal ? startCase(`${terbilang(data?.nominal)} rupiah`) : ''}
+                </Typography>
+              </div>
 
-          {data?.via && (
-            <div className="flex mb-8">
-              <Typography className="w-160">Via</Typography>
+              {data?.via && (
+                <div className="flex mb-8">
+                  <Typography className="w-160">Via</Typography>
 
-              <Typography className="italic">
-                : {data.via} {data.via === 'transfer' && `${data.namaBank} a.n. ${data.atasNama}`}
-              </Typography>
+                  <Typography className="italic">
+                    : {data.via}{' '}
+                    {data.via === 'transfer' &&
+                      `${data.namaBank || ''} ${data.atasNama ? `a.n. ${data.atasNama}` : ''}`}
+                  </Typography>
+                </div>
+              )}
+
+              <div className="flex mb-8">
+                <Typography className="min-w-160 w-160">Catatan</Typography>
+
+                <Typography className="italic">: {strOrStrip(data?.catatan)}</Typography>
+              </div>
+
+              <div className="flex mt-52">
+                <Typography className="w-160">Terbilang</Typography>
+
+                <Typography className="mr-4"> : </Typography>
+
+                <Typography className="text-16 font-bold italic underline">
+                  Rp. {strOrStrip(thousandSeparator(data?.nominal))}
+                </Typography>
+              </div>
             </div>
-          )}
 
-          <div className="flex mb-8">
-            <Typography className="w-160">Catatan</Typography>
-
-            <Typography className="italic">: {strOrStrip(data?.catatan)}</Typography>
-          </div>
-
-          <div className="flex mt-52">
-            <Typography className="w-160">Terbilang</Typography>
-
-            <Typography className="text-16 font-bold italic underline">
-              Rp. {strOrStrip(thousandSeparator(data?.nominal))}
-            </Typography>
+            <div className="absolute flex-col items-end justify-center items-center self-end hidden print:flex right-0 mt-24">
+              <Typography>Yang Menerima</Typography>
+              <Typography className="mt-40">________________________</Typography>
+            </div>
           </div>
         </Paper>
       </DialogContent>

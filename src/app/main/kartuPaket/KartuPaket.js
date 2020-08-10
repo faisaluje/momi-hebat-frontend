@@ -55,7 +55,7 @@ function KartuPaket(props) {
             delay: 200,
             duration: 500
           }}
-          className={clsx(classes.root, 'flex flex-col flex-auto overflow-auto items-center p-24')}
+          className={clsx(classes.root, 'flex flex-col flex-auto overflow-auto items-center p-24 print:hidden')}
         >
           <KartuPaketToolbar />
           <KartuPaketTable />

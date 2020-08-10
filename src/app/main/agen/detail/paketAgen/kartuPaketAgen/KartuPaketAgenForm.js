@@ -113,7 +113,7 @@ function KartuPaketAgenForm() {
       jenis,
       agen: agen.id,
       items: form.items.filter(item => !['0', ''].includes(item.jumlah)),
-      catatan: `${words} Agen ${agen.diri.nama.lengkap}`
+      catatan: `${words} Agen ${agen.no} - ${agen.diri.nama.lengkap}`
     };
 
     dispatch(createTransaksiKartuPaketAgen(newForm));

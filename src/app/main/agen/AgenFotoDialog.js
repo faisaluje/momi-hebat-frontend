@@ -80,7 +80,13 @@ function AgenFotoDialog(props) {
                 'flex items-center justify-center relative w-256 h-320 rounded-4 m-8 overflow-hidden cursor-pointer shadow-1 hover:shadow-5'
               )}
             >
-              <input accept="image/*" className="hidden" id="button-file" type="file" onChange={handleUploadChange} />
+              <input
+                accept=".gif, .jpg, .png, .jpeg"
+                className="hidden"
+                id="button-file"
+                type="file"
+                onChange={handleUploadChange}
+              />
               <img
                 className="max-w-none w-auto h-full"
                 src={`${URL_BACKEND}/profile-pictures/${data.id}.jpg?${new Date().getTime()}`}

@@ -214,7 +214,7 @@ function KartuPaketAgenList() {
                             );
                           })}
                           <TableCell align="center" className="flex flex-row">
-                            <Tooltip title="Cetak Packing" placement="left">
+                            <Tooltip title="Cetak Transaksi" placement="left">
                               <IconButton size="small" onClick={() => onCetakTransaksi(transaksi)}>
                                 <Icon>print</Icon>
                               </IconButton>
