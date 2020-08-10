@@ -16,6 +16,7 @@ import { strOrStrip, thousandSeparator } from 'app/Utils';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import HeaderTransaksiPrint from 'app/main/components/HeaderTransaksiPrint';
+import FooterTransaksiPrint from 'app/main/components/FooterTransaksiPrint';
 
 function TransaksiPaketAgenPrint({ onClose, open }) {
   const { data } = useSelector(({ transaksiPaketAgen }) => transaksiPaketAgen.form);
@@ -66,7 +67,9 @@ function TransaksiPaketAgenPrint({ onClose, open }) {
 
           {agen?.diri?.nama?.lengkap && (
             <div className="flex mb-8">
-              <Typography className="italic">Agen: {agen.diri.nama.lengkap}</Typography>
+              <Typography className="italic">
+                Agen: {agen.no} - {agen.diri.nama.lengkap}
+              </Typography>
             </div>
           )}
 
@@ -118,6 +121,8 @@ function TransaksiPaketAgenPrint({ onClose, open }) {
               </tr>
             </tbody>
           </table>
+
+          <FooterTransaksiPrint />
         </Paper>
       </DialogContent>
     </Dialog>

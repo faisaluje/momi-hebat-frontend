@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import HeaderTransaksiPrint from 'app/main/components/HeaderTransaksiPrint';
 import withReducer from 'app/store/withReducer';
 import DetailService from 'app/main/agen/detail/services/detail.service';
+import FooterTransaksiPrint from 'app/main/components/FooterTransaksiPrint';
 import reducer from '../store/reducers';
 
 function TransaksiKartuPaketPrint({ onClose, open }) {
@@ -146,6 +147,8 @@ function TransaksiKartuPaketPrint({ onClose, open }) {
               </tr>
             </tbody>
           </table>
+
+          <FooterTransaksiPrint />
         </Paper>
       </DialogContent>
     </Dialog>

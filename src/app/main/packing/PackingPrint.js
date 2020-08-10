@@ -14,6 +14,7 @@ import { strOrStrip, thousandSeparator } from 'app/Utils';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import HeaderTransaksiPrint from 'app/main/components/HeaderTransaksiPrint';
+import FooterTransaksiPrint from '../components/FooterTransaksiPrint';
 
 function PackingPrint({ onClose, open }) {
   const { data } = useSelector(({ packing }) => packing.form);
@@ -102,6 +103,8 @@ function PackingPrint({ onClose, open }) {
               </tr>
             </tbody>
           </table>
+
+          <FooterTransaksiPrint />
         </Paper>
       </DialogContent>
     </Dialog>

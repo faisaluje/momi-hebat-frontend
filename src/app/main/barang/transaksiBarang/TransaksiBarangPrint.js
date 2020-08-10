@@ -15,6 +15,7 @@ import { strOrStrip, thousandSeparator } from 'app/Utils';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import HeaderTransaksiPrint from 'app/main/components/HeaderTransaksiPrint';
+import FooterTransaksiPrint from 'app/main/components/FooterTransaksiPrint';
 
 function TransaksiBarangPrint({ onClose, open }) {
   const { data } = useSelector(({ barang }) => barang.transaksi.form);
@@ -101,6 +102,8 @@ function TransaksiBarangPrint({ onClose, open }) {
               </tr>
             </tbody>
           </table>
+
+          <FooterTransaksiPrint />
         </Paper>
       </DialogContent>
     </Dialog>
