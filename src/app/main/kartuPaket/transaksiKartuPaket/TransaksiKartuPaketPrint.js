@@ -14,14 +14,16 @@ import { sumBy } from 'lodash';
 import PropTypes from 'prop-types';
 import { strOrStrip, thousandSeparator } from 'app/Utils';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HeaderTransaksiPrint from 'app/main/components/HeaderTransaksiPrint';
 import withReducer from 'app/store/withReducer';
 import DetailService from 'app/main/agen/detail/services/detail.service';
 import FooterTransaksiPrint from 'app/main/components/FooterTransaksiPrint';
 import reducer from '../store/reducers';
+import { setTransaksiKartuPaketForm } from '../store/actions';
 
 function TransaksiKartuPaketPrint({ onClose, open }) {
+  const dispatch = useDispatch();
   const { data } = useSelector(({ kartuPaket }) => kartuPaket.transaksi.form);
   const [agen, setAgen] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -48,6 +50,8 @@ function TransaksiKartuPaketPrint({ onClose, open }) {
   }, [agen, data]);
 
   const handleClose = () => {
+    setAgen(null);
+    dispatch(setTransaksiKartuPaketForm(null));
     onClose();
   };
 

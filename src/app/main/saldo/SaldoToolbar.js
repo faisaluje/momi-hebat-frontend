@@ -16,7 +16,7 @@ function SaldoToolbar() {
     if (typeof totalSaldo === 'undefined') {
       Axios.get(`${URL_API}/agen/total-saldo`, { timeout: 30000 })
         .then(result => {
-          setTotalSaldo(result.data?.saldo || 0);
+          setTotalSaldo((result.data?.saldo || 0) + result.data?.bonus || 0);
         })
         .catch(() => setTotalSaldo(0));
     }

@@ -58,17 +58,9 @@ function SaldoTable() {
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  {agen.stok?.saldo ? (
-                    <NumberFormat
-                      prefix="Rp. "
-                      decimalSeparator=","
-                      value={agen.stok.saldo}
-                      displayType="text"
-                      thousandSeparator="."
-                    />
-                  ) : (
-                    '-'
-                  )}
+                  {(agen.stok?.saldo || 0) + (agen.stok?.totalBonus || 0)
+                    ? `Rp. ${thousandSeparator((agen.stok?.saldo || 0) + (agen.stok?.totalBonus || 0))}`
+                    : '-'}
                 </TableCell>
                 <TableCell>
                   {agen.stok?.totalBonus ? (
