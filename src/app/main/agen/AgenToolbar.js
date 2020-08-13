@@ -40,10 +40,6 @@ function AgenToolbar() {
     }
   };
 
-  // const onCetakAgen = () => {
-  //   History.push('agen/printList');
-  // };
-
   return (
     <Paper elevation={3} className="p-8 w-full flex flex-wrap justify-between">
       <div className="flex flex-wrap items-center">
@@ -90,7 +86,7 @@ function AgenToolbar() {
       <div className="flex flex-wrap items-center">
         <DatePicker
           inputVariant="outlined"
-          format="DD-MM-YYYY"
+          format="D MMMM"
           clearable
           size="small"
           label="Tgl Lahir"
@@ -131,17 +127,6 @@ function AgenToolbar() {
             </MenuItem>
           ))}
         </TextField>
-
-        {/* <Button
-          className="ml-0 sm:ml-12"
-          size="small"
-          variant="contained"
-          color="primary"
-          startIcon={<Icon>print</Icon>}
-          onClick={onCetakAgen}
-        >
-          Cetak
-        </Button> */}
 
         <AgenConfirmationDialog open={openConfirmation} onClose={onJenisSelected} />
         <Button

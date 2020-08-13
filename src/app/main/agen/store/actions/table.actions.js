@@ -4,6 +4,7 @@ export const GET_LIST_AGEN = 'GET_LIST_AGEN';
 export const GET_LIST_AGEN_ERROR = 'GET_LIST_AGEN_ERROR';
 export const GET_LIST_AGEN_SUCCESS = 'GET_LIST_AGEN_SUCCESS';
 
+export const SET_AGEN = 'SET_AGEN';
 export const SET_LIST_AGEN_PAGE = 'SET_LIST_AGEN_PAGE';
 export const SET_TXT_CARI_AGEN = 'SET_TXT_CARI_AGEN';
 export const SET_STATUS_AGEN = 'SET_STATUS_AGEN';
@@ -19,6 +20,7 @@ export const setStatusAgen = status => ({ type: SET_STATUS_AGEN, status });
 export const setLevelAgen = level => ({ type: SET_LEVEL_AGEN, level });
 export const setListAgenPage = page => ({ type: SET_LIST_AGEN_PAGE, page });
 export const setTglLahirAgen = tglLahir => ({ type: SET_TGL_LAHIR_AGEN, tglLahir });
+export const setAgen = agen => ({ type: SET_AGEN, agen });
 
 export function getListAgen(params) {
   return async dispatch => {

@@ -5,6 +5,10 @@ import ErrorService from 'app/services/error.service';
 class AgenService {
   static async getListAgenData(params) {
     try {
+      if (params.agen) {
+        params.agenId = params.agen.id;
+        delete params.agen;
+      }
       const { data } = await Axios.get(`${URL_API}/agen`, {
         params,
         timeout: 30000
