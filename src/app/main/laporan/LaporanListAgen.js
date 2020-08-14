@@ -92,7 +92,7 @@ function LaporanListAgen() {
               variant="outlined"
               size="small"
               label="Agen"
-              value={params?.agen}
+              value={params?.agen || null}
               onChange={(_event, agen) => onChangeParams({ ...params, agen })}
             />
 
@@ -218,7 +218,7 @@ function LaporanListAgen() {
                       }${agen.diri.alamat?.rw ? `, RW ${agen.diri.alamat?.rw}` : ''}${
                         agen.diri.alamat?.kelurahan ? `, Kel. ${agen.diri.alamat?.kelurahan}` : ''
                       }${agen.diri.alamat?.kecamatan ? `, Kec. ${agen.diri.alamat?.kecamatan}` : ''}${
-                        agen.diri.alamat?.kabKota ? `, Kab/Kota ${agen.diri.alamat?.kabKota}` : ''
+                        agen.diri.alamat?.kabKota ? `, ${agen.diri.alamat?.kabKota}` : ''
                       }`}</td>
                       <td className="border p-4">
                         {agen.topAgen ? `${agen.topAgen.no}. ${agen.topAgen.diri?.nama?.lengkap}` : '-'}
@@ -247,7 +247,7 @@ function LaporanListAgen() {
                               }${subAgen.diri.alamat?.rw ? `, RW ${subAgen.diri.alamat?.rw}` : ''}${
                                 subAgen.diri.alamat?.kelurahan ? `, Kel. ${subAgen.diri.alamat?.kelurahan}` : ''
                               }${subAgen.diri.alamat?.kecamatan ? `, Kec. ${subAgen.diri.alamat?.kecamatan}` : ''}${
-                                subAgen.diri.alamat?.kabKota ? `, Kab/Kota ${subAgen.diri.alamat?.kabKota}` : ''
+                                subAgen.diri.alamat?.kabKota ? `, ${subAgen.diri.alamat?.kabKota}` : ''
                               }`}</td>
                               <td className="border p-4">{`${agen.no}. ${agen.diri?.nama?.lengkap}`}</td>
                               <td className="border p-4">{strOrStrip(subAgen.diri?.noTlp)}</td>
@@ -258,7 +258,7 @@ function LaporanListAgen() {
                                 no += 1;
 
                                 return (
-                                  <tr>
+                                  <tr key={idx3}>
                                     <td className="border p-4">{no}</td>
                                     <td className="border p-4" align="right">
                                       {subAgen2.no}
@@ -275,9 +275,7 @@ function LaporanListAgen() {
                                       subAgen2.diri.alamat?.kelurahan ? `, Kel. ${subAgen2.diri.alamat?.kelurahan}` : ''
                                     }${
                                       subAgen2.diri.alamat?.kecamatan ? `, Kec. ${subAgen2.diri.alamat?.kecamatan}` : ''
-                                    }${
-                                      subAgen2.diri.alamat?.kabKota ? `, Kab/Kota ${subAgen2.diri.alamat?.kabKota}` : ''
-                                    }`}</td>
+                                    }${subAgen2.diri.alamat?.kabKota ? `, ${subAgen2.diri.alamat?.kabKota}` : ''}`}</td>
                                     <td className="border p-4">{`${subAgen.no}. ${subAgen.diri?.nama?.lengkap}`}</td>
                                     <td className="border p-4">{strOrStrip(subAgen2.diri?.noTlp)}</td>
                                   </tr>

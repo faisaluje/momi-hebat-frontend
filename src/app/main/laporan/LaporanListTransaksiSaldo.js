@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { startCase, sumBy } from 'lodash';
-import { Breadcrumbs, Icon, Typography, Button, Paper, CircularProgress } from '@material-ui/core';
+import { Breadcrumbs, Icon, Typography, Button, Paper, CircularProgress, TextField, MenuItem } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import withReducer from 'app/store/withReducer';
@@ -23,6 +23,7 @@ function LaporanListTransaksiSaldo() {
   const { periode } = useSelector(({ auth }) => auth.user.data);
   const [rows, setRows] = React.useState(null);
   const [total, setTotal] = React.useState({ masuk: 0, keluar: 0 });
+  const [waktu, setWaktu] = React.useState('bulanan');
 
   React.useEffect(() => {
     if (!rows || isRefresh) {
@@ -111,24 +112,79 @@ function LaporanListTransaksiSaldo() {
               onChange={(_event, val) => dispatch(setParamsTransaksiSaldo({ ...params, agen: val }))}
             />
 
-            <DatePicker
-              inputVariant="outlined"
-              views={['year', 'month']}
+            <TextField
+              label="Waktu Transaksi"
+              select
               size="small"
-              openTo="month"
-              label="Bulan Transaksi"
-              value={params?.dateFirst || getFirstDateOfMonth()}
+              variant="outlined"
               className="w-128 mx-0 sm:mx-24"
-              onChange={val =>
-                dispatch(
-                  setParamsTransaksiSaldo({
-                    ...params,
-                    dateFirst: getFirstDateOfMonth({ date: val.toDate() }),
-                    dateLast: getLastDateOfMonth({ date: val.toDate() })
-                  })
-                )
-              }
-            />
+              value={waktu}
+              onChange={event => setWaktu(event.target.value)}
+            >
+              <MenuItem value="harian">Harian</MenuItem>
+              <MenuItem value="bulanan">Bulanan</MenuItem>
+            </TextField>
+
+            {waktu === 'bulanan' && (
+              <DatePicker
+                inputVariant="outlined"
+                views={['year', 'month']}
+                size="small"
+                openTo="month"
+                label="Bulan Transaksi"
+                value={params?.dateFirst || getFirstDateOfMonth()}
+                className="w-128"
+                onChange={val =>
+                  dispatch(
+                    setParamsTransaksiSaldo({
+                      ...params,
+                      dateFirst: getFirstDateOfMonth({ date: val.toDate() }),
+                      dateLast: getLastDateOfMonth({ date: val.toDate() })
+                    })
+                  )
+                }
+              />
+            )}
+
+            {waktu === 'harian' && (
+              <>
+                <DatePicker
+                  inputVariant="outlined"
+                  format="D MMMM YYYY"
+                  size="small"
+                  label="Tgl Awal"
+                  value={params?.dateFirst || getFirstDateOfMonth()}
+                  className="w-136"
+                  onChange={val =>
+                    dispatch(
+                      setParamsTransaksiSaldo({
+                        ...params,
+                        dateFirst: val.toISOString()
+                      })
+                    )
+                  }
+                />
+
+                <div className="mx-12" />
+
+                <DatePicker
+                  inputVariant="outlined"
+                  format="D MMMM YYYY"
+                  size="small"
+                  label="Tgl Akhir"
+                  value={params?.dateLast || getLastDateOfMonth()}
+                  className="w-136"
+                  onChange={val =>
+                    dispatch(
+                      setParamsTransaksiSaldo({
+                        ...params,
+                        dateLast: val.toISOString()
+                      })
+                    )
+                  }
+                />
+              </>
+            )}
 
             <Button
               className="ml-0 sm:ml-12"
@@ -146,7 +202,7 @@ function LaporanListTransaksiSaldo() {
 
       <Paper
         elevation={3}
-        className="block w-2xl mx-auto print:w-full mt-24 print:m-0 print:shadow-none p-24 print:p-0"
+        className="block w-3xl mx-auto print:w-full mt-24 print:m-0 print:shadow-none p-24 print:p-0"
       >
         <div className="flex flex-row border-black border-b pb-16">
           <div className="flex items-center justify-center">
@@ -155,9 +211,13 @@ function LaporanListTransaksiSaldo() {
 
           <div className="flex flex-1 flex-col text-center items-center justify-center ml-8">
             <Typography className="font-black text-20">
-              DAFTAR TRANSAKSI SALDO AGEN BULAN{' '}
-              {moment(params?.dateFirst || new Date())
-                .format('MMMM YYYY')
+              DAFTAR TRANSAKSI SALDO AGEN PERIODE{' '}
+              {moment(params?.dateFirst || getFirstDateOfMonth())
+                .format('D MMMM YYYY')
+                .toUpperCase()}{' '}
+              -{' '}
+              {moment(params?.dateLast || getLastDateOfMonth())
+                .format('D MMMM YYYY')
                 .toUpperCase()}
             </Typography>
 
