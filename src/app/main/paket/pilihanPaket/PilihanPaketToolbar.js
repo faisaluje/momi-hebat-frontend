@@ -28,7 +28,7 @@ function PilihanPaketToolbar() {
           variant="outlined"
           size="small"
           style={{ width: '12rem' }}
-          color="secondary"
+          color="primary"
           label="Status"
           value={status}
           onChange={event => dispatch(setStatusPilihanPaket(event.target.value))}

@@ -37,10 +37,10 @@ export function updateStatusPilihanPaket(data) {
   return async dispatch => {
     dispatch({ type: GET_LIST_PILIHAN_PAKET });
 
-    const { id } = data;
-    delete data.id;
+    const { _id } = data;
+    delete data._id;
 
-    const result = await PilihanPaketService.updatePilihanPaket(id, data);
+    const result = await PilihanPaketService.updatePilihanPaket(_id, data);
     if (!result.success) {
       return dispatch({ type: GET_LIST_PILIHAN_PAKET_ERROR, payload: result.msg });
     }

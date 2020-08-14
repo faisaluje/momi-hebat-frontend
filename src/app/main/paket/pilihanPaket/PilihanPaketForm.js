@@ -108,7 +108,7 @@ function PilihanPaketForm() {
 
             <PaketAutoComplete
               style={{ width: '25rem' }}
-              disabled={!!data?.id}
+              disabled={!!data?._id}
               data={dataPaket || []}
               value={form?.jenisPaket || null}
               required

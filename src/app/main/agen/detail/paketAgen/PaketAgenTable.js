@@ -30,7 +30,7 @@ function PaketAgenTable() {
         <TableBody>
           {rows?.length > 0 ? (
             rows.map((paket, idx) => {
-              const stokPaket = stok?.pakets?.find(item => item.paket === paket.id);
+              const stokPaket = stok?.pakets?.find(item => item.paket === paket._id);
               const booking = stokPaket?.jumlah || 0;
 
               return (

@@ -1,26 +1,28 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import FuseUtils from '@fuse/utils';
-import moment from 'moment';
-import 'moment/locale/id';
+import 'moment/locale/id'
+
+import FuseUtils from '@fuse/utils'
 import {
-  TableContainer,
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Typography,
+  Button,
   Checkbox,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-  Button
-} from '@material-ui/core';
-import { openDialog, closeDialog } from 'app/store/actions';
-import { getListPeriode, setPeriodeForm, openPeriodeDialog, savePeriode } from './store/actions';
+  DialogTitle,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@material-ui/core'
+import { closeDialog, openDialog } from 'app/store/actions'
+import moment from 'moment'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { getListPeriode, openPeriodeDialog, savePeriode, setPeriodeForm } from './store/actions'
 
 moment.locale('id');
 
@@ -78,7 +80,7 @@ function PeriodeTable() {
   };
 
   const onSubmit = periode => {
-    dispatch(savePeriode({ ...periode, status: 'aktif' }));
+    dispatch(savePeriode({ ...periode, status: 'aktif' }, true));
     dispatch(closeDialog());
   };
 

@@ -117,13 +117,13 @@ function BonusPaketForm() {
           </div>
 
           {data?.map(paket => {
-            let bonusPaket = form?.bonusPakets?.find(item => item.paket === paket.id);
-            const idx = bonusPaket ? form.bonusPakets.findIndex(item => item.paket === paket.id) : undefined;
+            let bonusPaket = form?.bonusPakets?.find(item => item.paket === paket._id);
+            const idx = bonusPaket ? form.bonusPakets.findIndex(item => item.paket === paket._id) : undefined;
             if (!bonusPaket) {
-              bonusPaket = { paket: paket.id };
+              bonusPaket = { paket: paket._id };
             }
 
-            const paketSelected = form?.pakets?.find(item => item.paket === paket.id);
+            const paketSelected = form?.pakets?.find(item => item.paket === paket._id);
             const stok = paketSelected?.jumlah || 0;
 
             const bonus = (bonusPaket?.nominal || 0) * stok;
@@ -138,12 +138,12 @@ function BonusPaketForm() {
             }));
 
             return (
-              <div key={paket.id} className={clsx(style().root, 'flex flex-row py-8 w-full items-center')}>
+              <div key={paket._id} className={clsx(style().root, 'flex flex-row py-8 w-full items-center')}>
                 <Typography className="w-360 font-bold ">- {paket.nama}</Typography>
 
                 <NumberFormat
                   className="w-160"
-                  id={`nominal-bonus-${paket.id}`}
+                  id={`nominal-bonus-${paket._id}`}
                   prefix="Rp. "
                   size="small"
                   value={bonusPaket?.nominal || ''}

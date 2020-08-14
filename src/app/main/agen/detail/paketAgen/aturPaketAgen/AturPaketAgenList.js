@@ -165,7 +165,7 @@ function AturPaketAgenList() {
                           <TableCell>{startCase(aturPaket.jenis)}</TableCell>
                           {dataPaket.length > 0 &&
                             dataPaket.map((paket, idx) => {
-                              const paketSelected = aturPaket.items?.find(item => item.paket === paket.id);
+                              const paketSelected = aturPaket.items?.find(item => item.paket === paket._id);
                               totalBiaya += (paketSelected?.jumlah || 0) * paket.harga;
                               return (
                                 <TableCell key={idx} align="center">

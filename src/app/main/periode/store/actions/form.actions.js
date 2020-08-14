@@ -1,6 +1,7 @@
-import moment from 'moment';
-import PeriodeService from '../../services/periode.service';
-import { refreshListPeriode } from './table.actions';
+import moment from 'moment'
+
+import PeriodeService from '../../services/periode.service'
+import { refreshListPeriode } from './table.actions'
 
 export const OPEN_PERIODE_DIALOG = 'OPEN_PERIODE_DIALOG';
 export const CLOSE_PERIODE_DIALOG = 'CLOSE_PERIODE_DIALOG';
@@ -15,7 +16,7 @@ export const setPeriodeForm = data => ({ type: SET_PERIODE_FORM, data });
 export const openPeriodeDialog = () => ({ type: OPEN_PERIODE_DIALOG });
 export const closePeriodeDialog = () => ({ type: CLOSE_PERIODE_DIALOG });
 
-export function savePeriode(data) {
+export function savePeriode(data, statusChanged = false) {
   return async dispatch => {
     dispatch({ type: SAVE_PERIODE });
 
@@ -32,6 +33,10 @@ export function savePeriode(data) {
 
     if (!result.success) {
       return dispatch({ type: SAVE_PERIODE_ERROR, payload: result.msg });
+    }
+
+    if (statusChanged) {
+      window.location = '/';
     }
 
     dispatch({ type: SAVE_PERIODE_SUCCESS, payload: result.data });

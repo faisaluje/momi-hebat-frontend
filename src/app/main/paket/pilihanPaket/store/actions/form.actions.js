@@ -19,15 +19,15 @@ export function savePilihanPaket(data) {
     dispatch({ type: SAVE_PILIHAN_PAKET });
 
     let result = { success: false };
-    if (!data.id) {
+    if (!data._id) {
       result = await PilihanPaketService.createPilihanPaket({
         ...data,
         jenisPaket: data.jenisPaket.id
       });
     } else {
-      const { id } = data;
-      delete data.id;
-      result = await PilihanPaketService.updatePilihanPaket(id, data);
+      const { _id } = data;
+      delete data._id;
+      result = await PilihanPaketService.updatePilihanPaket(_id, data);
     }
 
     if (!result.success) {

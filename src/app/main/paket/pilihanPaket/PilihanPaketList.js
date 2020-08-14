@@ -13,13 +13,13 @@ import {
   Paper,
   Typography
 } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AgenStatus from 'app/main/agen/AgenStatus';
+import GreenSwitch from 'app/main/components/GreenSwitch';
 import { closeDialog, openDialog } from 'app/store/actions';
+import { thousandSeparator } from 'app/Utils';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import GreenSwitch from 'app/main/components/GreenSwitch';
-import { thousandSeparator } from 'app/Utils';
 import {
   getListPilihanPaket,
   openPilihanPaketDialog,
@@ -110,17 +110,17 @@ function PilihanPaketList() {
 
       {dataPaket?.length > 0 ? (
         dataPaket.map(paket => {
-          const pilihanPaketByDasarPaket = data.filter(pilihanPaket => pilihanPaket.jenisPaket.id === paket.id);
+          const pilihanPaketByDasarPaket = data.filter(pilihanPaket => pilihanPaket.jenisPaket._id === paket.id);
 
           return (
-            <ExpansionPanel elevation={5} defaultExpanded key={paket.id}>
+            <ExpansionPanel elevation={5} defaultExpanded key={paket._id}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className="font-bold">{paket.nama}</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails className="flex flex-col">
                 {pilihanPaketByDasarPaket.length > 0 ? (
                   pilihanPaketByDasarPaket.map(pilihanPaket => (
-                    <div key={pilihanPaket.id} className="flex flex-col sm:flex-row items-center">
+                    <div key={pilihanPaket._id} className="flex flex-col sm:flex-row items-center">
                       <div className="w-384">
                         <Typography
                           className="text-blue hover:underline font-bold text-14"

@@ -80,7 +80,7 @@ function AturPaketAgenForm() {
       const cashback = {};
       const totalAll = { allBiaya: 0, allBonus: 0, allCashback: 0 };
       form.items.forEach(item => {
-        const paketSelected = dataPaket.find(paket => paket.id === item.paket);
+        const paketSelected = dataPaket.find(paket => paket._id === item.paket);
         const bonusSelected = listBonus.find(val => val.paket === item.paket);
 
         biaya[item.paket] = (item.jumlah || 0) * (paketSelected?.harga || 0);
@@ -114,11 +114,11 @@ function AturPaketAgenForm() {
   }, [agen.id, dispatch, isError, isLoading, msg]);
 
   const handleJumlahChange = (paket, jumlah) => {
-    const itemIdx = form?.items.length > 0 ? form.items.findIndex(item => item.paket === paket.id) : -1;
+    const itemIdx = form?.items.length > 0 ? form.items.findIndex(item => item.paket === paket._id) : -1;
     const newForm = { ...form };
 
     if (itemIdx < 0) {
-      newForm.items.push({ paket: paket.id, jumlah });
+      newForm.items.push({ paket: paket._id, jumlah });
     } else {
       newForm.items[itemIdx].jumlah = jumlah;
     }
@@ -231,8 +231,8 @@ function AturPaketAgenForm() {
                     {dataPaket.length > 0 &&
                       dataPaket.map((paket, idx) => {
                         const paketSelected =
-                          form?.items?.length > 0 ? form.items.find(item => item.paket === paket.id) : undefined;
-                        const biaya = total.biaya[paket.id];
+                          form?.items?.length > 0 ? form.items.find(item => item.paket === paket._id) : undefined;
+                        const biaya = total.biaya[paket._id];
 
                         const bgColor = paket.bgColor || '#FFF';
                         const style = makeStyles(theme => ({
@@ -249,7 +249,7 @@ function AturPaketAgenForm() {
                             </Typography>
                             <Typography style={{ width: '14rem' }}>Rp. {thousandSeparator(paket.harga)}</Typography>
                             <NumberFormat
-                              id={`jumlah-paket-${paket.id}`}
+                              id={`jumlah-paket-${paket._id}`}
                               className="mr-32 w-72 h-0"
                               value={paketSelected?.jumlah || ''}
                               onValueChange={val => handleJumlahChange(paket, val.value)}
@@ -303,8 +303,8 @@ function AturPaketAgenForm() {
                     {dataPaket.length > 0 &&
                       dataPaket.map((paket, idx) => {
                         const paketSelected =
-                          form?.items?.length > 0 ? form.items.find(item => item.paket === paket.id) : undefined;
-                        const cashback = total.cashback[paket.id];
+                          form?.items?.length > 0 ? form.items.find(item => item.paket === paket._id) : undefined;
+                        const cashback = total.cashback[paket._id];
 
                         const bgColor = paket.bgColor || '#FFF';
                         const style = makeStyles(theme => ({
@@ -358,10 +358,10 @@ function AturPaketAgenForm() {
 
                     {dataPaket.length > 0 &&
                       dataPaket.map((paket, idx) => {
-                        const bonusSelected = listBonus.find(item => item.paket === paket.id);
+                        const bonusSelected = listBonus.find(item => item.paket === paket._id);
                         const paketSelected =
-                          form?.items?.length > 0 ? form.items.find(item => item.paket === paket.id) : undefined;
-                        const bonus = total.bonus[paket.id];
+                          form?.items?.length > 0 ? form.items.find(item => item.paket === paket._id) : undefined;
+                        const bonus = total.bonus[paket._id];
 
                         const bgColor = paket.bgColor || '#FFF';
                         const style = makeStyles(theme => ({
