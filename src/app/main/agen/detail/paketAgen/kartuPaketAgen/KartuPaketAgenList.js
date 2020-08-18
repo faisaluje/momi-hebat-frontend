@@ -28,8 +28,8 @@ import { orderBy, sumBy } from 'lodash';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thousandSeparator } from 'app/Utils';
-import { setTransaksiKartuPaketForm } from 'app/main/kartuPaket/store/actions';
 import TransaksiKartuPaketPrint from 'app/main/kartuPaket/transaksiKartuPaket/TransaksiKartuPaketPrint';
+import { URL_API } from 'app/Constants';
 import KartuPaketAgenDialog from './KartuPaketAgenDialog';
 import {
   closeListKartuPaketAgenDialog,
@@ -91,9 +91,8 @@ function KartuPaketAgenList() {
     dispatch(closeListKartuPaketAgenDialog());
   };
 
-  const onCetakTransaksi = transaksi => {
-    dispatch(setTransaksiKartuPaketForm(transaksi));
-    setOpenCetak(true);
+  const onCetakTransaksi = id => {
+    window.open(`${URL_API}/output/transaksi-kartu-paket/${id}`);
   };
 
   return (
@@ -215,7 +214,7 @@ function KartuPaketAgenList() {
                           })}
                           <TableCell align="center" className="flex flex-row">
                             <Tooltip title="Cetak Transaksi" placement="left">
-                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi)}>
+                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi.id)}>
                                 <Icon>print</Icon>
                               </IconButton>
                             </Tooltip>

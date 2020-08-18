@@ -1,12 +1,23 @@
 /*----------------------------------------------------------------*/
 /*  Print
 /*----------------------------------------------------------------*/
+@font-face {
+  font-family: 'saxMono';
+  font-style: normal;
+  font-weight: normal;
+  src: local('saxMono'), url('saxmono.woff') format('woff');
+}
+
 @media all {
   /* Never show page breaks in normal view */
   .page-break-after,
   .page-break-before {
     display: none;
   }
+}
+
+.font-saxmono {
+  font-family: saxMono !important;
 }
 
 @media print {

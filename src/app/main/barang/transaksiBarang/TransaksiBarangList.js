@@ -28,13 +28,13 @@ import { getFilteredArray } from 'app/Utils';
 import NumberFormat from 'react-number-format';
 import { orderBy, startCase, sumBy } from 'lodash';
 import { closeDialog, openDialog } from 'app/store/actions';
+import { URL_API } from 'app/Constants';
 import {
   closeListTransaksiBarangDialog,
   getListTransaksiBarang,
   refreshListTransaksiBarang,
   setTxtCariTransaksiBarang,
-  deleteTransaksiBarang,
-  setTransaksiBarangForm
+  deleteTransaksiBarang
 } from '../store/actions';
 import TransaksiBarangPrint from './TransaksiBarangPrint';
 
@@ -88,9 +88,8 @@ function TransaksiBarangList() {
     dispatch(closeDialog());
   };
 
-  const onCetakTransaksi = transaksi => {
-    dispatch(setTransaksiBarangForm(transaksi));
-    setOpenCetak(true);
+  const onCetakTransaksi = id => {
+    window.open(`${URL_API}/output/transaksi-barang/${id}`);
   };
 
   return (
@@ -247,7 +246,7 @@ function TransaksiBarangList() {
                           <TableCell>{transaksi.catatan}</TableCell>
                           <TableCell className="flex flex-row">
                             <Tooltip title="Cetak Transaksi" placement="left">
-                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi)}>
+                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi.id)}>
                                 <Icon>print</Icon>
                               </IconButton>
                             </Tooltip>

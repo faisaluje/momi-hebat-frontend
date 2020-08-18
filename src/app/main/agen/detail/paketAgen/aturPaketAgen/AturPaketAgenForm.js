@@ -406,8 +406,17 @@ function AturPaketAgenForm() {
                     <Typography className="font-bold">Hitungan</Typography>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails className="flex flex-col">
+                    {!data?.id && (
+                      <div className="flex mb-8">
+                        <Typography className="italic w-288">Total Saldo saat ini :</Typography>
+                        <Typography className="font-bold italic text-14">
+                          Rp. {thousandSeparator(saldoTotal)}
+                        </Typography>
+                      </div>
+                    )}
+
                     <div className="flex mb-8">
-                      <Typography className="w-288">Biaya : </Typography>
+                      <Typography className="w-288">Jumlah Tagihan : </Typography>
                       <Typography className="font-bold text-14">Rp. {thousandSeparator(total.allBiaya)}</Typography>
                     </div>
 
@@ -427,15 +436,6 @@ function AturPaketAgenForm() {
                       </Typography>
                       <Typography className="font-bold italic text-14">Rp. {thousandSeparator(hitungan)}</Typography>
                     </div>
-
-                    {!data?.id && (
-                      <div className="flex mb-8">
-                        <Typography className="italic w-288">Total Saldo saat ini :</Typography>
-                        <Typography className="font-bold italic text-14">
-                          Rp. {thousandSeparator(saldoTotal)}
-                        </Typography>
-                      </div>
-                    )}
 
                     {!data?.id && (
                       <div className="flex mb-8 mt-20">

@@ -29,13 +29,13 @@ import NumberFormat from 'react-number-format';
 import { startCase, sumBy } from 'lodash';
 import { closeDialog, openDialog } from 'app/store/actions';
 import { Pagination } from '@material-ui/lab';
+import { URL_API } from 'app/Constants';
 import {
   closeListTransaksiKartuPaketDialog,
   deleteTransaksiKartuPaket,
   getListTransaksiKartuPaket,
   refreshListTransaksiKartuPaket,
   setListTransaksiKartuPaketPage,
-  setTransaksiKartuPaketForm,
   setTxtCariTransaksiKartuPaket
 } from '../store/actions';
 import TransaksiKartuPaketPrint from './TransaksiKartuPaketPrint';
@@ -92,9 +92,8 @@ function TransaksiKartuPaketList() {
     dispatch(closeDialog());
   };
 
-  const onCetakTransaksi = transaksi => {
-    dispatch(setTransaksiKartuPaketForm(transaksi));
-    setOpenCetak(true);
+  const onCetakTransaksi = id => {
+    window.open(`${URL_API}/output/transaksi-kartu-paket/${id}`);
   };
 
   return (
@@ -236,7 +235,7 @@ function TransaksiKartuPaketList() {
                           <TableCell>{transaksi.catatan}</TableCell>
                           <TableCell className="flex flex-row">
                             <Tooltip title="Cetak Transaksi" placement="left">
-                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi)}>
+                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi.id)}>
                                 <Icon>print</Icon>
                               </IconButton>
                             </Tooltip>

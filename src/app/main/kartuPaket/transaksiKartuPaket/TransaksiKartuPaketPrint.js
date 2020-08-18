@@ -56,7 +56,23 @@ function TransaksiKartuPaketPrint({ onClose, open }) {
   };
 
   const onCetak = () => {
+    const css = '@page { width: 21.5cm }';
+    const head = document.head || document.getElementsByTagName('head')[0];
+    const style = document.createElement('style');
+
+    style.media = 'print';
+
+    if (style.styleSheet) {
+      style.styleSheet.cssText = css;
+    } else {
+      style.appendChild(document.createTextNode(css));
+    }
+
+    head.appendChild(style);
+
     window.print();
+
+    head.removeChild(style);
   };
 
   return (
@@ -105,21 +121,21 @@ function TransaksiKartuPaketPrint({ onClose, open }) {
                 <Typography className="mt-8">Sedang memproses. . .</Typography>
               </div>
             ) : (
-              <div className="flex mb-8">
-                <Typography className="italic">
+              <div className="flex mb-8 ml-8">
+                <Typography className="italic font-saxmono">
                   Catatan: {jenis} Oleh Agen {agen?.no} - {agen?.diri?.nama?.lengkap}{' '}
                 </Typography>
               </div>
             )
           ) : (
             data?.catatan && (
-              <div className="flex mb-8">
-                <Typography className="italic">Catatan: {data.catatan}</Typography>
+              <div className="flex mb-8 ml-8">
+                <Typography className="italic font-saxmono">Catatan: {data.catatan}</Typography>
               </div>
             )
           )}
 
-          <table className="border-collapse border-black">
+          <table className="border-collapse border-black font-saxmono">
             <thead>
               <tr>
                 <th className="p-4 border w-48">No.</th>

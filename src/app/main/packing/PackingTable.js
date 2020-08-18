@@ -22,6 +22,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sumBy } from 'lodash';
 import { closeDialog, openDialog } from 'app/store/actions';
+import { URL_API } from 'app/Constants';
 import { deletePacking, openPackingDialog, setPackingForm } from './store/actions';
 import PackingPrint from './PackingPrint';
 
@@ -70,9 +71,8 @@ function PackingTable() {
     dispatch(openPackingDialog());
   };
 
-  const onCetakPacking = packing => {
-    dispatch(setPackingForm(packing));
-    setOpenCetak(true);
+  const onCetakPacking = id => {
+    window.open(`${URL_API}/output/packing/${id}`);
   };
 
   return (
@@ -130,7 +130,7 @@ function PackingTable() {
                   <TableCell align="center">Rp. {thousandSeparator(totalBiaya)}</TableCell>
                   <TableCell align="center" className="flex flex-row">
                     <Tooltip title="Cetak Packing" placement="left">
-                      <IconButton size="small" onClick={() => onCetakPacking(packing)}>
+                      <IconButton size="small" onClick={() => onCetakPacking(packing.id)}>
                         <Icon>print</Icon>
                       </IconButton>
                     </Tooltip>

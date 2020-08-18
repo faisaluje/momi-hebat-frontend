@@ -23,6 +23,7 @@ import {
 } from '@material-ui/core';
 import JenisTransaksi from 'app/main/components/JenisTransaksi';
 import { openDialog, closeDialog } from 'app/store/actions';
+import { URL_API } from 'app/Constants';
 import { setTransaksiSaldoForm, openTransaksiSaldoDialog, deleteTransaksiSaldo } from './store/actions';
 import TransaksiSaldoKategori from './TransaksiSaldoKategori';
 import TransaksiSaldoPrint from './TransaksiSaldoPrint';
@@ -72,9 +73,8 @@ function TransaksiSaldoTable() {
     dispatch(closeDialog());
   };
 
-  const onCetakTransaksi = transaksi => {
-    dispatch(setTransaksiSaldoForm(transaksi));
-    setOpenCetak(true);
+  const onCetakTransaksi = id => {
+    window.open(`${URL_API}/output/transaksi-saldo/${id}`);
   };
 
   return (
@@ -131,7 +131,7 @@ function TransaksiSaldoTable() {
                 </TableCell>
                 <TableCell className="flex flex-row">
                   <Tooltip title="Cetak Transaksi" placement="left">
-                    <IconButton size="small" onClick={() => onCetakTransaksi(transaksi)}>
+                    <IconButton size="small" onClick={() => onCetakTransaksi(transaksi.id)}>
                       <Icon>print</Icon>
                     </IconButton>
                   </Tooltip>

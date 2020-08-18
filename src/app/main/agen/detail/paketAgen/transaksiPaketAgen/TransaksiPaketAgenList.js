@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { thousandSeparator } from 'app/Utils';
 import { startCase } from 'lodash';
 import { closeDialog, openDialog } from 'app/store/actions';
+import { URL_API } from 'app/Constants';
 import {
   closeListTransaksiPaketAgenDialog,
   deleteTransaksiPaketAgen,
@@ -94,9 +95,8 @@ function TransaksiPaketAgenList() {
     dispatch(closeDialog());
   };
 
-  const onCetakTransaksi = transaksi => {
-    dispatch(setTransaksiPaketAgenForm(transaksi));
-    setOpenCetak(true);
+  const onCetakTransaksi = id => {
+    window.open(`${URL_API}/output/transaksi-paket-agen/${id}`);
   };
 
   return (
@@ -203,7 +203,7 @@ function TransaksiPaketAgenList() {
                           </TableCell>
                           <TableCell align="center" className="flex flex-row">
                             <Tooltip title="Cetak Transaksi" placement="left">
-                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi)}>
+                              <IconButton size="small" onClick={() => onCetakTransaksi(transaksi.id)}>
                                 <Icon>print</Icon>
                               </IconButton>
                             </Tooltip>
