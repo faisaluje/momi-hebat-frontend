@@ -84,7 +84,6 @@ function BonusPaketForm() {
   };
 
   const onSubmit = () => {
-    console.log(form);
     dispatch(saveBonusPaket({ ...form }));
     dispatch(closeDialog());
   };

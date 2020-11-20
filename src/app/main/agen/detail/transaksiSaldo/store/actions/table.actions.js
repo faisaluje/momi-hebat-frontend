@@ -57,7 +57,6 @@ export function deleteTransaksiSaldo(id) {
     dispatch({ type: GET_LIST_TRANSAKSI_SALDO });
 
     const result = await TransaksiSaldoService.deleteTransaksiSaldo(id);
-    console.log(result);
     if (!result.success) {
       return dispatch({ type: GET_LIST_TRANSAKSI_SALDO_ERROR, payload: result.msg });
     }

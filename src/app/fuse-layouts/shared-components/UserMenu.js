@@ -35,7 +35,6 @@ function UserMenu(props) {
 
   const onClickProfile = () => {
     dispatch(setPenggunaForm(user.data));
-    console.log(user.data);
     dispatch(openPenggunaDialog());
     userMenuClose();
   };

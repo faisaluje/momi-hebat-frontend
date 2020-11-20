@@ -14,6 +14,10 @@ const LaporanConfig = {
     {
       path: '/laporan/list-transaksi-saldo',
       component: lazy(() => import('./LaporanListTransaksiSaldo'))
+    },
+    {
+      path: '/laporan/list-kartu-paket-agen',
+      component: lazy(() => import('./LaporanKartuPaketAgen'))
     }
   ]
 };
