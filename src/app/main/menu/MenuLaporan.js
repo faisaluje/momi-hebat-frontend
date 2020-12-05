@@ -87,6 +87,13 @@ function MenuLaporan(props) {
                   </ListItemIcon>
                   <ListItemText primary="List Kartu Paket Agen" />
                 </MenuItem>
+
+                <MenuItem onClick={() => History.push('/laporan/stok-kartu-paket')}>
+                  <ListItemIcon>
+                    <Icon className={classes.menu}>payment</Icon>
+                  </ListItemIcon>
+                  <ListItemText primary="Stok Kartu Paket" />
+                </MenuItem>
               </MenuList>
             </Paper>
           </Grow>
