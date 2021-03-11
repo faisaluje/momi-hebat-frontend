@@ -148,7 +148,7 @@ function AturPaketAgenList() {
                           {paket.nama}
                         </TableCell>
                       ))}
-                    <TableCell align="center" className="font-bold w-160">
+                    <TableCell align="center" className="font-bold w-192">
                       Biaya
                     </TableCell>
                   </TableRow>

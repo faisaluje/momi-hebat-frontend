@@ -22,11 +22,13 @@ import { Alert } from '@material-ui/lab';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import { closeDialog, openDialog, showMessage } from 'app/store/actions';
 import { thousandSeparator } from 'app/Utils';
+import Axios from 'axios';
 import clsx from 'clsx';
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
-import HitunganService from '../services/hitungan.service';
+
+import { URL_API } from '../../../../../Constants';
 import { createAturPaketAgen, setAturPaketAgenForm } from './store/actions';
 
 const defaultFormState = {
@@ -43,6 +45,7 @@ const defaultTotalState = {
 
 function AturPaketAgenForm() {
   const dispatch = useDispatch();
+  const { periode } = useSelector(({ auth }) => auth.user.data);
   const { data, isError, msg, isLoading, jenis } = useSelector(({ aturPaketAgen }) => aturPaketAgen.form);
   const { agen } = useSelector(({ detailAgen }) => detailAgen.panel);
   const { data: dataPaket } = useSelector(({ paketAgen }) => paketAgen.table);
@@ -52,6 +55,7 @@ function AturPaketAgenForm() {
   const { form, setForm, setInForm } = useForm({ ...defaultFormState });
   const canBeSubmitted = !!form?.tgl && form?.items?.length > 0 && hitungan > 0;
   const saldoTotal = agen?.stok ? (agen.stok.saldo || 0) + (agen.stok.totalBonus || 0) : 0;
+  const [isLoadingPdf, setIsLoadingPdf] = React.useState(false);
 
   React.useEffect(() => {
     if (data) {
@@ -166,12 +170,34 @@ function AturPaketAgenForm() {
       jenis,
       agen: agen.id
     };
-    HitunganService.printHitungan({ data: newForm, total, hitungan, agen, listPaket: dataPaket, listBonus });
+    // HitunganService.printHitungan({ data: newForm, total, hitungan, agen, listPaket: dataPaket, listBonus });
+
+    setIsLoadingPdf(true);
+    Axios({
+      url: `${URL_API}/output/booking-paket`,
+      method: 'post',
+      data: { data: newForm, total, hitungan, agen, listPaket: dataPaket, listBonus, periode },
+      responseType: 'blob'
+    })
+      .then(result => {
+        const blob = new Blob([result.data], {
+          type: 'application/pdf'
+        });
+
+        const url = URL.createObjectURL(blob);
+        window.open(url);
+      })
+      .finally(() => setIsLoadingPdf(false));
   };
 
   return (
     <>
-      <Dialog classes={{ paper: 'rounded-8 p-24' }} open={isLoading} disableEscapeKeyDown disableBackdropClick>
+      <Dialog
+        classes={{ paper: 'rounded-8 p-24' }}
+        open={isLoading || isLoadingPdf}
+        disableEscapeKeyDown
+        disableBackdropClick
+      >
         <div className="flex flex-col justify-center text-center items-center h-full p-16">
           <CircularProgress />
           <Typography className="mt-8">Sedang memproses. . .</Typography>
